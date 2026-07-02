@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Průvodce prváka | Informatika MFF UK</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/~smolad/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/~smolad/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/~smolad/favicon-16x16.png">
+    <link rel="manifest" href="/~smolad/site.webmanifest">
+    <!-- Připojení Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/~smolad/styles.css">
+    <style>
+        :root {
+            /* Oficiální MFF proměnné z webu */
+            --primary-blue: #003657;
+            --primary-red: #d22d40;
+            --primary-black: black;
+            --background-white: white;
+            --background-grey: whitesmoke;
+            
+            /* Transparentní varianty pro okraje a sekundární texty */
+            --blue-72: #003657b8;
+            --blue-32: #00365752;
+            --blue-12: #0036571f;
+            
+            /* Rádiusy */
+            --radius-btns: 50rem;
+            --radius-8-px: 8px;
+
+            /* Moje mapování na strukturu webu */
+            --bg-color: var(--background-white);
+            --text-color: var(--primary-blue); /* Matfyz používá modrou i pro běžný text */
+            --text-secondary: var(--blue-72);
+            --card-bg: var(--background-grey);
+            --border-color: var(--blue-12);
+            --accent-green: #10b981;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            /* Oficiální MFF font Silka s fallbackem na Arial */
+            font-family: "Silka Webfont", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 144%;
+            font-weight: 400;
+            letter-spacing: .004em;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem; /* --_spacing---40-px */
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            border-bottom: 3px solid var(--primary-red);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            font-size: 2.625rem;
+            line-height: 116%;
+            font-weight: 700;
+            letter-spacing: -.016em;
+            margin-bottom: 0.5rem;
+            /* display: flex; */
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            line-height: 108%;
+            font-weight: 700;
+            letter-spacing: -.024em;
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.375rem;
+            line-height: 116%;
+            font-weight: 600;
+            letter-spacing: -.015em;
+        }
+
+        .intro {
+            font-size: 1.125rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-8-px);
+            padding: 0  1.5rem 1.5rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .money-card {
+            background: #f1fcf5;
+            border-left: 5px solid var(--accent-green);
+            padding: 1.5rem;
+            border-radius: var(--radius-8-px);
+            margin-top: 2rem;
+            border-top: 1px solid #d1e7dd;
+            border-right: 1px solid #d1e7dd;
+            border-bottom: 1px solid #d1e7dd;
+        }
+
+        .money-card h3 {
+            color: #146c43;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; /* --_spacing---gap-16 */
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: var(--primary-red);
+            color: var(--background-white);
+            text-decoration: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: var(--radius-btns); /* Oficiální Matfyz zakulacení */
+            font-size: .875rem;
+            line-height: 100%;
+            font-weight: 600;
+            letter-spacing: 0em;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+            color: var(--background-white);
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+        }
+
+        .btn-discord:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-red);
+            color: var(--background-white);
+        }
+
+        .subject-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .subject-list li {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-red);
+            margin-bottom: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 0 var(--radius-8-px) var(--radius-8-px) 0;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .subject-code {
+            font-family: monospace;
+            background: var(--blue-12);
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: 1.125rem;
+            line-height: 132%;
+            margin-bottom: 0.3rem;
+            color: var(--primary-blue);
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+        }
+
+        .image-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .image-placeholder {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--background-white);
+            border: 2px dashed var(--blue-32);
+            border-radius: var(--radius-8-px);
+            text-align: center;
+            color: var(--blue-72);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .image-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .future-box {
+            background-color: #fff9e6;
+            border: 1px solid #ffe69c;
+            border-radius: var(--radius-8-px);
+            padding: 1.5rem;
+            margin-top: 3rem;
+            color: #997404;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: .875rem;
+        }
+
+        strong {
+            font-weight: 600; /* Dle variables MFF --_typography---paragraph-bold */
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="header-container">
+        <a href="/~smolad" class="header-logo">
+            <i class="bi bi-box-seam"></i> 
+            MFF UK Nástroje
+        </a>
+        <nav class="main-nav">
+            <a href="/~smolad">Průvodce prváka</a>
+            <a href="/~smolad/kalkulačka">Kalkulačka kreditů</a>
+            <a href="/~smolad/specializace">Mapa předmětů</a>
+        </nav>
+    </div>
+</header>
+    <div class="container">
+        <header>
+            <h1>🚧 WORK IN PROGRESS 🚧 <br>
+            <i class="bi bi-mortarboard"></i> Vítej na Matfyzu!</h1>
+            <p class="intro">Ahoj, jsem [Tvoje Jméno], tvůj studentský průvodce pro 1. ročník informatiky. Gratuluji k přijetí na MFF UK! Začátky můžou vypadat děsivě, ale slibuju, že se v tom rychle zorientuješ. Tahle stránka ti pomůže přežít první týdny.</p>
+        </header>
+
+        <section class="card">
+            <h2><i class="bi bi-ui-checks"></i> Rychlé startovní To-Do</h2>
+            <ul style="padding-left: 1.5rem; margin-bottom: 0;">
+                <li><strong>Získej heslo do CAS:</strong> Bez Centrální autentizační služby se nehneš. Nastav si ho co nejdřív.</li>
+                <li><strong>Zařiď si průkaz/ISIC:</strong> Budeš ho potřebovat na vstup do budov, menzu i slevy.</li>
+                <li><strong>Proklikej si SIS:</strong> Studijní informační systém bude tvůj nejlepší kamarád. Tady najdeš svůj rozvrh a zapíšeš si předměty.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2><i class="bi bi-wifi"></i> Připojení k WiFi (eduroam)</h2>
+            <p>V budovách fakulty se připojíš k síti <strong>eduroam</strong>. <strong>Pozor, chyták:</strong> Tvoje normální heslo do CASu tady fungovat nebude! Musíš si vygenerovat speciální heslo jen pro WiFi.</p>
+            <ol>
+                <li>Přihlas se do <a href="https://cas.cuni.cz/" target="_blank" style="color: var(--primary-red); font-weight: 600;">CASu</a>.</li>
+                <li>Najdi sekci pro nastavení hesla k eduroamu.</li>
+                <li>Vygeneruj si ho a jako přihlašovací jméno použij svůj login ve formátu <code style="background: var(--blue-12); padding: 2px 6px; border-radius: 4px;">číslo_osoby@cuni.cz</code> (ne @mff.cuni.cz!).</li>
+            </ol>
+            
+            <div class="image-row">
+                <div class="image-placeholder">
+                    <img src="" alt="Screenshot 1: Kde najít eduroam heslo v CASu">
+                    <span style="font-size: 0.75rem; margin-top: 0.75rem;"><i class="bi bi-image"></i> Tady bude screenshot kroku 1</span>
+                </div>
+                <div class="image-placeholder">
+                    <img src="" alt="Screenshot 2: Generování hesla">
+                    <span style="font-size: 0.75rem; margin-top: 0.75rem;"><i class="bi bi-image"></i> Tady bude screenshot kroku 2</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="money-card">
+            <h3><i class="bi bi-cash-coin"></i> Nezapomeň na peníze zdarma: Ubytovací stipendium!</h3>
+            <p>Pokud nemáš trvalé bydliště na území Prahy, máš s největší pravděpodobností nárok na ubytovací stipendium (i když nebydlíš na koleji!). Je to pár tisícovek za semestr, o které ale musíš aktivně požádat v SISu.</p>
+            <ul style="margin-bottom: 1.5rem;">
+                <li><strong>Kdy žádat:</strong> Žádosti se většinou podávají během <strong>října a listopadu</strong>. Sleduj upozornění v SISu!</li>
+                <li><strong>Kde žádat:</strong> V SISu v modulu <em>Stipendia</em>.</li>
+            </ul>
+            <a href="https://sis.is.cuni.cz/stipendia/" target="_blank" class="btn btn-outline" style="display: inline-flex; width: auto;"><i class="bi bi-info-circle"></i> Oficiální info o stipendiích na UK</a>
+        </section>
+
+        <section>
+            <h2><i class="bi bi-link-45deg"></i> Důležité odkazy</h2>
+            <div class="links-grid">
+                <a href="https://is.cuni.cz/studium/" target="_blank" class="btn"><i class="bi bi-laptop"></i> SIS (Studijní systém)</a>
+                <a href="https://wiki.matfyz.cz/" target="_blank" class="btn"><i class="bi bi-journal-bookmark-fill"></i> Fakultní Wiki</a>
+                <a href="https://discord.gg/7afJ9ES" target="_blank" class="btn btn-discord"><i class="bi bi-discord"></i> Neoficiální MFF Discord</a> 
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="bi bi-star"></i> Fajn volitelné předměty</h2>
+            <p>I když je rozvrh plný povinných věcí, vyplatí se přihodit si něco z tohto výběru.</p>
+            <ul class="subject-list">
+                <li>
+                    <span class="subject-code">NMAI069</span>
+                    <a href="https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NMAI069" target="_blank" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">Matematické dovednosti</a>
+                </li>
+                <li>
+                    <span class="subject-code">NDMI050</span>
+                    <a href="https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NDMI050" target="_blank" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">Úvod do řešení problémů kombinatorických, mat. i jiných (IPS) I</a>
+                </li>
+                <li>
+                    <span class="subject-code">NMAT100</span>
+                    <a href="https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NMAT100" target="_blank" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">Matematické problémy nematematiků</a>
+                </li>
+                <li>
+                    <span class="subject-code">NJAZ071/070/170</span>
+                    <strong>
+                        Anglický jazyk pro
+                        <a href="https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NJAZ071" target="_blank" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">mírně</a> /
+                        <a href="https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NJAZ070" target="_blank" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">středně</a> /
+                        <a href="https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NJAZ170" target="_blank" style="color: var(--primary-red); text-decoration: none; font-weight: 600;">pokročilé</a> I
+                    </strong>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2><i class="bi bi-lightbulb"></i> Časté dotazy (FAQ) & Tipy</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Kdy a jak si mám zapsat rozvrh?</div>
+                <div class="faq-answer">V zimním semestru v prváku máte rozvrh <strong>pevně daný</strong> (tzv. kruhy). Nemusíte si ho složitě skládat. Stačí si zapsat zobrazené předměty a máš hotovo. Navíc si akorát můžeš zapsat volitelné předměty (třeba ty ze seznamu výše).</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Ztrácím se v informacích, kde najdu odpovědi?</div>
+                <div class="faq-answer">Doporučuji <strong>Fakultní Wiki</strong>, o kterou se staráme my, studenti. Najdeš tam poznámky, rady, předchozí zkoušky i návody na byrokracii. Pokud něco nenajde napiš <strong>mě</strong> nebo na <strong>Discord</strong></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Bude to hodně těžké?</div>
+                <div class="faq-answer">Bude to jízda. :D</div>
+            </div>
+        </section>
+
+        <div class="future-box">
+            <h3 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;"><i class="bi bi-calendar-check"></i> Co vás čeká v letním semestru?</h3>
+            <p style="margin-bottom: 1.5rem;">Teď to ještě řešit nemusíte, ale v letním semestru si budete vybírat <strong>specializaci</strong>. Připravil jsem k tomu samostatný web, kam se můžete v průběhu zimy mrknout, ať víte, co vás čeká.</p>
+            <a href="/~smolad/specializace/" target="_blank" class="btn btn-outline" style="display: inline-flex; width: auto;"><i class="bi bi-arrow-right-circle"></i> Můj průvodce specializacemi</a>
+        </div>
+
+        <footer>
+            <p><strong>Máš dotaz, který tu není?</strong> Napiš mi!</p>
+            <p><i class="bi bi-envelope"></i> Email: tvuj.mail@mff.cuni.cz | <i class="bi bi-discord"></i> Discord: tvoje_jmeno</p>
+            <p style="margin-top: 2rem;">Vytvořeno pro prváky informatiky (česká paralelka) s <i class="bi bi-heart-fill" style="color: var(--primary-red);"></i></p>
+        </footer>
+    </div>
+
+    <script>
+    // Automatické schování hlavičky při scrollu dolů, zobrazení při scrollu nahoru
+    (function () {
+        var header = document.querySelector('.site-header');
+        if (!header) return;
+        var lastScrollY = window.scrollY;
+        var ticking = false;
+        var threshold = 10; // minimální pohyb, aby to nebliklo u drobných scrollů
+
+        function onScroll() {
+            var currentScrollY = window.scrollY;
+
+            header.classList.toggle('site-header--scrolled', currentScrollY > 8);
+
+            if (Math.abs(currentScrollY - lastScrollY) > threshold) {
+                if (currentScrollY > lastScrollY && currentScrollY > header.offsetHeight) {
+                    header.classList.add('site-header--hidden'); // scroll dolů -> schovat
+                } else {
+                    header.classList.remove('site-header--hidden'); // scroll nahoru -> zobrazit
+                }
+                lastScrollY = currentScrollY;
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(onScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+    })();
+    </script>
+</body>
+</html>
