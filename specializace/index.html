@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaktivní mapa předmětů</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/~smolad/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/~smolad/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/~smolad/favicon-16x16.png">
+  <link rel="manifest" href="/~smolad/site.webmanifest">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Bootstrap 5 – pokud je již v projektu jinde načtený (řekl jsi, že ano), tento řádek klidně smaž -->
+  <link rel="stylesheet" href="/~smolad/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      /* Vaše dodané design systém proměnné */
+      --_typography---font-family--silka: "Silka Webfont", Arial, sans-serif;
+      --_typography---paragraph--font-size: 1rem;
+      --_typography---paragraph--line-height: 144%;
+      --_typography---paragraph--font-weight: 400;
+      --_typography---paragraph--letter-spacing: .004em;
+      --_spacing---40-px: 2.5rem;
+      --_typography---h1--font-size: 2.625rem;
+      --_typography---h1--line-height: 116%;
+      --_typography---h1--font-weight: 700;
+      --_typography---h1--letter-spacing: -.016em;
+      --_spacing---20-px: 1.25rem;
+      --_spacing---gap-40: 40px;
+      --_typography---h2--font-size: 1.5rem;
+      --_typography---h2--font-weight: 700;
+      --_typography---h2--letter-spacing: -.024em;
+      --_typography---h3--font-size: 1.375rem;
+      --_typography---h3--line-height: 116%;
+      --_typography---h3--font-weight: 600;
+      --_typography---h3--letter-spacing: -.015em;
+      --_spacing---32-px: 2rem;
+      --primary--primary-blue: #003657;
+      --_spacing---8-px: .5rem;
+      --_spacing---24-px: 1.5rem;
+      --variables--white-68: #ffffffad;
+      --primary--primary-black: black;
+      --primary--background-white: white;
+      --_typography---header-link--font-size: .75rem;
+      --_typography---header-link--line-height: 100%;
+      --_typography---header-link--font-weight: 500;
+      --_typography---header-link--letter-spacing: 0em;
+      --_spacing---2-px: .125rem;
+      --_spacing---12-px: .75rem;
+      --_radius---radius-btns: 50rem;
+      --primary--background-grey: whitesmoke;
+      --primary--primary-red: #d22d40;
+      --variables--white-16: #ffffff29;
+      --variables--blue-12: #0036571f;
+      --_typography---main-nav-dropdown--font-size: 1rem;
+      --_typography---main-nav-dropdown--line-height: 100%;
+      --_typography---main-nav-dropdown--font-weight: 600;
+      --_typography---main-nav-dropdown--letter-spacing: -.012em;
+      --variables--white-8: #ffffff14;
+      --_radius---radius-8-px: 8px;
+      --_spacing---80-px: 5rem;
+      --_spacing---64-px: 4rem;
+      --_spacing---gap-20: 20px;
+      --_spacing---16-px: 1rem;
+      --_typography---btn-primary--font-size: .875rem;
+      --_typography---btn-primary--line-height: 100%;
+      --_typography---btn-primary--font-weight: 500;
+      --_typography---btn-primary--letter-spacing: 0em;
+      --_spacing---gap-column: 8px;
+      --_spacing---4-px: .25rem;
+      --_spacing---minus-32-px: -2rem;
+      --_typography---article-feed-heading-2--font-size: 1.125rem;
+      --_typography---article-feed-heading-2--line-height: 132%;
+      --_typography---article-feed-heading-2--font-weight: 600;
+      --_typography---article-feed-heading-2--letter-spacing: -.008em;
+      --_typography---article-date--font-size: .75rem;
+      --_typography---article-date--line-height: 100%;
+      --_typography---article-date--font-weight: 400;
+      --_typography---article-date--letter-spacing: .004px;
+      --_typography---main-nav-dropdown-link--font-size: 1rem;
+      --_typography---main-nav-dropdown-link--line-height: 100%;
+      --_typography---main-nav-dropdown-link--font-weight: 400;
+      --variables--white-32: #ffffff52;
+      --variables--blue-72: #003657b8;
+      --_spacing---120-px: 7.5rem;
+      --_typography---text-s--font-size: .75rem;
+      --_typography---text-s--line-height: 128%;
+      --_typography---text-s--font-family: 400;
+      --_typography---text-s--letter-spacing: .004em;
+      --_typography---footer-link--font-size: .875rem;
+      --_typography---footer-link--line-height: 100%;
+      --_typography---footer-link--font-weight: 400;
+      --_typography---footer-link--letter-spacing: 0em;
+      --_typography---card-link-heading--font-size: 1.75rem;
+      --_typography---card-link-heading--line-height: 116%;
+      --_typography---card-link-heading--font-weight: 700;
+      --_typography---card-link-heading--letter-spacing: -.016em;
+      --_typography---article-feed-label--letter-spacing: .02em;
+      --_typography---calendar-date--font-size: 2.25rem;
+      --_typography---calendar-date--line-height: 100%;
+      --_typography---calendar-date--font-weight: 700;
+      --_typography---calendar-date--letter-spacing: -.04em;
+      --_typography---text-l--font-size: 1.25rem;
+      --_typography---text-l--line-height: 124%;
+      --_typography---text-l--font-weight: 600;
+      --_typography---text-l--letter-spacing: -.008em;
+      --_typography---btn-video--font-size: .875rem;
+      --_typography---btn-video--line-height: 116%;
+      --_typography---btn-video--font-weight: 600;
+      --_typography---btn-video--letter-spacing: 0em;
+      --_typography---header-breadcrumbs--font-size: .75rem;
+      --_typography---header-breadcrumbs--line-height: 100%;
+      --_typography---header-breadcrumbs--font-weight: 400;
+      --_typography---header-breadcrumbs--letter-spacing: .004em;
+      --variables--blue-52: #00365785;
+      --variables--blue-32: #00365752;
+      --_spacing---14-px: .875rem;
+      --_typography---article-feed-label--font-weight: 500;
+      --_typography---article-perex--font-size: 1.375rem;
+      --_typography---article-perex--line-height: 132%;
+      --_typography---article-perex--font-weight: 600;
+      --_typography---article-perex--letter-spacing: -.016em;
+      --_typography---paragraph-bold--font-weight: 600;
+      --_spacing---gap-16: 16px;
+      --_typography---article-feed-label--font-size: .75rem;
+      --_typography---article-feed-label--line-height: 100%;
+      --_typography---filter-label--font-weight: 500;
+      --_spacing---6-px: .375rem;
+      --variables--overlay-blue: #004e7e;
+      --variables--blue-8: #00365714;
+      --variables--white-12: #ffffff1f;
+      --_typography---h2--line-height: 108%;
+      --_typography---article-feed-heading-1--font-size: 1.75rem;
+      --_typography---article-feed-heading-1--font-weight: 700;
+      --_typography---article-feed-heading-1--line-height: 116%;
+      --_typography---article-feed-heading-1--letter-spacing: -.024em;
+      --_typography---paragraph-bold--font-size: 1rem;
+      --_typography---paragraph-bold--line-height: 144%;
+      --_typography---paragraph-bold--letter-spacing: .004em;
+      --_typography---text-xs--font-size: .75rem;
+      --_typography---text-xs--font-weight: 400;
+      --_typography---text-xs--line-height: 132%;
+      --_typography---text-xs--letter-spacing: .01em;
+      --_typography---text-m--font-size: 1.125rem;
+      --_typography---text-m--font-weight: 600;
+      --_typography---text-m--line-height: 124%;
+      --_typography---text-m--letter-spacing: -.008em;
+      --_typography---text-xl--font-size: 2.5rem;
+      --_typography---text-xl--font-weight: 700;
+      --_typography---text-xl--line-height: 116%;
+      --_typography---text-xl--letter-spacing: -.02em;
+      --_typography---filter-label--font-size: .625rem;
+      --_typography---filter-label--line-height: 100%;
+      --_typography---filter-label--letter-spacing: .04em;
+      --_typography---main-nav-dropdown-link--letter-spacing: .004em;
+      --_typography---card-video-heading--font-size: 1.25rem;
+      --_typography---card-video-heading--font-weight: 700;
+      --_typography---card-video-heading--line-height: 116%;
+      --_typography---card-video-heading--letter-spacing: -.012em;
+      --_typography---form-label--font-size: .925rem;
+      --_typography---form-label--line-height: 100%;
+      --_typography---form-label--font-weight: 400;
+      --_typography---form-label--letter-spacing: 0em;
+
+      --bg: var(--primary--background-white);
+      --text: var(--primary--primary-black);
+      --muted: #6b7280;
+      --col-mandatory-all: #3b82f6;
+      --col-mandatory: #4ade80;
+      --col-elective: #fb923c;
+      --col-mixed: #facc15;
+
+      /* Zvýraznění specializací dle vybraných předmětů: AND = ve všech, OR = alespoň v jednom */
+      --col-subj-and: var(--primary--primary-blue);   /* zelená — specializace nabízí VŠECHNY vybrané předměty */
+      --col-subj-or: var(--primary--primary-red);   /* modrá — specializace nabízí ALESPOŇ JEDEN vybraný předmět */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--_typography---font-family--silka);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .page-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex: 1;
+      padding: var(--_spacing---40-px) var(--_spacing---20-px);
+      box-sizing: border-box;
+    }
+
+    .site-footer {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    h1 {
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---h1--font-size);
+      line-height: var(--_typography---h1--line-height);
+      font-weight: var(--_typography---h1--font-weight);
+      letter-spacing: var(--_typography---h1--letter-spacing);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    h1 span {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .instructions {
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: var(--_spacing---14-px) var(--_spacing---24-px);
+      border-radius: var(--_radius---radius-8-px);
+      margin-bottom: 16px;
+      color: var(--primary--primary-blue);
+      max-width: 1000px;
+      text-align: center;
+      font-size: var(--_typography---paragraph--font-size);
+      line-height: var(--_typography---paragraph--line-height);
+    }
+
+    /* Přepínátko pro stupně studia */
+    .filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: 6px;
+      border-radius: var(--_radius---radius-8-px);
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---btn-primary--font-size);
+      font-weight: 600;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      color: var(--primary--primary-black);
+    }
+
+    .filter-btn.active {
+      background: var(--primary--background-white);
+      color: var(--primary--primary-blue);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--_spacing---gap-20);
+      margin-bottom: 30px;
+      font-size: 0.85rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    #graph-container {
+      width: 100%;
+      height: 800px;
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    #graph-container.fullscreen {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+      z-index: 9999;
+      background: var(--bg) !important;
+      overflow: visible !important;
+    }
+
+    #btn-fullscreen-open {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--primary--background-white);
+      border: 1px solid var(--variables--blue-12);
+      color: var(--primary--primary-black);
+      padding: 8px 14px;
+      border-radius: var(--_radius---radius-8-px);
+      cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: 13px;
+      z-index: 20;
+      transition: background 0.2s;
+    }
+
+    #btn-fullscreen-open:hover {
+      background: #e5e7eb;
+    }
+
+    #btn-fullscreen-close {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 28px;
+      cursor: pointer;
+      display: none;
+      z-index: 20;
+      transition: color 0.2s;
+    }
+
+    #btn-fullscreen-close:hover {
+      color: var(--primary--primary-black);
+    }
+
+    .fullscreen #btn-fullscreen-open {
+      display: none;
+    }
+
+    .fullscreen #btn-fullscreen-close {
+      display: block;
+    }
+
+    .zoom-controls {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 20;
+    }
+
+    .zoom-controls button {
+      width: 34px;
+      height: 34px;
+      background: var(--primary--background-white);
+      border: 1px solid var(--variables--blue-12);
+      color: var(--primary--primary-black);
+      border-radius: var(--_radius---radius-8-px);
+      cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: 16px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .zoom-controls button:hover {
+      background: #e5e7eb;
+    }
+
+    svg {
+      cursor: grab;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    svg:active {
+      cursor: grabbing;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(15, 18, 25, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 14px 18px;
+      border-radius: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+      max-width: 280px;
+    }
+
+    .tooltip-title {
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .tooltip-desc {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      font-family: var(--_typography---font-family--silka);
+    }
+
+    .tooltip-meta {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      margin-top: 6px;
+      color: #111;
+    }
+
+    .node {
+      transition: opacity 0.3s ease;
+    }
+
+    .link {
+      stroke: rgba(0, 0, 0, 0.08);
+      stroke-width: 1px;
+      transition: stroke 0.3s, stroke-width 0.3s, stroke-opacity 0.3s, opacity 0.3s ease;
+    }
+
+    .node circle {
+      stroke: rgba(0, 0, 0, 0.1);
+      stroke-width: 1px;
+      transition: fill 0.3s, stroke 0.3s, filter 0.3s;
+      cursor: pointer;
+    }
+
+    .node text {
+      font-family: var(--_typography---font-family--silka);
+      pointer-events: none;
+      font-size: 11px;
+      fill: #374151;
+      font-weight: 500;
+    }
+
+    .node-spec text {
+      font-size: 12px;
+      font-weight: 700;
+      fill: var(--primary--primary-black);
+    }
+
+    .node-spec.selected circle {
+      stroke: var(--primary--primary-black);
+      stroke-width: 3px;
+      filter: drop-shadow(0 0 14px currentColor);
+    }
+
+    .node-spec.selected text {
+      font-weight: 800;
+      fill: var(--primary--primary-black);
+    }
+
+    .node-subj.highlighted circle {
+      stroke: var(--primary--primary-black);
+      stroke-width: 1.5px;
+    }
+
+    .node-subj.highlighted text {
+      fill: var(--primary--primary-black);
+      opacity: 1;
+      font-weight: 600;
+    }
+
+    /* OPRAVA 1: Dimmed prvky jsou průhledné kompletně a neschovají ostatní elementy za nimi */
+    .node-subj.dimmed {
+      opacity: 0.25 !important;
+    }
+
+    .node-subj.dimmed circle {
+      fill: #e5e7eb !important;
+      stroke: rgba(0, 0, 0, 0.02);
+      filter: none !important;
+    }
+
+    .link.highlighted {
+      stroke-width: 2px;
+      stroke-opacity: 0.8;
+    }
+
+    .link.dimmed {
+      stroke-opacity: 0.01;
+    }
+
+    /* --- Zvýraznění specializací z popoveru předmětu (nezávislé na "průniku" specializací) ---
+       AND (zelená) = specializace nabízí VŠECHNY vybrané předměty.
+       OR  (modrá)  = specializace nabízí ALESPOŇ JEDEN vybraný předmět, ale ne všechny. */
+    .node-spec.subj-emphasized-and circle {
+      stroke: var(--col-subj-and);
+      stroke-width: 3px;
+      filter: drop-shadow(0 0 14px currentColor);
+      color: var(--col-subj-and);
+    }
+
+    .node-spec.subj-emphasized-and text {
+      font-weight: 800;
+      fill: var(--col-subj-and);
+    }
+
+    .node-spec.subj-emphasized-or circle {
+      stroke: var(--col-subj-or);
+      stroke-width: 2.5px;
+      filter: drop-shadow(0 0 10px currentColor);
+      color: var(--col-subj-or);
+    }
+
+    .node-spec.subj-emphasized-or text {
+      font-weight: 700;
+      fill: var(--col-subj-or);
+    }
+
+    .node-subj.subj-source circle {
+      stroke: var(--col-subj-and);
+      stroke-width: 3px;
+    }
+
+    .node-subj.subj-source text {
+      fill: var(--col-subj-and);
+      font-weight: 700;
+    }
+
+    .link.subj-highlighted-and {
+      stroke: var(--col-subj-and);
+      stroke-width: 2px;
+      stroke-opacity: 0.9;
+    }
+
+    .link.subj-highlighted-or {
+      stroke: var(--col-subj-or);
+      stroke-width: 1.5px;
+      stroke-opacity: 0.6;
+    }
+
+    /* Zešednutí zbytku – zůstává klikatelné (žádné pointer-events: none) */
+    .node.subj-faded circle {
+      opacity: 0.35;
+    }
+
+    .node.subj-faded text {
+      opacity: 0.35;
+    }
+
+    #subj-highlight-panel {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 20;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #subj-highlight-panel.visible {
+      display: flex;
+    }
+
+    #btn-clear-subj-highlight {
+      background: var(--primary--background-white);
+      border: 1px solid var(--variables--blue-12);
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: var(--_radius---radius-8-px);
+      cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    #btn-clear-subj-highlight:hover {
+      background: var(--primary--background-grey);
+    }
+
+    #subj-highlight-legend {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--primary--background-white);
+      border: 1px solid var(--variables--blue-12);
+      border-radius: var(--_radius---radius-8-px);
+      padding: 6px 12px;
+      font-family: var(--_typography---font-family--silka);
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    #subj-highlight-legend .legend-swatch {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #subj-highlight-legend .legend-swatch .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    #subj-highlight-legend .legend-swatch.and .dot {
+      background: var(--col-subj-and);
+    }
+
+    #subj-highlight-legend .legend-swatch.or .dot {
+      background: var(--col-subj-or);
+    }
+
+    .node.filtered-out {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .link.filtered-out {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* --- Popover pro předmětové (subj) uzly --- */
+    .popover .popover-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .popover .subj-popover-close {
+      font-size: .7rem;
+    }
+
+    .subj-popover-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .subj-popover-link {
+      color: var(--primary--primary-blue, #003657);
+      text-decoration: none;
+      font-size: .875rem;
+    }
+
+    .subj-popover-link:hover {
+      text-decoration: underline;
+    }
+
+    .subj-popover-links .btn {
+      text-decoration: none;
+      border: none;
+    }
+
+    .subj-popover-links .btn-subj-sis {
+      background-color: var(--primary--primary-blue);
+      color: var(--primary--background-white);
+    }
+
+    .subj-popover-links .btn-subj-sis:hover {
+      background-color: var(--variables--blue-72);
+      color: var(--primary--background-white);
+    }
+
+    .subj-popover-links .btn-subj-wiki {
+      background-color: var(--primary--primary-red);
+      color: var(--primary--background-white);
+    }
+
+    .subj-popover-links .btn-subj-wiki:hover {
+      filter: brightness(0.9);
+      color: var(--primary--background-white);
+    }
+
+    .subj-popover-links .btn-subj-specs {
+      background-color: var(--primary--background-grey);
+      color: var(--primary--primary-black);
+      border: 1px solid var(--variables--blue-12);
+    }
+
+    .subj-popover-links .btn-subj-specs:hover {
+      background-color: #e5e7eb;
+    }
+
+    .subj-popover-links .btn-subj-specs.active {
+      background-color: var(--primary--primary-red);
+      color: var(--primary--background-white);
+      border-color: var(--primary--primary-red);
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="header-container">
+        <a href="/~smolad" class="header-logo">
+            <i class="bi bi-box-seam"></i> 
+            MFF UK Nástroje
+        </a>
+        <nav class="main-nav">
+            <a href="/~smolad">Průvodce prváka</a>
+            <a href="/~smolad/kalkulačka">Kalkulačka kreditů</a>
+            <a href="/~smolad/specializace">Mapa předmětů</a>
+        </nav>
+    </div>
+</header>
+  <div class="page-content">
+  <header>
+    <h1>Kompletní průniky <span>předmětů</span></h1>
+  </header>
+  <div class="instructions">Klikněte na <strong>jednu nebo více specializací</strong>. Mapa rozsvítí předměty, které
+    jsou v nich sdílené.</div>
+
+  <div class="filters">
+    <button class="filter-btn" data-filter="all">Všechny stupně</button>
+    <button class="filter-btn active" data-filter="bakalarske">Bakalářské</button>
+    <button class="filter-btn" data-filter="magisterske">Magisterské</button>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background: var(--col-mandatory-all);"></div><span>Společný povinný</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: var(--col-mandatory);"></div><span>Povinný</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: var(--col-elective);"></div><span>Povinně volitelný</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: var(--col-mixed);"></div><span>Smíšený</span>
+    </div>
+  </div>
+  <div id="graph-container">
+    <button id="btn-fullscreen-open">Celá obrazovka</button>
+    <button id="btn-fullscreen-close">✕</button>
+    <div id="subj-highlight-panel">
+      <button id="btn-clear-subj-highlight">Zrušit zvýraznění</button>
+      <div id="subj-highlight-legend">
+        <span class="legend-swatch and"><span class="dot"></span>ve všech vybraných předmětech (AND)</span>
+        <span class="legend-swatch or"><span class="dot"></span>alespoň v jednom vybraném předmětu (OR)</span>
+      </div>
+    </div>
+    <div class="zoom-controls">
+      <button id="btn-zoom-in" title="Přiblížit">+</button>
+      <button id="btn-zoom-out" title="Oddálit">−</button>
+      <button id="btn-zoom-reset" title="Výchozí zobrazení">⟲</button>
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+  </div>
+  </div>
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>MFF UK Studentské Nástroje</h4>
+            <p>Vytvořeno studenty pro studenty.</p>
+            <p>Nejedná se o oficiální stránky Matematicko-fyzikální fakulty UK.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-github"></i> Zdrojové kódy na GitHubu
+            </a>
+            <a href="https://discord.gg/7afJ9ES" target="_blank">
+                <i class="bi bi-discord"></i> Discord
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 MFF UK Studentské Nástroje. Žádná práva nevyhrazena.
+    </div>
+</footer>
+
+  <script>
+    const colMandatoryAll = "#3b82f6", colMandatory = "#4ade80", colElective = "#fb923c", colMixed = "#facc15";
+    const subjToSpecs = {};
+    let currentFilter = 'bakalarske';
+
+    Promise.all([
+      d3.json("nodes.json"),
+      d3.json("links.json")
+    ]).then(([nodes, links]) => {
+
+      const graphData = { "nodes": nodes, "links": links };
+
+      // OPRAVA 2: Bezpečné získání ID pro vytvoření mapy vazeb (odolné vůči mutacím D3)
+      graphData.links.forEach(l => {
+        const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+        const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+        if (!subjToSpecs[sourceId]) subjToSpecs[sourceId] = [];
+        subjToSpecs[sourceId].push(targetId);
+      });
+
+      const width = 1200, height = 900, cx = width / 2, cy = height / 2;
+      const radius = 300;
+      const specNodes = graphData.nodes.filter(n => n.group === 'spec');
+      const subjNodes = graphData.nodes.filter(n => n.group === 'subj');
+
+      specNodes.forEach((n, i) => {
+        const angle = (i / specNodes.length) * 2 * Math.PI - Math.PI / 2;
+        n.fx = cx + radius * Math.cos(angle);
+        n.fy = cy + radius * Math.sin(angle);
+      });
+
+      // Update the viewBox to match the new dimensions
+
+      subjNodes.forEach(n => {
+        if (n.course_type === 'mandatory' && n.shared_count === 7) n.baseColor = colMandatoryAll;
+        else if (n.course_type === 'mandatory') n.baseColor = colMandatory;
+        else if (n.course_type === 'elective') n.baseColor = colElective;
+        else n.baseColor = colMixed;
+      });
+
+      specNodes.forEach((n, i) => {
+        const angle = (i / specNodes.length) * 2 * Math.PI - Math.PI / 2;
+        n.fx = cx + radius * Math.cos(angle); n.fy = cy + radius * Math.sin(angle);
+      });
+
+      const svg = d3.select("#graph-container").append("svg").attr("viewBox", [0, 0, width, height]);
+
+      // Zoom/pan: veškerý obsah (linky i uzly) žije uvnitř <g class="zoom-layer">,
+      // na kterou aplikujeme transformaci ze zoom chování.
+      const zoomLayer = svg.append("g").attr("class", "zoom-layer");
+
+      const zoomBehavior = d3.zoom()
+        .scaleExtent([0.3, 8])
+        .on("zoom", (event) => {
+          zoomLayer.attr("transform", event.transform);
+          // Pokud je otevřený popover na uzlu předmětu, drž ho nad pohybujícím se kruhem
+          if (activeSubjPopover) activeSubjPopover.update();
+        });
+
+      svg.call(zoomBehavior);
+
+      const link = zoomLayer.append("g").selectAll("line").data(graphData.links).join("line").attr("class", "link").attr("id", d => {
+        const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+        const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+        return `link-${sourceId}-${targetId}`;
+      });
+
+      const node = zoomLayer.append("g").selectAll("g").data(graphData.nodes).join("g")
+        .attr("class", d => "node " + (d.group === 'spec' ? 'node-spec' : 'node-subj')).attr("id", d => "node-" + d.id);
+
+      node.append("circle").attr("r", d => d.radius).attr("fill", d => d.group === 'spec' ? d.color : d.baseColor)
+        .style("color", d => d.group === 'spec' ? d.color : d.baseColor);
+      node.filter(d => d.group === 'spec')
+        .append("text")
+        .attr("x", 0)
+        .attr("y", 32)
+        .attr("text-anchor", "middle")
+        .text(d => d.label)
+        .call(wrap, 110);
+      node.filter(d => d.group === 'subj').append("text").attr("dy", 4).attr("text-anchor", "middle").style("font-size", "8px").text(d => d.id);
+
+      const simulation = d3.forceSimulation(graphData.nodes)
+        .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(30).strength(0.1))
+        .force("charge", d3.forceManyBody().strength(d => d.group === 'spec' ? 0 : -25))
+        .force("collide", d3.forceCollide().radius(d => d.radius + 6).iterations(3))
+        .force("pullToSpecs", function (alpha) {
+          // Look ONLY at the links that are currently active in the physics engine
+          const activeLinks = simulation.force("link").links();
+
+          graphData.nodes.filter(d => d.group === 'subj').forEach(d => {
+            // Find active connections for this specific subject
+            const myLinks = activeLinks.filter(l => l.source.id === d.id || l.target.id === d.id);
+            if (myLinks.length === 0) return;
+
+            let targetX = 0, targetY = 0;
+            let activeSpecCount = 0;
+
+            myLinks.forEach(l => {
+              // Find the node on the other end of the link
+              const otherNode = l.source.id === d.id ? l.target : l.source;
+              if (otherNode.group === 'spec') {
+                targetX += otherNode.x;
+                targetY += otherNode.y;
+                activeSpecCount++;
+              }
+            });
+
+            if (activeSpecCount === 0) return;
+
+            targetX /= activeSpecCount;
+            targetY /= activeSpecCount;
+
+            // Center it perfectly if it is shared by all 7
+            if (activeSpecCount === 7) {
+              targetX = cx;
+              targetY = cy;
+            }
+
+            // Pull strength increased slightly to snap them into place faster
+            d.vx += (targetX - d.x) * alpha * 0.6;
+            d.vy += (targetY - d.y) * alpha * 0.6;
+          });
+        })
+        .on("tick", () => {
+          node.attr("transform", d => {
+            // Reduced padding to 20 so the expanded radius doesn't hit the walls
+            const padding = d.group === 'spec' ? 20 : 15;
+            d.x = Math.max(padding, Math.min(width - padding, d.x));
+            d.y = Math.max(padding, Math.min(height - padding - 15, d.y));
+            return `translate(${d.x},${d.y})`;
+          });
+          link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+
+          // Pokud je otevřený popover na uzlu předmětu, drž ho nad pohybujícím se kruhem
+          if (typeof activeSubjPopover !== "undefined" && activeSubjPopover) {
+            activeSubjPopover.update();
+          }
+        });
+
+      const tooltip = d3.select("#tooltip");
+      let selectedSpecs = new Set();
+
+      // Nezávislý stav: zvýraznění specializací spuštěné tlačítkem "Zobrazit specializace"
+      // v popoveru předmětu. Je aditivní (klik na další předmět přidává, nemaže) a
+      // nijak neovlivňuje / neni ovlivňováno selectedSpecs (průnik specializací).
+      let subjHighlightSpecsAnd = new Set();  // odvozeno: PRŮNIK (AND) specializací napříč subjHighlightSources
+      let subjHighlightSpecsOr = new Set();   // odvozeno: SJEDNOCENÍ (OR) minus AND — alespoň jeden, ne všechny
+      let subjHighlightSources = new Set();   // ID předmětů vybraných přes "Zobrazit specializace" (toggle)
+
+      // Spočítá průnik (AND) a sjednocení-minus-průnik (OR-only) specializací
+      // pro aktuálně vybrané zdrojové předměty.
+      function computeSubjHighlightIntersection() {
+        subjHighlightSpecsAnd.clear();
+        subjHighlightSpecsOr.clear();
+        if (subjHighlightSources.size === 0) return;
+
+        const sourceIds = Array.from(subjHighlightSources);
+        const specLists = sourceIds.map(id => subjToSpecs[id] || []);
+        const [first, ...rest] = specLists;
+
+        const union = new Set();
+        specLists.forEach(list => list.forEach(specId => union.add(specId)));
+
+        first.forEach(specId => {
+          if (rest.every(list => list.includes(specId))) {
+            subjHighlightSpecsAnd.add(specId);
+          }
+        });
+
+        union.forEach(specId => {
+          if (!subjHighlightSpecsAnd.has(specId)) {
+            subjHighlightSpecsOr.add(specId);
+          }
+        });
+      }
+
+      function updateSubjHighlights() {
+        const panel = document.getElementById("subj-highlight-panel");
+
+        computeSubjHighlightIntersection();
+
+        if (subjHighlightSources.size === 0) {
+          node.classed("subj-emphasized-and", false).classed("subj-emphasized-or", false)
+              .classed("subj-source", false).classed("subj-faded", false);
+          link.classed("subj-highlighted-and", false).classed("subj-highlighted-or", false);
+          panel.classList.remove("visible");
+          return;
+        }
+
+        panel.classList.add("visible");
+
+        // Zvýrazněné: vybrané zdrojové předměty + specializace v AND (zelená) / OR-only (modrá) skupině.
+        node.filter(d => d.group === 'spec').classed("subj-emphasized-and", d => subjHighlightSpecsAnd.has(d.id));
+        node.filter(d => d.group === 'spec').classed("subj-emphasized-or", d => subjHighlightSpecsOr.has(d.id));
+        node.filter(d => d.group === 'subj').classed("subj-source", d => subjHighlightSources.has(d.id));
+
+        // Vše ostatní lehce zešedne, ale zůstává klikatelné (žádné pointer-events: none).
+        node.filter(d => d.group === 'spec').classed("subj-faded", d => !subjHighlightSpecsAnd.has(d.id) && !subjHighlightSpecsOr.has(d.id));
+        node.filter(d => d.group === 'subj').classed("subj-faded", d => !subjHighlightSources.has(d.id));
+
+        link.classed("subj-highlighted-and", d => {
+          const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+          const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+          return subjHighlightSources.has(sourceId) && subjHighlightSpecsAnd.has(targetId);
+        });
+
+        link.classed("subj-highlighted-or", d => {
+          const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+          const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+          return subjHighlightSources.has(sourceId) && subjHighlightSpecsOr.has(targetId);
+        });
+      }
+
+      function clearSubjHighlights() {
+        subjHighlightSpecsAnd.clear();
+        subjHighlightSpecsOr.clear();
+        subjHighlightSources.clear();
+        updateSubjHighlights();
+      }
+      let activeSubjPopover = null;      // aktuálně otevřená Bootstrap Popover instance
+      let activeSubjPopoverNode = null;  // DOM element (kruh), na který je navázaná
+      let activeSubjPopoverD = null;     // datový uzel (d3 data) navázaného předmětu
+
+      function closeSubjPopover() {
+        if (activeSubjPopover) {
+          activeSubjPopover.dispose();
+          activeSubjPopover = null;
+          activeSubjPopoverNode = null;
+          activeSubjPopoverD = null;
+        }
+      }
+
+      function openSubjPopover(circleEl, d) {
+        // Klik znovu na stejný uzel popover zavře (toggle)
+        if (activeSubjPopoverNode === circleEl) {
+          closeSubjPopover();
+          return;
+        }
+        closeSubjPopover();
+
+        const isCuniUrl = `https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=${d.id}`;
+        const wikiMffUrl = `https://wiki.matfyz.cz/${d.id}`;
+        const isInSubjHighlight = subjHighlightSources.has(d.id);
+        const specsBtnLabel = isInSubjHighlight ? "Odebrat z výběru specializací" : "Zobrazit specializace";
+        // TODO: uprav odkazy/texty dle potřeby
+        const popoverHtml = `
+          <div class="subj-popover-links">
+            <a href="${isCuniUrl}" target="_blank" rel="noopener" class="subj-popover-link btn btn-subj-sis">SIS</a>
+            <a href="${wikiMffUrl}" target="_blank" rel="noopener" class="subj-popover-link btn btn-subj-wiki">WIKI</a>
+            <button type="button" class="subj-popover-link btn btn-subj-specs${isInSubjHighlight ? ' active' : ''}">${specsBtnLabel}</button>
+          </div>
+        `;
+
+        // Fullscreen fix: ve fullscreenu popover appendujeme přímo do #graph-container,
+        // aby zůstal nad ním (containerem s position:fixed a vysokým z-indexem).
+        // Mimo fullscreen necháváme "body", ať se v normálním layoutu nic neláme.
+        const graphContainerEl = document.getElementById("graph-container");
+        const popoverContainer = graphContainerEl.classList.contains("fullscreen") ? graphContainerEl : "body";
+
+        activeSubjPopover = new bootstrap.Popover(circleEl, {
+          container: popoverContainer,
+          html: true,
+          sanitize: false,
+          placement: "top",
+          trigger: "manual",
+          title: `${d.id} <button type="button" class="btn-close subj-popover-close" aria-label="Zavřít"></button>`,
+          content: popoverHtml,
+        });
+        activeSubjPopoverNode = circleEl;
+        activeSubjPopoverD = d;
+        activeSubjPopover.show();
+
+        // Napojení zavíracího křížku v hlavičce popoveru
+        const tipEl = activeSubjPopover.tip || document.querySelector(".popover.show");
+        if (tipEl) {
+          tipEl.querySelector(".subj-popover-close")?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            closeSubjPopover();
+          });
+
+          // Tlačítko "Zobrazit specializace" – toggle: přidá/odebere předmět z výběru.
+          // Zvýrazněné specializace = průnik specializací napříč všemi vybranými předměty.
+          // Nezasahuje do "průniku" specializací ovládaného klikem na uzly specializací (selectedSpecs).
+          tipEl.querySelector(".btn-subj-specs")?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (subjHighlightSources.has(d.id)) {
+              subjHighlightSources.delete(d.id);
+            } else {
+              subjHighlightSources.add(d.id);
+            }
+            updateSubjHighlights();
+            closeSubjPopover();
+          });
+        }
+      }
+
+      // Zavření popoveru klikem mimo popover a mimo uzel předmětu
+      document.addEventListener("click", (e) => {
+        if (!activeSubjPopover) return;
+        const tipEl = activeSubjPopover.tip || document.querySelector(".popover.show");
+        const clickedInsidePopover = tipEl && tipEl.contains(e.target);
+        const clickedOnOwnNode = activeSubjPopoverNode && activeSubjPopoverNode.contains(e.target);
+        if (!clickedInsidePopover && !clickedOnOwnNode) {
+          closeSubjPopover();
+        }
+      });
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          currentFilter = e.target.getAttribute('data-filter');
+          applyStudyFilter();
+        });
+      });
+
+      function applyStudyFilter() {
+        let activeNodes, activeLinks;
+
+        if (currentFilter === 'all') {
+          node.classed("filtered-out", false);
+          link.classed("filtered-out", false);
+
+          activeNodes = graphData.nodes;
+          activeLinks = graphData.links;
+        } else {
+          const matchingNodeIds = new Set();
+          graphData.nodes.forEach(n => {
+            if (n.study_type === currentFilter) {
+              matchingNodeIds.add(n.id);
+            }
+          });
+
+          const visibleNodeIds = new Set(matchingNodeIds);
+          const visibleLinks = new Set();
+
+          graphData.links.forEach(l => {
+            const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+            const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+
+            if (matchingNodeIds.has(sourceId) || matchingNodeIds.has(targetId)) {
+              visibleNodeIds.add(sourceId);
+              visibleNodeIds.add(targetId);
+              visibleLinks.add(l);
+            }
+          });
+
+          node.classed("filtered-out", d => !visibleNodeIds.has(d.id));
+          link.classed("filtered-out", d => !visibleLinks.has(d));
+
+          // Unlike before, ONLY include specializations that are actually connected to visible subjects
+          activeNodes = graphData.nodes.filter(n => visibleNodeIds.has(n.id));
+          activeLinks = Array.from(visibleLinks);
+        }
+
+        // --- 1. DYNAMIC CIRCLE RECALCULATION ---
+        const activeSpecs = activeNodes.filter(n => n.group === 'spec');
+        const radius = 300; // Keep this consistent with your initial layout
+
+        activeSpecs.forEach((n, i) => {
+          // Recalculate angles based ONLY on the remaining visible specializations
+          const angle = (i / activeSpecs.length) * 2 * Math.PI - Math.PI / 2;
+          // Overwriting fx and fy tells D3 to pull them to these new coordinates
+          n.fx = cx + radius * Math.cos(angle);
+          n.fy = cy + radius * Math.sin(angle);
+        });
+
+        // --- 2. RELEASE HIDDEN SPECS ---
+        // If a specialization is filtered out, we remove its fixed coordinates
+        // so it doesn't cause physics collisions as it fades away.
+        graphData.nodes.forEach(n => {
+          if (n.group === 'spec' && !activeSpecs.includes(n)) {
+            n.fx = null;
+            n.fy = null;
+          }
+        });
+
+        // Inject the newly filtered data into the physics engine
+        simulation.nodes(activeNodes);
+        simulation.force("link").links(activeLinks);
+
+        // Heat the simulation up fully. The specs will slide to their new circle positions, 
+        // and the custom 'pullToSpecs' force will elegantly drag the subjects right along with them.
+        simulation.alpha(0.5).restart();
+        updateHighlights();
+        updateSubjHighlights();
+      }
+
+      function updateHighlights() {
+        if (selectedSpecs.size === 0) {
+          node.classed("selected", false).classed("highlighted", false).classed("dimmed", false);
+          node.filter(d => d.group === 'subj').select("circle").attr("fill", d => d.baseColor).style("filter", d => `drop-shadow(0 0 6px ${d.baseColor}40)`);
+          link.classed("highlighted", false).classed("dimmed", false).style("stroke", null);
+          return;
+        }
+
+        node.filter(d => d.group === 'spec').classed("selected", d => selectedSpecs.has(d.id));
+
+        node.filter(d => d.group === 'subj').each(function (d) {
+          const parentSpecs = subjToSpecs[d.id] || [];
+          const matchesAllSelected = Array.from(selectedSpecs).every(specId => parentSpecs.includes(specId));
+          const elem = d3.select(this);
+          elem.classed("highlighted", matchesAllSelected).classed("dimmed", !matchesAllSelected);
+
+          if (matchesAllSelected) {
+            // OPRAVA 3: Přenesení elementu navrch, aby nezůstal schovaný za utlumenými
+            elem.raise();
+
+            let mCount = 0, eCount = 0;
+            Array.from(selectedSpecs).forEach(specId => {
+              if (d.mandatory_in && d.mandatory_in.includes(specId)) mCount++;
+              if (d.elective_in && d.elective_in.includes(specId)) eCount++;
+            });
+
+            let dynColor = d.baseColor;
+            if (d.course_type === 'mandatory' && d.shared_count === 7) {
+              dynColor = colMandatoryAll;
+            } else {
+              if (mCount > 0 && eCount === 0) dynColor = colMandatory;
+              else if (eCount > 0 && mCount === 0) dynColor = colElective;
+              else if (mCount > 0 && eCount > 0) dynColor = colMixed;
+            }
+
+            elem.select("circle").attr("fill", dynColor).style("filter", `drop-shadow(0 0 10px ${dynColor}80)`);
+          } else {
+            elem.select("circle").attr("fill", null).style("filter", "none");
+          }
+        });
+
+        link.each(function (d) {
+          const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+          const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+
+          const sourceNodeElem = d3.select("#node-" + sourceId);
+          const isSourceActive = sourceNodeElem.classed("highlighted");
+          const isTargetSelected = selectedSpecs.has(targetId);
+
+          if (isSourceActive && isTargetSelected) {
+            d3.select(this).classed("highlighted", true).classed("dimmed", false).style("stroke", d.target.color);
+          } else {
+            d3.select(this).classed("highlighted", false).classed("dimmed", true).style("stroke", null);
+          }
+        });
+
+        // Znovu vyzvedneme uzly specializací, aby byly nad linkami i předměty
+        node.filter(d => d.group === 'spec').raise();
+      }
+
+      node.filter(d => d.group === 'subj').select("circle").style("filter", d => `drop-shadow(0 0 6px ${d.baseColor}40)`);
+
+      node.on("click", (event, d) => {
+        if (d.group === 'spec') {
+          selectedSpecs.has(d.id) ? selectedSpecs.delete(d.id) : selectedSpecs.add(d.id);
+          updateHighlights();
+        } else if (d.group === 'subj') {
+          event.stopPropagation(); // aby to hned nespustilo globální "click mimo" listener
+          const circleEl = event.currentTarget.querySelector("circle");
+          openSubjPopover(circleEl, d);
+        }
+      });
+
+      node.on("mouseenter", (event, d) => {
+        if (d.group === 'subj') {
+          const title = d.label.replace(d.id, '').trim();
+          let badgeHtml = '';
+          if (d.course_type === 'mandatory' && d.shared_count === 7) badgeHtml = `<div class="badge" style="background:${colMandatoryAll};">Společný povinný</div>`;
+          else if (d.course_type === 'mandatory') badgeHtml = `<div class="badge" style="background:${colMandatory};">Povinný</div>`;
+          else if (d.course_type === 'elective') badgeHtml = `<div class="badge" style="background:${colElective};">Povinně volitelný</div>`;
+          else badgeHtml = `<div class="badge" style="background:${colMixed};">Smíšený</div>`;
+
+          tooltip.style("opacity", 1).html(`
+                   <div class="tooltip-title" style="color: ${d.baseColor}">${d.id}</div>
+                   <div class="tooltip-desc">${title}</div>${badgeHtml}
+                   <div class="tooltip-meta">Vyskytuje se v ${d.shared_count} specializacích</div>
+                 `);
+        } else {
+          const count = graphData.links.filter(l => {
+            const lTargetId = typeof l.target === 'object' ? l.target.id : l.target;
+            const lSourceId = typeof l.source === 'object' ? l.source.id : l.source;
+            const sourceNode = graphData.nodes.find(n => n.id === lSourceId);
+            const targetNode = graphData.nodes.find(n => n.id === lTargetId);
+
+            if (currentFilter === 'all') return lTargetId === d.id;
+            return lTargetId === d.id && (sourceNode.study_type === currentFilter || targetNode.study_type === currentFilter);
+          }).length;
+
+          tooltip.style("opacity", 1).html(`
+                   <div class="tooltip-title" style="color: ${d.color}">${d.label}</div>
+                   <div class="tooltip-desc">Kliknutím aktivujete / skryjete v průniku</div>
+                   <div class="tooltip-meta">Sdílených předmětů (ve filtru): ${count}</div>
+                 `);
+        }
+      });
+
+      node.on("mousemove", (event) => {
+        const container = document.getElementById("graph-container");
+        const rect = container.getBoundingClientRect();
+
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+
+        tooltip.style("left", x + "px");
+
+        if (y < 150) {
+          tooltip.style("top", (y + 24) + "px");
+          tooltip.style("transform", "translate(-50%, 0)");
+        } else {
+          tooltip.style("top", (y - 16) + "px");
+          tooltip.style("transform", "translate(-50%, -100%)");
+        }
+      });
+
+      node.on("mouseleave", () => tooltip.style("opacity", 0));
+
+      function wrap(text, width) {
+        text.each(function () {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            x = text.attr("x") || 0,
+            y = text.attr("y") || 0,
+            dy = parseFloat(text.attr("dy")) || 0,
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
+
+      const container = document.getElementById("graph-container");
+      const btnOpen = document.getElementById("btn-fullscreen-open");
+      const btnClose = document.getElementById("btn-fullscreen-close");
+
+      btnOpen.addEventListener("click", () => {
+        closeSubjPopover(); // popover je navázaný na konkrétní container (body/graph-container), při přepnutí fullscreenu ho proto zavřeme
+        container.classList.add("fullscreen");
+      });
+      btnClose.addEventListener("click", () => {
+        closeSubjPopover();
+        container.classList.remove("fullscreen");
+      });
+
+      // Ovládací tlačítka zoomu
+      document.getElementById("btn-zoom-in").addEventListener("click", () => {
+        svg.transition().duration(200).call(zoomBehavior.scaleBy, 1.4);
+      });
+      document.getElementById("btn-zoom-out").addEventListener("click", () => {
+        svg.transition().duration(200).call(zoomBehavior.scaleBy, 1 / 1.4);
+      });
+      document.getElementById("btn-zoom-reset").addEventListener("click", () => {
+        svg.transition().duration(300).call(zoomBehavior.transform, d3.zoomIdentity);
+      });
+
+      document.getElementById("btn-clear-subj-highlight").addEventListener("click", clearSubjHighlights);
+
+      applyStudyFilter();
+    }).catch(error => {
+      console.error("Chyba při asynchronním načítání dat z JSON souborů:", error);
+    });
+    
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <script>
+  // Automatické schování hlavičky při scrollu dolů, zobrazení při scrollu nahoru
+  (function () {
+      var header = document.querySelector('.site-header');
+      if (!header) return;
+      var lastScrollY = window.scrollY;
+      var ticking = false;
+      var threshold = 10; // minimální pohyb, aby to nebliklo u drobných scrollů
+
+      function onScroll() {
+          var currentScrollY = window.scrollY;
+
+          header.classList.toggle('site-header--scrolled', currentScrollY > 8);
+
+          if (Math.abs(currentScrollY - lastScrollY) > threshold) {
+              if (currentScrollY > lastScrollY && currentScrollY > header.offsetHeight) {
+                  header.classList.add('site-header--hidden'); // scroll dolů -> schovat
+              } else {
+                  header.classList.remove('site-header--hidden'); // scroll nahoru -> zobrazit
+              }
+              lastScrollY = currentScrollY;
+          }
+          ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+          if (!ticking) {
+              window.requestAnimationFrame(onScroll);
+              ticking = true;
+          }
+      }, { passive: true });
+  })();
+  </script>
+</body>
+
+</html>

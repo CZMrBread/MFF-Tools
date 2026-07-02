@@ -1,0 +1,6008 @@
+[
+ {
+  "id": "s1",
+  "label": "Obecná informatika",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#ff6b6b",
+  "radius": 40
+ },
+ {
+  "id": "s2",
+  "label": "Programování a vývoj software",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#4ecdc4",
+  "radius": 40
+ },
+ {
+  "id": "s3",
+  "label": "Systémové programování",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#ffd166",
+  "radius": 40
+ },
+ {
+  "id": "s4",
+  "label": "Webové a datově orientované programování",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#a8e6cf",
+  "radius": 40
+ },
+ {
+  "id": "s5",
+  "label": "Umělá inteligence",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#c3a6ff",
+  "radius": 40
+ },
+ {
+  "id": "s6",
+  "label": "Počítačová grafika a vidění",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#ff9a3c",
+  "radius": 40
+ },
+ {
+  "id": "s7",
+  "label": "Počítačová grafika, vidění a vývoj her",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#f76197",
+  "radius": 40
+ },
+ {
+  "id": "m1",
+  "label": "Diskrétní modely a algoritmy",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#ff9f6b",
+  "radius": 40
+ },
+ {
+  "id": "m2",
+  "label": "Teoretická informatika",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#6bc6ff",
+  "radius": 40
+ },
+ {
+  "id": "m3",
+  "label": "Softwarové a datové inženýrství",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#6bffbf",
+  "radius": 40
+ },
+ {
+  "id": "m4",
+  "label": "Softwarové systémy",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#ff6b6b",
+  "radius": 40
+ },
+ {
+  "id": "m5",
+  "label": "Jazykové technologie a počítačová lingvistika",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#ffdf6b",
+  "radius": 40
+ },
+ {
+  "id": "m6",
+  "label": "Umělá inteligence",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#cb6bff",
+  "radius": 40
+ },
+ {
+  "id": "m7",
+  "label": "Vizuální výpočty a vývoj počítačových her",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#6beeff",
+  "radius": 40
+ },
+ {
+  "id": "NAFF003",
+  "label": "NAFF003 Game Studies",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NAIL002",
+  "label": "NAIL002 Neuronové sítě",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 8,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL004",
+  "label": "NAIL004 Seminář z umělé inteligence 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL013",
+  "label": "NAIL013 Aplikace teorie neuronových sítí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL015",
+  "label": "NAIL015 Implementace neuronových sítí 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL021",
+  "label": "NAIL021 Booleovské funkce a jejich aplikace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1,
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL025",
+  "label": "NAIL025 Evoluční algoritmy 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 2,
+   "m6": 1,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL028",
+  "label": "NAIL028 Úvod do robotiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s3",
+   "s5",
+   "s6",
+   "s7",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s3": 4,
+   "s5": 1,
+   "s6": 0,
+   "s7": 0,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL029",
+  "label": "NAIL029 Strojové učení",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL052",
+  "label": "NAIL052 Seminář z umělé inteligence 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL060",
+  "label": "NAIL060 Implementace neuronových sítí 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL061",
+  "label": "NAIL061 Seminář z mobilní robotiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL062",
+  "label": "NAIL062 Výroková a predikátová logika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NAIL063",
+  "label": "NAIL063 Teorie množin",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NAIL065",
+  "label": "NAIL065 Evoluční robotika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL069",
+  "label": "NAIL069 Umělá inteligence 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m6"
+  ],
+  "elective_in": [
+   "m5",
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m5": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NAIL070",
+  "label": "NAIL070 Umělá inteligence 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m6"
+  ],
+  "elective_in": [
+   "m5",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NAIL071",
+  "label": "NAIL071 Plánování a rozvrhování",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 1,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL073",
+  "label": "NAIL073 Robot 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL074",
+  "label": "NAIL074 Robot 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL076",
+  "label": "NAIL076 Logické programování 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": "doporucene",
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL077",
+  "label": "NAIL077 Logické programování 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL078",
+  "label": "NAIL078 Lambda-kalkulus a funkcionální programování 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL079",
+  "label": "NAIL079 Lambda-kalkulus a funkcionální programování 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL086",
+  "label": "NAIL086 Evoluční algoritmy 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL087",
+  "label": "NAIL087 Úvod do výpočetní neurovědy I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6",
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m6": 2,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL088",
+  "label": "NAIL088 Úvod do výpočetní neurovědy II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL094",
+  "label": "NAIL094 Rozhodovací procedury a SAT/SMT řešiče",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m4",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m2": 1,
+   "m4": 1,
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL099",
+  "label": "NAIL099 Seminář strojového učení a modelování 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL101",
+  "label": "NAIL101 Pravděpodobnostní robotika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL104",
+  "label": "NAIL104 Pravděpodobnostní grafické modely",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5",
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2,
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL105",
+  "label": "NAIL105 Internet a klasifikační metody",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL106",
+  "label": "NAIL106 Multiagentní systémy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NAIL107",
+  "label": "NAIL107 Strojové učení v bioinformatice",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL108",
+  "label": "NAIL108 Mobilní robotika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 1,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL109",
+  "label": "NAIL109 Aplikace metod výpočetní inteligence",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL116",
+  "label": "NAIL116 Sociální sítě a jejich analýza",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m2": "doporucene",
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL119",
+  "label": "NAIL119 Přírodou inspirované algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s5",
+   "s6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s5": 1,
+   "s6": 0
+  }
+ },
+ {
+  "id": "NAIL120",
+  "label": "NAIL120 Úvod do umělé inteligence",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s5"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 5,
+   "s3": 4,
+   "s4": 3,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NAIL121",
+  "label": "NAIL121 Seminář dobývání znalostí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s5"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s4": 3,
+   "s5": 1
+  }
+ },
+ {
+  "id": "NAIL124",
+  "label": "NAIL124 Cvičení z teorie množin",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NAIL126",
+  "label": "NAIL126 Základy robotiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NAIL131",
+  "label": "NAIL131 Ethics of AI +",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NAIL132",
+  "label": "NAIL132 Umělé bytosti 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL133",
+  "label": "NAIL133 Umělé bytosti",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6",
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NAIL135",
+  "label": "NAIL135 Diplomový seminář pro vývoj počítačových her",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NAIL138",
+  "label": "NAIL138 Neuronové sítě, strojové učení a náhodnost",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NAIL139",
+  "label": "NAIL139 Umělá inteligence pro počítačové hry",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD001",
+  "label": "NCGD001 Vývoj počítačových her 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD003",
+  "label": "NCGD003 Programování herních mechanik",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s7",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s7": 0,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD005",
+  "label": "NCGD005 Konstrukce herního zážitku",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD006",
+  "label": "NCGD006 Praktikum z vývoje počítačových her v limitovaném čase",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s7",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s7": 0,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NCGD007",
+  "label": "NCGD007 Praktikum z herního vývoje v nativním kódu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD008",
+  "label": "NCGD008 Praktikum z herního vývoje s řízeným kódem",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD010",
+  "label": "NCGD010 Úvod do herního designu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD011",
+  "label": "NCGD011 Procedurální generování obsahu počítačových her",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NCGD015",
+  "label": "NCGD015 Kapitoly z virtuální reality",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NDBI007",
+  "label": "NDBI007 Principy organizace dat",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s1": 3,
+   "s2": 5,
+   "s4": 2
+  }
+ },
+ {
+  "id": "NDBI013",
+  "label": "NDBI013 Administrace Oracle",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s4": 2
+  }
+ },
+ {
+  "id": "NDBI021",
+  "label": "NDBI021 Uživatelské preference a pokročilé metody doporučování",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": 1
+  }
+ },
+ {
+  "id": "NDBI023",
+  "label": "NDBI023 Dobývání znalostí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m3": 1,
+   "m6": 1
+  }
+ },
+ {
+  "id": "NDBI025",
+  "label": "NDBI025 Databázové systémy",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NDBI026",
+  "label": "NDBI026 Vývoj databázových aplikací",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 4
+ },
+ {
+  "id": "NDBI034",
+  "label": "NDBI034 Vyhledávání multimediálního obsahu na webu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NDBI038",
+  "label": "NDBI038 Vyhledávání na webu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s4": 2
+  }
+ },
+ {
+  "id": "NDBI040",
+  "label": "NDBI040 Moderní databázové systémy",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s4"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "m3",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 5,
+   "m3": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NDBI042",
+  "label": "NDBI042 Techniky vizualizace dat",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": 1,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NDBI045",
+  "label": "NDBI045 Vyhledávání ve videu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": 3,
+   "s5": 3,
+   "s6": 0,
+   "s7": 0,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NDBI046",
+  "label": "NDBI046 Úvod do datového inženýrství",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NDBI048",
+  "label": "NDBI048 Data Science",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m3": 1
+  }
+ },
+ {
+  "id": "NDBI049",
+  "label": "NDBI049 Dotazovací jazyky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 1
+  }
+ },
+ {
+  "id": "NDMI002",
+  "label": "NDMI002 Diskrétní matematika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NDMI007",
+  "label": "NDMI007 Kombinatorické algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m2": "doporucene"
+  }
+ },
+ {
+  "id": "NDMI009",
+  "label": "NDMI009 Základy kombinatorické a výpočetní geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s6",
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1,
+   "s6": 0,
+   "m1": "doporucene"
+  }
+ },
+ {
+  "id": "NDMI010",
+  "label": "NDMI010 Grafové algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "m1",
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 1,
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI011",
+  "label": "NDMI011 Kombinatorika a grafy 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NDMI012",
+  "label": "NDMI012 Kombinatorika a grafy 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NDMI013",
+  "label": "NDMI013 Kombinatorická a výpočetní geometrie 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI014",
+  "label": "NDMI014 Topologické metody v kombinatorice",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI015",
+  "label": "NDMI015 Kombinatorické počítání",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI018",
+  "label": "NDMI018 Aproximační a online algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI025",
+  "label": "NDMI025 Pravděpodobnostní algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI028",
+  "label": "NDMI028 Aplikace lineární algebry v kombinatorice",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI036",
+  "label": "NDMI036 Kombinatorické struktury",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI037",
+  "label": "NDMI037 Geometrické reprezentace grafů 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI045",
+  "label": "NDMI045 Analytická a kombinatorická teorie čísel",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI055",
+  "label": "NDMI055 Vybrané kapitoly z kombinatoriky 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI056",
+  "label": "NDMI056 Vybrané kapitoly z kombinatoriky 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI059",
+  "label": "NDMI059 Grafové minory a stromové rozklady",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI060",
+  "label": "NDMI060 Barevnost grafů a kombinatorických struktur",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI064",
+  "label": "NDMI064 Aplikovaná diskrétní matematika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI065",
+  "label": "NDMI065 Teorie matroidů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI066",
+  "label": "NDMI066 Algebraická teorie čísel",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI067",
+  "label": "NDMI067 Toky, cesty a řezy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI073",
+  "label": "NDMI073 Kombinatorika a grafy 3",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 2
+  }
+ },
+ {
+  "id": "NDMI074",
+  "label": "NDMI074 Algoritmy a jejich implementace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI077",
+  "label": "NDMI077 Algoritmy pro specifické třídy grafů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI084",
+  "label": "NDMI084 Úvod do aproximačních a pravděpodobnostních algoritmů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NDMI087",
+  "label": "NDMI087 Analytická kombinatorika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NDMI088",
+  "label": "NDMI088 Grafové algoritmy 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI093",
+  "label": "NDMI093 Seminář z algoritmů a datových struktur",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NDMI098",
+  "label": "NDMI098 Algoritmická teorie her",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s5",
+   "s6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1,
+   "s5": 1,
+   "s6": 0
+  }
+ },
+ {
+  "id": "NDMI100",
+  "label": "NDMI100 Úvod do kryptografie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3"
+  ],
+  "elective_in": [
+   "s1",
+   "s2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 1,
+   "s2": 5
+  }
+ },
+ {
+  "id": "NDMI110",
+  "label": "NDMI110 Grafy a sítě",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NDMI113",
+  "label": "NDMI113 Extremal combinatorics",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NJAZ091",
+  "label": "NJAZ091 Anglický jazyk — zkouška pro bakaláře",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 1
+ },
+ {
+  "id": "NMAG337",
+  "label": "NMAG337 Úvod do teorie grup",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NMAG536",
+  "label": "NMAG536 Důkazová složitost a P vs. NP problém",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NMAI040",
+  "label": "NMAI040 Úvod do teorie čísel",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NMAI042",
+  "label": "NMAI042 Numerická matematika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NMAI054",
+  "label": "NMAI054 Matematická analýza 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NMAI055",
+  "label": "NMAI055 Matematická analýza 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s1",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s2": 5,
+   "s3": 4,
+   "s4": 3
+  }
+ },
+ {
+  "id": "NMAI056",
+  "label": "NMAI056 Matematická analýza 3",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NMAI057",
+  "label": "NMAI057 Lineární algebra 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NMAI058",
+  "label": "NMAI058 Lineární algebra 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NMAI059",
+  "label": "NMAI059 Pravděpodobnost a statistika 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NMAI060",
+  "label": "NMAI060 Pravděpodobnostní metody",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m6",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1,
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NMAI061",
+  "label": "NMAI061 Metody matematické statistiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NMAI062",
+  "label": "NMAI062 Algebra 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NMAI064",
+  "label": "NMAI064 Matematické struktury",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NMAI065",
+  "label": "NMAI065 Základy teorie kategorií pro informatiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NMAI066",
+  "label": "NMAI066 Topologické a algebraické metody",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NMAI067",
+  "label": "NMAI067 Logika v informatice",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1,
+   "m6": 2
+  }
+ },
+ {
+  "id": "NMAI071",
+  "label": "NMAI071 Matematika++",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NMAI073",
+  "label": "NMAI073 Pravděpodobnost a statistika 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1,
+   "s5": 3,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NMAI076",
+  "label": "NMAI076 Algebra 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s1": 1
+  }
+ },
+ {
+  "id": "NMMA901",
+  "label": "NMMA901 Úvod do komplexní analýzy (O)",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NMMA931",
+  "label": "NMMA931 Úvod do funkcionální analýzy (O)",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 8,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NOPT008",
+  "label": "NOPT008 Algoritmy nelineární optimalizace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NOPT016",
+  "label": "NOPT016 Celočíselné programování",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NOPT017",
+  "label": "NOPT017 Vícekriteriální optimalizace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NOPT018",
+  "label": "NOPT018 Základy nelineární optimalizace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 2
+  }
+ },
+ {
+  "id": "NOPT021",
+  "label": "NOPT021 Algoritmy moderní teorie her",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 2
+  }
+ },
+ {
+  "id": "NOPT034",
+  "label": "NOPT034 Matematické programování a polyedrální kombinatorika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NOPT042",
+  "label": "NOPT042 Programování s omezujícími podmínkami",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": "doporucene",
+   "m6": 1
+  }
+ },
+ {
+  "id": "NOPT046",
+  "label": "NOPT046 Diskrétní a spojitá optimalizace",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 1,
+   "s5": 3,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NOPT048",
+  "label": "NOPT048 Lineární programování a kombinatorická optimalizace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NOPT051",
+  "label": "NOPT051 Intervalové metody",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NOPT059",
+  "label": "NOPT059 Optimalizace velkých problémů: přesné metody",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NOPT061",
+  "label": "NOPT061 Optimalizace velkých problémů: metaheuristiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NPFL006",
+  "label": "NPFL006 Úvod do formální lingvistiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL012",
+  "label": "NPFL012 Úvod do počítačové lingvistiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 3,
+   "s5": 1
+  }
+ },
+ {
+  "id": "NPFL038",
+  "label": "NPFL038 Základy rozpoznávání a generování mluvené řeči",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL063",
+  "label": "NPFL063 Úvod do obecné lingvistiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5"
+  ],
+  "elective_in": [],
+  "credits": 4
+ },
+ {
+  "id": "NPFL068",
+  "label": "NPFL068 Statistické metody zpracování přirozených jazyků II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL070",
+  "label": "NPFL070 Zdroje jazykových dat",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL075",
+  "label": "NPFL075 Závislostní gramatiky a korpusy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL079",
+  "label": "NPFL079 Algoritmy rozpoznávání mluvené řeči",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL083",
+  "label": "NPFL083 Lingvistické teorie a gramatické formalismy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL087",
+  "label": "NPFL087 Statistický strojový překlad",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL093",
+  "label": "NPFL093 Aplikace NLP",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL094",
+  "label": "NPFL094 Morfologická a syntaktická analýza",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL095",
+  "label": "NPFL095 Moderní metody v počítačové lingvistice",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPFL097",
+  "label": "NPFL097 Neřízené strojové učení v NLP",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPFL099",
+  "label": "NPFL099 Statistické dialogové systémy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL101",
+  "label": "NPFL101 Soutěžní strojový překlad",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s5": 1
+  }
+ },
+ {
+  "id": "NPFL103",
+  "label": "NPFL103 Vyhledávání informací",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m5": 1,
+   "m6": 1
+  }
+ },
+ {
+  "id": "NPFL123",
+  "label": "NPFL123 Dialogové systémy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s5": 1
+  }
+ },
+ {
+  "id": "NPFL124",
+  "label": "NPFL124 Zpracování přirozeného jazyka",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s5"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s1": 3,
+   "s5": 1
+  }
+ },
+ {
+  "id": "NPFL125",
+  "label": "NPFL125 Základy jazykových technologií",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s5": 1
+  }
+ },
+ {
+  "id": "NPFL128",
+  "label": "NPFL128 Jazykové technologie v praxi",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m5": 1
+  }
+ },
+ {
+  "id": "NPFL129",
+  "label": "NPFL129 Úvod do strojového učení v Pythonu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "m3"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 5,
+   "s3": 4,
+   "s4": 3,
+   "s5": 1,
+   "m3": 2
+  }
+ },
+ {
+  "id": "NPFL138",
+  "label": "NPFL138 Hluboké učení",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m5"
+  ],
+  "elective_in": [
+   "m3",
+   "m6",
+   "m7"
+  ],
+  "credits": 8,
+  "pv_group": {
+   "m3": 1,
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPFL139",
+  "label": "NPFL139 Hluboké zpětnovazební učení",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5",
+   "m6"
+  ],
+  "credits": 8,
+  "pv_group": {
+   "m5": 2,
+   "m6": 2
+  }
+ },
+ {
+  "id": "NPFL140",
+  "label": "NPFL140 Velké jazykové modely",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPFL141",
+  "label": "NPFL141 Lingvistika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPFL147",
+  "label": "NPFL147 Statistické metody zpracování přirozených jazyků 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m5"
+  ],
+  "elective_in": [
+   "m6"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m6": 1
+  }
+ },
+ {
+  "id": "NPFL149",
+  "label": "NPFL149 Informační struktura věty a výstavba diskurzu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPFL150",
+  "label": "NPFL150 Variabilita jazyků v čase a prostoru",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m5"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPGR001",
+  "label": "NPGR001 3D počítačové vidění",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m6",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR002",
+  "label": "NPGR002 Digitální zpracování obrazu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "m6"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s1": 3,
+   "s3": 4,
+   "s4": 3,
+   "s5": 1,
+   "s6": 0,
+   "s7": 0,
+   "m6": 2
+  }
+ },
+ {
+  "id": "NPGR003",
+  "label": "NPGR003 Základy počítačové grafiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s6",
+   "s7"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 5,
+   "s3": 4
+  }
+ },
+ {
+  "id": "NPGR004",
+  "label": "NPGR004 Fotorealistická grafika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s6",
+   "s7",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s6": 0,
+   "s7": 0,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPGR005",
+  "label": "NPGR005 Seminář z počítačové grafiky a vidění",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPGR010",
+  "label": "NPGR010 Pokročilá 3D grafika pro film a hry",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR013",
+  "label": "NPGR013 Speciální funkce a transformace ve zpracování obrazu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR016",
+  "label": "NPGR016 Aplikovaná výpočetní geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR019",
+  "label": "NPGR019 Realtime grafika na GPU",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s3",
+   "s6",
+   "s7",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s3": 4,
+   "s6": 0,
+   "s7": 0,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPGR020",
+  "label": "NPGR020 Geometrie pro počítačovou grafiku",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s6",
+   "s7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NPGR021",
+  "label": "NPGR021 Geometrické modelování",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR022",
+  "label": "NPGR022 Speciální seminář ze zpracování obrazu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPGR024",
+  "label": "NPGR024 Seminář z vědecké práce",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR025",
+  "label": "NPGR025 Introduction to Colour Science",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s6",
+   "s7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NPGR026",
+  "label": "NPGR026 Predictive Image Synthesis Technologies",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR029",
+  "label": "NPGR029 Variační metody ve zpracování obrazu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR030",
+  "label": "NPGR030 Optika pro počítačovou grafiku",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPGR033",
+  "label": "NPGR033 Počítačová grafika pro vývoj her",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR035",
+  "label": "NPGR035 Strojové učení v počítačovém vidění",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NPGR036",
+  "label": "NPGR036 Počítačové vidění",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "m5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s3": 4,
+   "s4": 3,
+   "s5": 1,
+   "s6": 0,
+   "s7": 0,
+   "m5": 2
+  }
+ },
+ {
+  "id": "NPGR037",
+  "label": "NPGR037 Praktikum z Matlabu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s6",
+   "s7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NPGR038",
+  "label": "NPGR038 Základy vývoje počítačových her",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s5",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 5,
+   "s3": 4,
+   "s5": 3,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NPGR041",
+  "label": "NPGR041 Vybrané kapitoly z počítačového vidění",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPGR042",
+  "label": "NPGR042 Appearance Modeling and Shading",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG005",
+  "label": "NPRG005 Neprocedurální programování",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s1",
+   "s5"
+  ],
+  "elective_in": [
+   "s2",
+   "s3",
+   "s4",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s2": 5,
+   "s3": 4,
+   "s4": 1,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NPRG013",
+  "label": "NPRG013 Programování v jazyce Java",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 2,
+   "s2": 1,
+   "s3": 1,
+   "s4": 1,
+   "s5": 2
+  }
+ },
+ {
+  "id": "NPRG014",
+  "label": "NPRG014 Koncepty moderních programovacích jazyků",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": 1,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NPRG021",
+  "label": "NPRG021 Pokročilé programování v jazyce Java",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "m4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 2,
+   "s3": 2,
+   "s4": 1,
+   "s5": 3,
+   "m4": 2
+  }
+ },
+ {
+  "id": "NPRG024",
+  "label": "NPRG024 Návrhové vzory",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s2",
+   "s3",
+   "m3"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s2": 3,
+   "s3": 3,
+   "m3": 1
+  }
+ },
+ {
+  "id": "NPRG030",
+  "label": "NPRG030 Programování 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NPRG031",
+  "label": "NPRG031 Programování 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NPRG035",
+  "label": "NPRG035 Programování v jazyce C#",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s6",
+   "s7"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 2,
+   "s2": 1,
+   "s3": 1,
+   "s4": 1,
+   "s5": 2
+  }
+ },
+ {
+  "id": "NPRG036",
+  "label": "NPRG036 Datové formáty",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s4"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 3,
+   "s5": 3
+  }
+ },
+ {
+  "id": "NPRG037",
+  "label": "NPRG037 Programování mikrokontrolerů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s3",
+   "s5",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s3": 4,
+   "s5": 3,
+   "m6": 2
+  }
+ },
+ {
+  "id": "NPRG038",
+  "label": "NPRG038 Pokročilé programování v jazyce C#",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "m4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 2,
+   "s3": 2,
+   "s4": 1,
+   "s5": 3,
+   "s6": 0,
+   "s7": 0,
+   "m4": 2
+  }
+ },
+ {
+  "id": "NPRG041",
+  "label": "NPRG041 Programování v C++",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s2",
+   "s3",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [
+   "s1",
+   "s4",
+   "s5"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 2,
+   "s4": 1,
+   "s5": 2
+  }
+ },
+ {
+  "id": "NPRG042",
+  "label": "NPRG042 Programování v paralelním prostředí",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 9,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "s1": 3,
+   "s2": 4,
+   "s5": 3,
+   "s6": 0,
+   "s7": 0,
+   "m3": 1,
+   "m4": 2,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPRG043",
+  "label": "NPRG043 Doporučené postupy v programování",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s2"
+  ],
+  "elective_in": [
+   "s3",
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s3": 3,
+   "m3": 1,
+   "m4": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG045",
+  "label": "NPRG045 Ročníkový projekt",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 4
+ },
+ {
+  "id": "NPRG051",
+  "label": "NPRG051 Pokročilé programování v C++",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "m4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s2": 2,
+   "s3": 2,
+   "s4": 1,
+   "s5": 3,
+   "s6": 0,
+   "s7": 0,
+   "m4": 2
+  }
+ },
+ {
+  "id": "NPRG054",
+  "label": "NPRG054 Vývoj vysoce výkonného software",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s6",
+   "s7",
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "s1": 3,
+   "s2": 4,
+   "s3": 4,
+   "s6": 0,
+   "s7": 0,
+   "m3": 2,
+   "m4": 2,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPRG056",
+  "label": "NPRG056 Programování mobilních zařízení",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s2",
+   "s4",
+   "m4",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s2": 2,
+   "s4": 2,
+   "m4": 2,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPRG058",
+  "label": "NPRG058 Pokročilé programování v paralelním prostředí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG062",
+  "label": "NPRG062 Algoritmizace",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 4
+ },
+ {
+  "id": "NPRG069",
+  "label": "NPRG069 Softwarový projekt",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 12,
+  "pv_group": {
+   "m3": 0,
+   "m4": 3,
+   "m5": 2,
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG070",
+  "label": "NPRG070 Výzkumný projekt",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 9,
+  "pv_group": {
+   "m3": 0,
+   "m4": 3,
+   "m5": 2,
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG071",
+  "label": "NPRG071 Firemní projekt",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m3": 0,
+   "m4": 3,
+   "m5": 2,
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG072",
+  "label": "NPRG072 Zvýšený rozsah projektu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m6",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 0,
+   "m6": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NPRG075",
+  "label": "NPRG075 Design programovacích jazyků",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NPRG076",
+  "label": "NPRG076 Virtualní stroje a běhová prostředí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NPRG077",
+  "label": "NPRG077 Napište si vlastní programovací mini-systém(y)!",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NPRG078",
+  "label": "NPRG078 Softwarový projekt II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPRG079",
+  "label": "NPRG079 Výzkumný projekt II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPRG080",
+  "label": "NPRG080 Firemní projekt II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NPRG084",
+  "label": "NPRG084 Principy programovacích jazyků",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWE001",
+  "label": "NSWE001 Vestavěné systémy a systémy reálného času",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4",
+   "m6"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m4": 1,
+   "m6": 1
+  }
+ },
+ {
+  "id": "NSWI026",
+  "label": "NSWI026 Praktické aspekty softwarového inženýrství",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m3": 1,
+   "m4": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NSWI035",
+  "label": "NSWI035 Principy distribuovaných systémů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1,
+   "m6": 1
+  }
+ },
+ {
+  "id": "NSWI041",
+  "label": "NSWI041 Úvod do softwarového inženýrství",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s2"
+  ],
+  "elective_in": [
+   "s3",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s3": 3,
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NSWI054",
+  "label": "NSWI054 Softwarové inženýrství pro spolehlivé systémy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s3",
+   "m4",
+   "m6"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s3": 3,
+   "m4": 1,
+   "m6": 2
+  }
+ },
+ {
+  "id": "NSWI057",
+  "label": "NSWI057 Výběrový seminář z distribuovaných a komponentových systémů I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI071",
+  "label": "NSWI071 Ochrana informací 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI072",
+  "label": "NSWI072 Algoritmy komprese dat",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m3",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1,
+   "m3": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NSWI080",
+  "label": "NSWI080 Middleware",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI089",
+  "label": "NSWI089 Ochrana informací 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI090",
+  "label": "NSWI090 Počítačové sítě",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 3,
+   "s2": 3,
+   "s4": 2
+  }
+ },
+ {
+  "id": "NSWI098",
+  "label": "NSWI098 Principy překladačů",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "m4"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "s1": 3,
+   "s2": 4,
+   "m4": 2
+  }
+ },
+ {
+  "id": "NSWI101",
+  "label": "NSWI101 Modely a verifikace chování systémů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI106",
+  "label": "NSWI106 Administrace Linuxu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s3",
+   "m4"
+  ],
+  "credits": 6,
+  "pv_group": {
+   "s3": 4,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI109",
+  "label": "NSWI109 Konstrukce překladačů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI120",
+  "label": "NSWI120 Principy počítačů",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 3
+ },
+ {
+  "id": "NSWI126",
+  "label": "NSWI126 Pokročilé nástroje pro vývoj a monitorování software",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m3": 1,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI130",
+  "label": "NSWI130 Architektury softwarových systémů",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s2",
+   "s3",
+   "s4",
+   "m3",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s2": 3,
+   "s3": 3,
+   "s4": 2,
+   "m3": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NSWI131",
+  "label": "NSWI131 Vyhodnocování výkonnosti počítačových systémů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NSWI132",
+  "label": "NSWI132 Analýza programů a verifikace kódu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI133",
+  "label": "NSWI133 Firemní semináře",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI141",
+  "label": "NSWI141 Úvod do počítačových sítí",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 3
+ },
+ {
+  "id": "NSWI142",
+  "label": "NSWI142 Programování webových aplikací",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s2",
+   "s4"
+  ],
+  "elective_in": [
+   "s1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3
+  }
+ },
+ {
+  "id": "NSWI143",
+  "label": "NSWI143 Architektura počítačů",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": 3,
+   "s2": 3,
+   "m4": 2
+  }
+ },
+ {
+  "id": "NSWI144",
+  "label": "NSWI144 Data na Webu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m3": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NSWI149",
+  "label": "NSWI149 Softwarové inženýrství v praxi",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 2
+  }
+ },
+ {
+  "id": "NSWI150",
+  "label": "NSWI150 Virtualizace a cloud computing",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 1,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI151",
+  "label": "NSWI151 Administrace virtualizační infrastruktury",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI152",
+  "label": "NSWI152 Vývoj cloudových aplikací",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m3": 2,
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI153",
+  "label": "NSWI153 Pokročilé programování webových aplikací",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 5,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s2",
+   "s4",
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s2": 2,
+   "s4": 1,
+   "m3": 1,
+   "m4": 2,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NSWI154",
+  "label": "NSWI154 Nástroje pro vývoj software",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s2"
+  ],
+  "elective_in": [
+   "s3"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s3": 3
+  }
+ },
+ {
+  "id": "NSWI158",
+  "label": "NSWI158 Seminář z počítačových her",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m7": "doporucene"
+  }
+ },
+ {
+  "id": "NSWI161",
+  "label": "NSWI161 Pokročilé operační systémy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI164",
+  "label": "NSWI164 Modelem řízený vývoj",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m4": 1
+  }
+ },
+ {
+  "id": "NSWI166",
+  "label": "NSWI166 Úvod do doporučovacích systémů a uživatelských preferencí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "m3"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s4": 3,
+   "m3": 2
+  }
+ },
+ {
+  "id": "NSWI170",
+  "label": "NSWI170 Počítačové systémy",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NSWI177",
+  "label": "NSWI177 Úvod do Linuxu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 4
+ },
+ {
+  "id": "NSWI183",
+  "label": "NSWI183 Sémantika programů",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3"
+  ],
+  "elective_in": [
+   "s2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s2": 5
+  }
+ },
+ {
+  "id": "NSWI200",
+  "label": "NSWI200 Operační systémy",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s2",
+   "s3"
+  ],
+  "elective_in": [
+   "s1",
+   "s4",
+   "s6",
+   "s7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": 3,
+   "s4": 3,
+   "s6": 0,
+   "s7": 0
+  }
+ },
+ {
+  "id": "NSZZ023",
+  "label": "NSZZ023 Diplomová práce I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "elective_in": [],
+  "credits": 6
+ },
+ {
+  "id": "NSZZ024",
+  "label": "NSZZ024 Diplomová práce II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "elective_in": [],
+  "credits": 9
+ },
+ {
+  "id": "NSZZ025",
+  "label": "NSZZ025 Diplomová práce III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "elective_in": [],
+  "credits": 15
+ },
+ {
+  "id": "NSZZ031",
+  "label": "NSZZ031 Vypracování a konzultace bakalářské práce",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 6
+ },
+ {
+  "id": "NTIN017",
+  "label": "NTIN017 Paralelní algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN022",
+  "label": "NTIN022 Pravděpodobnostní techniky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m2"
+  ],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NTIN023",
+  "label": "NTIN023 Dynamické grafové datové struktury",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN043",
+  "label": "NTIN043 Formální základy softwarového inženýrství",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m3": 1,
+   "m4": 1,
+   "m7": 1
+  }
+ },
+ {
+  "id": "NTIN060",
+  "label": "NTIN060 Algoritmy a datové struktury 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NTIN061",
+  "label": "NTIN061 Algoritmy a datové struktury 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NTIN063",
+  "label": "NTIN063 Složitost",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m2"
+  ],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NTIN064",
+  "label": "NTIN064 Vyčíslitelnost",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN066",
+  "label": "NTIN066 Datové struktury 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "elective_in": [],
+  "credits": 6
+ },
+ {
+  "id": "NTIN067",
+  "label": "NTIN067 Datové struktury 2",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1,
+   "m3": 2
+  }
+ },
+ {
+  "id": "NTIN071",
+  "label": "NTIN071 Automaty a gramatiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 5
+ },
+ {
+  "id": "NTIN073",
+  "label": "NTIN073 Rekurze",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN081",
+  "label": "NTIN081 Výpočetní složitost a interaktivni protokoly",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN082",
+  "label": "NTIN082 Neuniformní výpočetní modely",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN084",
+  "label": "NTIN084 Bioinformatické algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN085",
+  "label": "NTIN085 Vybrané kapitoly z výpočetní složitosti I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN086",
+  "label": "NTIN086 Vybrané kapitoly z výpočetní složitosti II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN087",
+  "label": "NTIN087 Textové algoritmy",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN088",
+  "label": "NTIN088 Algoritmická náhodnost",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN090",
+  "label": "NTIN090 Základy složitosti a vyčíslitelnosti",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "elective_in": [],
+  "credits": 4
+ },
+ {
+  "id": "NTIN096",
+  "label": "NTIN096 Pseudo-Booleovská optimalizace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN097",
+  "label": "NTIN097 Struktury v hyperkrychlích",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN099",
+  "label": "NTIN099 Algoritmy pro reprezentaci znalostí",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN100",
+  "label": "NTIN100 Základy přenosu a zpracování informace",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "m2"
+  ],
+  "elective_in": [
+   "m1"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": 1
+  }
+ },
+ {
+  "id": "NTIN101",
+  "label": "NTIN101 Selected Topics in Algorithms",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN102",
+  "label": "NTIN102 Seminář z teoretické informatiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN103",
+  "label": "NTIN103 Introduction to Parameterized Algorithms",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m1": 1,
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN104",
+  "label": "NTIN104 Foundations of theoretical cryptography",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN106",
+  "label": "NTIN106 Implementace algoritmů a datových struktur",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN110",
+  "label": "NTIN110 Vybrané kapitoly z datových struktur",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTIN111",
+  "label": "NTIN111 Selected Topics in Algorithms II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": 1
+  }
+ },
+ {
+  "id": "NTVY014",
+  "label": "NTVY014 Tělesná výchova I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik"
+  }
+ },
+ {
+  "id": "NTVY015",
+  "label": "NTVY015 Tělesná výchova II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik"
+  }
+ },
+ {
+  "id": "NTVY016",
+  "label": "NTVY016 Tělesná výchova III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik"
+  }
+ },
+ {
+  "id": "NTVY017",
+  "label": "NTVY017 Tělesná výchova IV",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik"
+  }
+ },
+ {
+  "id": "NTVY018",
+  "label": "NTVY018 Letní výcvikový kurz",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik"
+  }
+ },
+ {
+  "id": "NTVY019",
+  "label": "NTVY019 Zimní výcvikový kurz",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 7,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik"
+  }
+ },
+ {
+  "id": "req_s1",
+  "group": "program_req",
+  "spec": "s1",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 116,
+  "pv_overall_min": 45,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 1,
+    "label": "Skupina 1",
+    "min_credits": 30
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2",
+    "min_credits": 5
+   },
+   {
+    "group": 3,
+    "label": "Skupina 3",
+    "min_credits": 0
+   }
+  ]
+ },
+ {
+  "id": "req_s2",
+  "group": "program_req",
+  "spec": "s2",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 128,
+  "pv_overall_min": 37,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 1,
+    "label": "Skupina 1",
+    "min_credits": 5
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2",
+    "min_credits": 10
+   },
+   {
+    "group": 3,
+    "label": "Skupina 3",
+    "min_credits": 10
+   },
+   {
+    "group": 4,
+    "label": "Skupina 4",
+    "min_credits": 6
+   },
+   {
+    "group": 5,
+    "label": "Skupina 5",
+    "min_credits": 0
+   }
+  ]
+ },
+ {
+  "id": "req_s3",
+  "group": "program_req",
+  "spec": "s3",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 135,
+  "pv_overall_min": 27,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 1,
+    "label": "Skupina 1",
+    "min_credits": 5
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2",
+    "min_credits": 5
+   },
+   {
+    "group": 3,
+    "label": "Skupina 3",
+    "min_credits": 7
+   },
+   {
+    "group": 4,
+    "label": "Skupina 4",
+    "min_credits": 10
+   }
+  ]
+ },
+ {
+  "id": "req_s4",
+  "group": "program_req",
+  "spec": "s4",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 125,
+  "pv_overall_min": 37,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 0,
+    "label": "Ostatní povinně volitelné (libovolné ze sk. 1-3)",
+    "min_credits": 5
+   },
+   {
+    "group": 1,
+    "label": "Skupina 1",
+    "min_credits": 20
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2",
+    "min_credits": 8
+   },
+   {
+    "group": 3,
+    "label": "Skupina 3",
+    "min_credits": 4
+   }
+  ]
+ },
+ {
+  "id": "req_s5",
+  "group": "program_req",
+  "spec": "s5",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 116,
+  "pv_overall_min": 45,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 1,
+    "label": "Skupina 1",
+    "min_credits": 25
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2",
+    "min_credits": 10
+   },
+   {
+    "group": 3,
+    "label": "Skupina 3",
+    "min_credits": 10
+   }
+  ]
+ },
+ {
+  "id": "req_s6",
+  "group": "program_req",
+  "spec": "s6",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 121,
+  "pv_overall_min": 43,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 0,
+    "label": "Povinně volitelné",
+    "min_credits": 43
+   }
+  ]
+ },
+ {
+  "id": "req_s7",
+  "group": "program_req",
+  "spec": "s7",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 121,
+  "pv_overall_min": 43,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělocvik",
+    "min_credits": 4
+   },
+   {
+    "group": 0,
+    "label": "Povinně volitelné",
+    "min_credits": 43
+   }
+  ]
+ },
+ {
+  "id": "req_m1",
+  "group": "program_req",
+  "spec": "m1",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 45,
+  "pv_overall_min": 50,
+  "pv_groups": [
+   {
+    "group": 1,
+    "label": "Skupina 1",
+    "min_credits": 45
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2",
+    "min_credits": 5
+   }
+  ]
+ },
+ {
+  "id": "req_m2",
+  "group": "program_req",
+  "spec": "m2",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 53,
+  "pv_overall_min": 35,
+  "pv_groups": [
+   {
+    "group": 1,
+    "label": "Povinně volitelné",
+    "min_credits": 35
+   }
+  ]
+ },
+ {
+  "id": "req_m3",
+  "group": "program_req",
+  "spec": "m3",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 40,
+  "pv_overall_min": 56,
+  "pv_groups": [
+   {
+    "group": 0,
+    "label": "Týmový projekt",
+    "min_credits": 6
+   },
+   {
+    "group": 1,
+    "label": "Profilující",
+    "min_credits": 41
+   },
+   {
+    "group": 2,
+    "label": "Povinně volitelné",
+    "min_credits": 15
+   }
+  ]
+ },
+ {
+  "id": "req_m4",
+  "group": "program_req",
+  "spec": "m4",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 40,
+  "pv_overall_min": 56,
+  "pv_groups": [
+   {
+    "group": 1,
+    "label": "Povinně volitelné",
+    "min_credits": 48
+   },
+   {
+    "group": 2,
+    "label": "Z bakalářského programu",
+    "min_credits": 8
+   },
+   {
+    "group": 3,
+    "label": "Týmový projekt",
+    "min_credits": 6
+   }
+  ]
+ },
+ {
+  "id": "req_m5",
+  "group": "program_req",
+  "spec": "m5",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 58,
+  "pv_overall_min": 40,
+  "pv_groups": [
+   {
+    "group": 1,
+    "label": "Skupina 1 (profilující)",
+    "min_credits": 24
+   },
+   {
+    "group": 2,
+    "label": "Skupina 2 (rozšiřující)",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_m6",
+  "group": "program_req",
+  "spec": "m6",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 47,
+  "pv_overall_min": 53,
+  "pv_groups": [
+   {
+    "group": 1,
+    "label": "Profilující",
+    "min_credits": 38
+   },
+   {
+    "group": 2,
+    "label": "Rozšiřující",
+    "min_credits": 15
+   }
+  ]
+ },
+ {
+  "id": "req_m7",
+  "group": "program_req",
+  "spec": "m7",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 40,
+  "pv_overall_min": 53,
+  "pv_groups": [
+   {
+    "group": 1,
+    "label": "Povinně volitelné",
+    "min_credits": 53
+   }
+  ]
+ }
+]

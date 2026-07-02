@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MFF UK | Kalkulačka kreditů</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/~smolad/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/~smolad/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/~smolad/favicon-16x16.png">
+  <link rel="manifest" href="/~smolad/site.webmanifest">
+  <link rel="stylesheet" href="/~smolad/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      /* Vaše dodané design systém proměnné */
+      --_typography---font-family--silka: "Silka Webfont", Arial, sans-serif;
+      --_typography---paragraph--font-size: 1rem;
+      --_typography---paragraph--line-height: 144%;
+      --_typography---paragraph--font-weight: 400;
+      --_typography---paragraph--letter-spacing: .004em;
+      --_spacing---40-px: 2.5rem;
+      --_typography---h1--font-size: 2.625rem;
+      --_typography---h1--line-height: 116%;
+      --_typography---h1--font-weight: 700;
+      --_typography---h1--letter-spacing: -.016em;
+      --_spacing---20-px: 1.25rem;
+      --_spacing---gap-40: 40px;
+      --_typography---h2--font-size: 1.5rem;
+      --_typography---h2--font-weight: 700;
+      --_typography---h2--letter-spacing: -.024em;
+      --_typography---h3--font-size: 1.375rem;
+      --_typography---h3--line-height: 116%;
+      --_typography---h3--font-weight: 600;
+      --_typography---h3--letter-spacing: -.015em;
+      --_spacing---32-px: 2rem;
+      --primary--primary-blue: #003657;
+      --_spacing---8-px: .5rem;
+      --_spacing---24-px: 1.5rem;
+      --variables--white-68: #ffffffad;
+      --primary--primary-black: black;
+      --primary--background-white: white;
+      --_typography---header-link--font-size: .75rem;
+      --_typography---header-link--line-height: 100%;
+      --_typography---header-link--font-weight: 500;
+      --_typography---header-link--letter-spacing: 0em;
+      --_spacing---2-px: .125rem;
+      --_spacing---12-px: .75rem;
+      --_radius---radius-btns: 50rem;
+      --primary--background-grey: whitesmoke;
+      --primary--primary-red: #d22d40;
+      --variables--white-16: #ffffff29;
+      --variables--blue-12: #0036571f;
+      --_typography---main-nav-dropdown--font-size: 1rem;
+      --_typography---main-nav-dropdown--line-height: 100%;
+      --_typography---main-nav-dropdown--font-weight: 600;
+      --_typography---main-nav-dropdown--letter-spacing: -.012em;
+      --variables--white-8: #ffffff14;
+      --_radius---radius-8-px: 8px;
+      --_spacing---80-px: 5rem;
+      --_spacing---64-px: 4rem;
+      --_spacing---gap-20: 20px;
+      --_spacing---16-px: 1rem;
+      --_typography---btn-primary--font-size: .875rem;
+      --_typography---btn-primary--line-height: 100%;
+      --_typography---btn-primary--font-weight: 500;
+      --_typography---btn-primary--letter-spacing: 0em;
+      --_spacing---gap-column: 8px;
+      --_spacing---4-px: .25rem;
+      --_spacing---minus-32-px: -2rem;
+      --_typography---article-feed-heading-2--font-size: 1.125rem;
+      --_typography---article-feed-heading-2--line-height: 132%;
+      --_typography---article-feed-heading-2--font-weight: 600;
+      --_typography---article-feed-heading-2--letter-spacing: -.008em;
+      --_typography---article-date--font-size: .75rem;
+      --_typography---article-date--line-height: 100%;
+      --_typography---article-date--font-weight: 400;
+      --_typography---article-date--letter-spacing: .004px;
+      --_typography---main-nav-dropdown-link--font-size: 1rem;
+      --_typography---main-nav-dropdown-link--line-height: 100%;
+      --_typography---main-nav-dropdown-link--font-weight: 400;
+      --variables--white-32: #ffffff52;
+      --variables--blue-72: #003657b8;
+      --_spacing---120-px: 7.5rem;
+      --_typography---text-s--font-size: .75rem;
+      --_typography---text-s--line-height: 128%;
+      --_typography---text-s--font-family: 400;
+      --_typography---text-s--letter-spacing: .004em;
+      --_typography---footer-link--font-size: .875rem;
+      --_typography---footer-link--line-height: 100%;
+      --_typography---footer-link--font-weight: 400;
+      --_typography---footer-link--letter-spacing: 0em;
+      --_typography---card-link-heading--font-size: 1.75rem;
+      --_typography---card-link-heading--line-height: 116%;
+      --_typography---card-link-heading--font-weight: 700;
+      --_typography---card-link-heading--letter-spacing: -.016em;
+      --_typography---article-feed-label--letter-spacing: .02em;
+      --_typography---calendar-date--font-size: 2.25rem;
+      --_typography---calendar-date--line-height: 100%;
+      --_typography---calendar-date--font-weight: 700;
+      --_typography---calendar-date--letter-spacing: -.04em;
+      --_typography---text-l--font-size: 1.25rem;
+      --_typography---text-l--line-height: 124%;
+      --_typography---text-l--font-weight: 600;
+      --_typography---text-l--letter-spacing: -.008em;
+      --_typography---btn-video--font-size: .875rem;
+      --_typography---btn-video--line-height: 116%;
+      --_typography---btn-video--font-weight: 600;
+      --_typography---btn-video--letter-spacing: 0em;
+      --_typography---header-breadcrumbs--font-size: .75rem;
+      --_typography---header-breadcrumbs--line-height: 100%;
+      --_typography---header-breadcrumbs--font-weight: 400;
+      --_typography---header-breadcrumbs--letter-spacing: .004em;
+      --variables--blue-52: #00365785;
+      --variables--blue-32: #00365752;
+      --_spacing---14-px: .875rem;
+      --_typography---article-feed-label--font-weight: 500;
+      --_typography---article-perex--font-size: 1.375rem;
+      --_typography---article-perex--line-height: 132%;
+      --_typography---article-perex--font-weight: 600;
+      --_typography---article-perex--letter-spacing: -.016em;
+      --_typography---paragraph-bold--font-weight: 600;
+      --_spacing---gap-16: 16px;
+      --_typography---article-feed-label--font-size: .75rem;
+      --_typography---article-feed-label--line-height: 100%;
+      --_typography---filter-label--font-weight: 500;
+      --_spacing---6-px: .375rem;
+      --variables--overlay-blue: #004e7e;
+      --variables--blue-8: #00365714;
+      --variables--white-12: #ffffff1f;
+      --_typography---h2--line-height: 108%;
+      --_typography---article-feed-heading-1--font-size: 1.75rem;
+      --_typography---article-feed-heading-1--font-weight: 700;
+      --_typography---article-feed-heading-1--line-height: 116%;
+      --_typography---article-feed-heading-1--letter-spacing: -.024em;
+      --_typography---paragraph-bold--font-size: 1rem;
+      --_typography---paragraph-bold--line-height: 144%;
+      --_typography---paragraph-bold--letter-spacing: .004em;
+      --_typography---text-xs--font-size: .75rem;
+      --_typography---text-xs--font-weight: 400;
+      --_typography---text-xs--line-height: 132%;
+      --_typography---text-xs--letter-spacing: .01em;
+      --_typography---text-m--font-size: 1.125rem;
+      --_typography---text-m--font-weight: 600;
+      --_typography---text-m--line-height: 124%;
+      --_typography---text-m--letter-spacing: -.008em;
+      --_typography---text-xl--font-size: 2.5rem;
+      --_typography---text-xl--font-weight: 700;
+      --_typography---text-xl--line-height: 116%;
+      --_typography---text-xl--letter-spacing: -.02em;
+      --_typography---filter-label--font-size: .625rem;
+      --_typography---filter-label--line-height: 100%;
+      --_typography---filter-label--letter-spacing: .04em;
+      --_typography---main-nav-dropdown-link--letter-spacing: .004em;
+      --_typography---card-video-heading--font-size: 1.25rem;
+      --_typography---card-video-heading--font-weight: 700;
+      --_typography---card-video-heading--line-height: 116%;
+      --_typography---card-video-heading--letter-spacing: -.012em;
+      --_typography---form-label--font-size: .925rem;
+      --_typography---form-label--line-height: 100%;
+      --_typography---form-label--font-weight: 400;
+      --_typography---form-label--letter-spacing: 0em;
+
+      --bg: var(--primary--background-white);
+      --text: var(--primary--primary-black);
+      --muted: #6b7280;
+      --col-mandatory-all: #3b82f6;
+      --col-mandatory: #4ade80;
+      --col-elective: #fb923c;
+      --col-mixed: #facc15;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--_typography---font-family--silka);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .page-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex: 1;
+      padding: var(--_spacing---40-px) var(--_spacing---20-px);
+      box-sizing: border-box;
+    }
+
+    .site-footer {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    h1 {
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---h1--font-size);
+      line-height: var(--_typography---h1--line-height);
+      font-weight: var(--_typography---h1--font-weight);
+      letter-spacing: var(--_typography---h1--letter-spacing);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    h1 span {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .instructions {
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: var(--_spacing---14-px) var(--_spacing---24-px);
+      border-radius: var(--_radius---radius-8-px);
+      margin-bottom: 16px;
+      color: var(--primary--primary-blue);
+      max-width: 1000px;
+      text-align: center;
+      font-size: var(--_typography---paragraph--font-size);
+      line-height: var(--_typography---paragraph--line-height);
+    }
+
+    /* Přepínátko pro stupně studia */
+    .filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: 6px;
+      border-radius: var(--_radius---radius-8-px);
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---btn-primary--font-size);
+      font-weight: 600;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      color: var(--primary--primary-black);
+    }
+
+    .filter-btn.active {
+      background: var(--primary--background-white);
+      color: var(--primary--primary-blue);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--_spacing---gap-20);
+      margin-bottom: 30px;
+      font-size: 0.85rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .tooltip-title { font-family: monospace; }
+
+    /* ============================================================
+       Komponenty kalkulačky (laděné do dodaného design systému)
+       ============================================================ */
+    .container {
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    .step {
+      display: none;
+      text-align: center;
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: var(--_spacing---64-px) var(--_spacing---40-px);
+      border-radius: 24px;
+    }
+    .step.active { display: block; animation: fadeIn .35s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity:1; transform: translateY(0);} }
+
+    .step h2 {
+      font-size: var(--_typography---h1--font-size);
+      line-height: var(--_typography---h1--line-height);
+      font-weight: var(--_typography---h1--font-weight);
+      letter-spacing: var(--_typography---h1--letter-spacing);
+      color: var(--primary--primary-blue);
+      margin-bottom: var(--_spacing---12-px);
+    }
+    .step p { color: var(--muted); max-width: 640px; margin: 0 auto; }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: var(--_spacing---gap-16);
+      margin-top: var(--_spacing---32-px);
+    }
+
+    .btn {
+      padding: var(--_spacing---16-px) var(--_spacing---24-px);
+      background: var(--primary--primary-blue);
+      color: #fff;
+      border: none;
+      border-radius: var(--_radius---radius-btns);
+      cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---paragraph--font-size);
+      font-weight: 600;
+      letter-spacing: -.012em;
+      transition: transform .15s, box-shadow .15s, background .15s, opacity .15s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,54,87,.18); }
+    .btn.alt { background: var(--primary--primary-red); }
+    .btn.alt:hover { box-shadow: 0 6px 16px rgba(210,45,64,.2); }
+    .btn.ghost { background: var(--primary--background-white); color: var(--primary--primary-blue); border: 1px solid var(--variables--blue-12); }
+    .btn.ghost:hover { background: var(--primary--background-grey); box-shadow: none; }
+    .btn.small { padding: var(--_spacing---8-px) var(--_spacing---16-px); font-size: var(--_typography---btn-primary--font-size); }
+
+    .dashboard { display: none; grid-template-columns: 1.9fr 1fr; gap: var(--_spacing---24-px); align-items: start; }
+    .dashboard.active { display: grid; animation: fadeIn .35s ease; }
+
+    .panel {
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: var(--_spacing---32-px);
+      border-radius: 24px;
+    }
+
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--_spacing---16-px); flex-wrap: wrap;
+      margin-bottom: var(--_spacing---20-px);
+      padding-bottom: var(--_spacing---16-px);
+      border-bottom: 1px solid var(--variables--blue-12);
+    }
+    .sec-title {
+      font-size: var(--_typography---filter-label--font-size);
+      letter-spacing: var(--_typography---filter-label--letter-spacing);
+      text-transform: uppercase; color: var(--muted); font-weight: 600;
+    }
+    .header h2, .panel > h3 { color: var(--primary--primary-blue); }
+    .header h2 {
+      font-size: var(--_typography---h2--font-size); font-weight: var(--_typography---h2--font-weight);
+      letter-spacing: var(--_typography---h2--letter-spacing); margin-top: var(--_spacing---2-px);
+    }
+
+    .cat { margin: var(--_spacing---24-px) 0; }
+    .cat-head {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: var(--_spacing---8-px); flex-wrap: wrap;
+      margin: 0 0 var(--_spacing---4-px);
+    }
+    .cat h3 {
+      margin: 0; display: flex; align-items: center; gap: var(--_spacing---8-px); flex-wrap: wrap;
+      font-size: var(--_typography---text-m--font-size); font-weight: 600;
+      letter-spacing: var(--_typography---text-m--letter-spacing); color: var(--primary--primary-black);
+    }
+    .cat .sub { font-size: var(--_typography---text-xs--font-size); color: var(--muted); margin-bottom: var(--_spacing---12-px); }
+    .cat-reset {
+      flex-shrink: 0; white-space: nowrap;
+    }
+
+    .pill { font-size: var(--_typography---filter-label--font-size); font-weight: 700; padding: .2rem .55rem;
+      border-radius: var(--_radius---radius-btns); color: #fff; letter-spacing: .02em; text-transform: uppercase; }
+    .pill.ok { background: #1f9d55; }
+    .pill.todo { background: var(--col-mixed); color: #5b4b00; }
+    .pill.req { background: var(--primary--primary-red); }
+    .pill.nc { background: var(--variables--blue-32); color: #fff; }
+    .pill-btn { cursor: pointer; border: none; transition: filter .15s ease, transform .1s ease; }
+    .pill-btn:hover { filter: brightness(1.12); }
+    .pill-btn:active { transform: scale(.96); }
+
+    .subject-list { display: flex; flex-direction: column; gap: var(--_spacing---6-px); }
+    .subject-item {
+      display: flex; align-items: center; gap: var(--_spacing---12-px);
+      padding: var(--_spacing---12-px) var(--_spacing---14-px);
+      border: 1px solid var(--variables--blue-12); border-radius: var(--_radius---radius-8-px);
+      background: var(--primary--background-white); cursor: pointer; transition: background .15s, border-color .15s;
+      user-select: none;
+    }
+    .subject-item:hover { background: #eef2f5; }
+    .subject-item.done { background: #e7f6ec; border-color: #bfe6cc; }
+    .subject-item.nocredit { background: var(--variables--blue-8); border-style: dashed; }
+    .subject-item.nocredit .name { color: var(--muted); font-style: italic; }
+    .subject-item input[type="checkbox"] { transform: scale(1.3); accent-color: var(--primary--primary-blue); cursor: pointer; }
+    .subject-item .name { flex: 1; font-size: var(--_typography---form-label--font-size); }
+    .credits-badge {
+      margin-left: auto; background: var(--variables--blue-8); color: var(--primary--primary-blue);
+      padding: .2rem .5rem; border-radius: var(--_radius---radius-8-px);
+      font-size: var(--_typography---text-xs--font-size); font-weight: 700; white-space: nowrap;
+    }
+    /* "bez kreditů" přepínátko */
+    .nc-toggle {
+      display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
+      font-size: var(--_typography---text-xs--font-size); color: var(--muted); cursor: pointer;
+      padding: .5rem; border: 1px dashed var(--variables--blue-32); border-radius: var(--_radius---radius-8-px);
+    }
+    .nc-toggle input { transform: scale(1.05); accent-color: var(--primary--primary-red); cursor: pointer; }
+    .nc-toggle:hover { color: var(--primary--primary-black); }
+
+    .summary { position: sticky; top: var(--_spacing---20-px); }
+    .progress-box { margin-bottom: var(--_spacing---12-px); }
+    .progress-info { display: flex; justify-content: space-between; gap: var(--_spacing---8-px);
+      margin-bottom: var(--_spacing---4-px); font-weight: 500; font-size: var(--_typography---form-label--font-size); }
+    .progress-info .rem { color: var(--muted); font-weight: 600; }
+    .progress-bar { width: 100%; height: 9px; background: var(--variables--blue-12); border-radius: var(--_radius---radius-btns); overflow: hidden; }
+    .progress-fill { height: 100%; width: 0; background: var(--primary--primary-blue); border-radius: var(--_radius---radius-btns); transition: width .4s ease; }
+    .divider { margin: var(--_spacing---20-px) 0; border: 0; border-top: 1px dashed var(--variables--blue-32); }
+    .total-line .progress-info { font-size: var(--_typography---text-m--font-size); font-weight: 700; color: var(--primary--primary-blue); }
+
+    .status { margin-top: var(--_spacing---16-px); padding: var(--_spacing---12-px) var(--_spacing---14-px);
+      border-radius: var(--_radius---radius-8-px); text-align: center; font-weight: 600; font-size: var(--_typography---form-label--font-size); }
+    .status.ok { background: #e7f6ec; color: #1f7a3f; }
+    .status.todo { background: #fff7e0; color: #5b4b00; }
+
+    .note { font-size: var(--_typography---text-xs--font-size); color: var(--muted); margin-top: var(--_spacing---20-px); line-height: 1.5; }
+
+    @media (max-width: 820px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .summary { position: static; }
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+    <div class="header-container">
+        <a href="/~smolad" class="header-logo">
+            <i class="bi bi-box-seam"></i> 
+            MFF UK Nástroje
+        </a>
+        <nav class="main-nav">
+            <a href="/~smolad">Průvodce prváka</a>
+            <a href="/~smolad/kalkulačka">Kalkulačka kreditů</a>
+            <a href="/~smolad/specializace">Mapa předmětů</a>
+        </nav>
+    </div>
+</header>
+  <div class="page-content">
+  <h1>Kalkulačka kreditů <span>MFF UK</span></h1>
+  <div class="instructions">
+    Vyber stupeň studia a specializaci, pak zaškrtávej splněné předměty. U každé kategorie uvidíš
+    získané a požadované kredity a kolik ti ještě zbývá splnit.
+  </div>
+
+  <div class="container">
+    <div id="step-1" class="step active">
+      <h2>Zvol stupeň studia</h2>
+      <p>Bakalářské a magisterské studium mají odlišné specializace i požadavky na kredity.</p>
+      <div class="btn-grid">
+        <button class="btn" onclick="selectDegree('bakalarske')">Bakalářské studium</button>
+        <button class="btn alt" onclick="selectDegree('magisterske')">Magisterské studium</button>
+      </div>
+    </div>
+
+    <div id="step-2" class="step">
+      <h2>Jakou máš specializaci?</h2>
+      <div id="spec-grid" class="btn-grid"></div>
+      <button class="btn ghost small" style="margin-top: var(--_spacing---40-px)" onclick="goToStep(1)">← Zpět na výběr studia</button>
+    </div>
+
+    <div id="dashboard" class="dashboard">
+      <div class="panel">
+        <div class="header">
+          <div>
+            <div class="sec-title" id="dash-degree">Specializace</div>
+            <h2 id="dash-title">Můj plán</h2>
+          </div>
+          <button class="btn alt small" onclick="resetProgress()">Změnit obor</button>
+        </div>
+        <div id="lists"></div>
+      </div>
+
+      <div class="panel summary">
+        <h3 style="margin:0 0 var(--_spacing---16-px); font-size: var(--_typography---h3--font-size); font-weight: var(--_typography---h3--font-weight);">Kontrola plnění</h3>
+        <div id="summary-body"></div>
+        <div id="status" class="status"></div>
+        <button class="btn ghost small" style="margin-top: var(--_spacing---16-px); width: 100%;" onclick="resetAllProgress()">Reset celkový (zrušit vše splněné)</button>
+        <p class="note">
+          Limity vycházejí ze studijních plánů (Karolinka). „Volitelné“ doplníš libovolnými předměty do
+          celkového počtu kreditů. U magisterských povinně volitelných můžeš předmět označit
+          <b>„bez kreditů“</b> — sníží požadované minimum kategorie, ale nepočítá se do získaných kreditů.
+          Postup se ukládá do prohlížeče.
+        </p>
+      </div>
+    </div>
+  </div>
+  </div>
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h4>MFF UK Studentské Nástroje</h4>
+            <p>Vytvořeno studenty pro studenty.</p>
+            <p>Nejedná se o oficiální stránky Matematicko-fyzikální fakulty UK.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-github"></i> Zdrojové kódy na GitHubu
+            </a>
+            <a href="https://discord.gg/7afJ9ES" target="_blank">
+                <i class="bi bi-discord"></i> Discord
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 MFF UK Studentské Nástroje. Žádná práva nevyhrazena.
+    </div>
+</footer>
+<script>
+let NODES = [];
+let SUBJ = [];
+let SPECS = [];
+const REQS = {}; 
+const byId = {}; 
+
+let currentSpec = null;
+let currentDegree = null;
+let completed = new Set();
+let noCredit = new Set();   // předměty označené "bez kreditů" (jen Mgr PV)
+
+function saveState(){
+  if(currentSpec) localStorage.setItem('mff_spec', currentSpec);
+  if(currentDegree) localStorage.setItem('mff_degree', currentDegree);
+  localStorage.setItem('mff_completed', JSON.stringify([...completed]));
+  localStorage.setItem('mff_nocredit', JSON.stringify([...noCredit]));
+}
+function loadState(){
+  const c = localStorage.getItem('mff_completed');
+  if(c) completed = new Set(JSON.parse(c));
+  const nc = localStorage.getItem('mff_nocredit');
+  if(nc) noCredit = new Set(JSON.parse(nc));
+  currentDegree = localStorage.getItem('mff_degree');
+  return localStorage.getItem('mff_spec');
+}
+
+function goToStep(step){
+  document.querySelectorAll('.step,.dashboard').forEach(e => e.classList.remove('active'));
+  document.getElementById(step === 'dashboard' ? 'dashboard' : 'step-' + step).classList.add('active');
+}
+
+function selectDegree(deg){
+  currentDegree = deg;
+  const specs = SPECS.filter(s => s.study_type === deg);
+  const grid = document.getElementById('spec-grid');
+  grid.innerHTML = '';
+  specs.forEach(sp => {
+    const b = document.createElement('button');
+    b.className = 'btn';
+    if(deg === 'magisterske') b.classList.add('alt');
+    b.textContent = sp.label;
+    b.onclick = () => selectSpec(sp.id);
+    grid.appendChild(b);
+  });
+  goToStep(2);
+}
+
+function selectSpec(id){ currentSpec = id; saveState(); renderDashboard(); }
+
+function credits(id){ return byId[id] ? (byId[id].credits || 0) : 0; }
+
+function planFor(spec){
+  const req = REQS[spec];
+  const mandatory = SUBJ.filter(s => (s.mandatory_in || []).includes(spec))
+                        .sort((a,b)=>a.label.localeCompare(b.label,'cs'));
+  const groups = (req.pv_groups || []).map(def => {
+    const subjects = SUBJ.filter(s => (s.pv_group || {})[spec] === def.group)
+                         .sort((a,b)=>a.label.localeCompare(b.label,'cs'));
+    return {def, subjects};
+  }).filter(g => g.subjects.length > 0);
+  return {req, mandatory, groups};
+}
+
+function toggleDone(id){
+  if(completed.has(id)) completed.delete(id);
+  else { completed.add(id); noCredit.delete(id); }
+  saveState(); renderDashboard();
+}
+function toggleNoCredit(id){
+  if(noCredit.has(id)) noCredit.delete(id);
+  else { noCredit.add(id); completed.delete(id); }
+  saveState(); renderDashboard();
+}
+
+// kredity "bez kreditů" v daném seznamu předmětů
+function ncCreditsIn(subjects){
+  return subjects.filter(s => noCredit.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+}
+function effMin(rawMin, subjects){
+  if(rawMin == null) return null;
+  return Math.max(0, rawMin - ncCreditsIn(subjects));
+}
+
+function subjectRow(s, allowNoCredit){
+  const done = completed.has(s.id);
+  const nc = noCredit.has(s.id);
+  const div = document.createElement('label');
+  div.className = 'subject-item' + (done ? ' done' : '') + (nc ? ' nocredit' : '');
+  const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = done;
+  cb.onchange = (e) => { e.preventDefault(); toggleDone(s.id); };
+  const name = document.createElement('span'); name.className = 'name'; name.textContent = s.label;
+  div.append(cb, name);
+
+  if(allowNoCredit){
+    const ncWrap = document.createElement('span');
+    ncWrap.className = 'nc-toggle';
+    ncWrap.title = 'Předmět splněn bez započtení kreditů — sníží požadované minimum, ale nepřičte kredity.';
+    const ncCb = document.createElement('input'); ncCb.type = 'checkbox'; ncCb.checked = nc;
+    ncCb.onclick = (e) => { e.stopPropagation(); };
+    ncCb.onchange = () => toggleNoCredit(s.id);
+    const ncLbl = document.createElement('span'); ncLbl.textContent = 'bez kreditů';
+    ncWrap.append(ncCb, ncLbl);
+    // klik na obal nesmí togglovat hlavní checkbox
+    ncWrap.onclick = (e) => { e.preventDefault(); e.stopPropagation(); if(e.target===ncWrap||e.target===ncLbl) toggleNoCredit(s.id); };
+    div.append(ncWrap);
+  }
+
+  const badge = document.createElement('span'); badge.className = 'credits-badge'; badge.textContent = (s.credits||0)+' kr.';
+  div.append(badge);
+  return div;
+}
+
+function pill(text, cls, onclick){
+  if(onclick){
+    return `<span class="pill ${cls} pill-btn" onclick="${onclick}">${text}</span>`;
+  }
+  return `<span class="pill ${cls}">${text}</span>`;
+}
+
+function completeAllMandatory(){
+  const spec = SPECS.find(s => s.id === currentSpec);
+  if(currentDegree == null) currentDegree = spec ? spec.study_type : null;
+  const plan = planFor(currentSpec);
+  plan.mandatory.forEach(s => {
+    completed.add(s.id);
+    noCredit.delete(s.id);
+  });
+  saveState();
+  renderDashboard();
+}
+
+function renderDashboard(){
+  goToStep('dashboard');
+  const plan = planFor(currentSpec);
+  const spec = SPECS.find(s => s.id === currentSpec);
+  if(currentDegree == null) currentDegree = spec ? spec.study_type : null;
+  const isMgr = plan.req.level === 'mgr';
+  document.getElementById('dash-degree').textContent =
+    (isMgr ? 'Magisterské studium' : 'Bakalářské studium');
+  document.getElementById('dash-title').textContent = spec ? spec.label : currentSpec;
+
+  const lists = document.getElementById('lists');
+  lists.innerHTML = '';
+
+  // Povinné
+  const mandEarned = plan.mandatory.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+  const mandTotal = plan.mandatory.reduce((a,s)=>a+credits(s.id),0);
+  lists.appendChild(catBlock(
+    'Povinné předměty',
+    `Nutné splnit všechny • ${mandEarned}/${mandTotal} kr.`,
+    (mandEarned>=mandTotal && mandTotal>0) ? pill('hotovo','ok') : pill('splnit vše','req','completeAllMandatory()'),
+    plan.mandatory, false
+  ));
+
+  // PV skupiny
+  plan.groups.forEach(g => {
+    const earned = g.subjects.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+    const raw = g.def.min_credits;
+    const min = effMin(raw, g.subjects);
+    const ncCr = ncCreditsIn(g.subjects);
+    let badge;
+    if(raw == null) badge = pill('bez limitu','todo');
+    else if(raw === 0) badge = pill('bez vlastního limitu','todo');
+    else badge = earned>=min ? pill('splněno','ok') : pill('min. '+min+' kr.','req');
+    let subt;
+    if(raw){
+      subt = `Minimum ${min} kr.` + (ncCr ? ` (sníženo o ${ncCr} kr. „bez kreditů“ z ${raw})` : '') + ` • získáno ${earned} kr.`;
+    } else {
+      subt = `Získáno ${earned} kr. (počítá se do celku PV)`;
+    }
+    lists.appendChild(catBlock('Povinně volitelné — ' + g.def.label, subt, badge, g.subjects, isMgr));
+  });
+
+  if(REQS[currentSpec].no_pdf_plan){
+    const warn = document.createElement('p');
+    warn.className = 'sub'; warn.style.color = '#b08900';
+    warn.textContent = 'Pozn.: pro tuto specializaci není v PDF samostatný studijní plán, povinně volitelné se zobrazují jako jeden seznam bez dílčích limitů.';
+    lists.appendChild(warn);
+  }
+
+  renderSummary(plan, isMgr);
+}
+
+function catBlock(title, subtitle, badgeHtml, subjects, allowNoCredit){
+  const wrap = document.createElement('div'); wrap.className = 'cat';
+  const head = document.createElement('div'); head.className = 'cat-head';
+  head.innerHTML = `<h3>${title} ${badgeHtml}</h3>`;
+  const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
+  resetBtn.className = 'btn ghost small cat-reset';
+  resetBtn.textContent = 'Reset kategorie';
+  const ids = subjects.map(s => s.id);
+  resetBtn.onclick = () => resetCategory(ids);
+  head.appendChild(resetBtn);
+  wrap.appendChild(head);
+  const sub = document.createElement('div'); sub.className = 'sub'; sub.textContent = subtitle;
+  wrap.appendChild(sub);
+  const list = document.createElement('div'); list.className = 'subject-list';
+  if(subjects.length === 0) list.innerHTML = '<p style="color:#999">Žádné předměty.</p>';
+  subjects.forEach(s => list.appendChild(subjectRow(s, allowNoCredit)));
+  wrap.appendChild(list);
+  return wrap;
+}
+
+function bar(label, earned, target){
+  const pct = target ? Math.min(earned/target*100,100) : (earned>0?100:0);
+  const rem = target!=null ? Math.max(0, target - earned) : null;
+  const right = target!=null ? `${earned} / ${target} kr.` : `${earned} kr.`;
+  const remTxt = rem!=null ? (rem>0 ? `zbývá ${rem}` : '✓ splněno') : '';
+  const col = (target!=null && earned>=target) ? '#1f9d55' : 'var(--primary--primary-blue)';
+  return `<div class="progress-box">
+    <div class="progress-info"><span>${label}</span><span>${right}</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${col}"></div></div>
+    ${remTxt?`<div class="progress-info" style="margin-top:.2rem"><span></span><span class="rem">${remTxt}</span></div>`:''}
+  </div>`;
+}
+
+function renderSummary(plan){
+  const req = plan.req;
+  const body = document.getElementById('summary-body');
+
+  const mandEarned = plan.mandatory.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+  const mandTotal = plan.mandatory.reduce((a,s)=>a+credits(s.id),0);
+
+  let pvEarned = 0; const allPv = [];
+  plan.groups.forEach(g => g.subjects.forEach(s => allPv.push(s)));
+  const allPvUniq = [...new Map(allPv.map(s=>[s.id,s])).values()];
+  allPvUniq.forEach(s => { if(completed.has(s.id)) pvEarned += credits(s.id); });
+
+  // efektivní celkové PV minimum (sníženo o "bez kreditů" napříč všemi PV)
+  const ncTotal = ncCreditsIn(allPvUniq);
+  const effOverall = req.pv_overall_min!=null ? Math.max(0, req.pv_overall_min - ncTotal) : null;
+
+  let html = '';
+  html += `<div class="sec-title">Povinné</div>` + bar('Povinné předměty', mandEarned, mandTotal);
+
+  html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">Povinně volitelné — skupiny</div>`;
+  let groupsOk = true;
+  plan.groups.forEach(g => {
+    const earned = g.subjects.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+    const min = effMin(g.def.min_credits, g.subjects);
+    if(min && earned < min) groupsOk = false;
+    if(g.def.min_credits){ html += bar(g.def.label, earned, min); }
+  });
+
+  if(req.pv_overall_min != null){
+    html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">PV celkem</div>` +
+            bar('Povinně volitelné celkem', pvEarned, effOverall) +
+            (ncTotal ? `<div class="progress-info" style="font-size:.72rem;color:var(--muted)"><span>sníženo „bez kreditů“</span><span>−${ncTotal} kr. (z ${req.pv_overall_min})</span></div>` : '');
+  }
+
+  const totalEarned = mandEarned + pvEarned;
+  html += `<hr class="divider">`;
+  html += `<div class="total-line">` + bar('Celkem kreditů', totalEarned, req.total_credits) + `</div>`;
+
+  const structuralFree = req.total_credits - mandTotal - (effOverall || 0);
+  if(structuralFree > 0){
+    html += `<div class="progress-info" style="font-size:.78rem;color:var(--muted)">
+      <span>z toho volitelné (libovolné předměty)</span><span>~${structuralFree} kr.</span></div>`;
+  }
+
+  body.innerHTML = html;
+
+  const st = document.getElementById('status');
+  const mandOk = mandTotal>0 && mandEarned>=mandTotal;
+  const overallOk = effOverall==null || pvEarned>=effOverall;
+  const totalOk = totalEarned>=req.total_credits;
+  if(mandOk && groupsOk && overallOk && totalOk){
+    st.className = 'status ok';
+    st.textContent = '✓ Všechny podmínky studijního plánu jsou splněné.';
+  } else {
+    const need = [];
+    if(!mandOk) need.push('povinné');
+    if(!groupsOk) need.push('minima PV skupin');
+    if(!overallOk) need.push('PV celkem');
+    if(!totalOk) need.push((req.total_credits-totalEarned)+' kr. do '+req.total_credits);
+    st.className = 'status todo';
+    st.textContent = 'Zbývá splnit: ' + need.join(', ') + '.';
+  }
+}
+
+function resetProgress(){
+  if(confirm('Opravdu změnit obor? Smaže to aktuální výběr předmětů.')){
+    currentSpec = null; currentDegree = null; completed = new Set(); noCredit = new Set();
+    ['mff_spec','mff_degree','mff_completed','mff_nocredit'].forEach(k=>localStorage.removeItem(k));
+    goToStep(1);
+  }
+}
+
+// Zruší "splněno" i "bez kreditů" u zadané sady předmětů (jedna kategorie)
+function resetCategory(ids){
+  ids.forEach(id => { completed.delete(id); noCredit.delete(id); });
+  saveState();
+  renderDashboard();
+}
+
+// Zruší úplně všechen zaznamenaný postup (splněno + bez kreditů) v rámci aktuální specializace,
+// ale ponechá zvolený obor/typ studia
+function resetAllProgress(){
+  completed = new Set();
+  noCredit = new Set();
+  saveState();
+  renderDashboard();
+}
+
+async function init() {
+    try {
+        // A) Wait for the data to actually arrive
+        const response = await fetch('/~smolad/specializace/nodes.json');
+        NODES = await response.json();
+
+        // B) Now that we have the data, populate your derived variables
+        SUBJ = NODES.filter(n => n.group === 'subj');
+        SPECS = NODES.filter(n => n.group === 'spec');
+        
+        NODES.filter(n => n.group === 'program_req').forEach(r => REQS[r.spec] = r);
+        SUBJ.forEach(s => byId[s.id] = s);
+
+        // C) Run your original startup logic
+        const saved = loadState();
+        if (saved && REQS[saved]) { 
+            currentSpec = saved; 
+            renderDashboard(); 
+        } else {
+            goToStep(1);
+        }
+
+    } catch (error) {
+        console.error('Failed to load study plan data:', error);
+        document.body.innerHTML = '<h2>Chyba při načítání dat (nodes.json). Zkontrolujte konzoli.</h2>';
+    }
+}
+
+window.onload = init;
+</script>
+
+<script>
+// Automatické schování hlavičky při scrollu dolů, zobrazení při scrollu nahoru
+(function () {
+    var header = document.querySelector('.site-header');
+    if (!header) return;
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+    var threshold = 10; // minimální pohyb, aby to nebliklo u drobných scrollů
+
+    function onScroll() {
+        var currentScrollY = window.scrollY;
+
+        header.classList.toggle('site-header--scrolled', currentScrollY > 8);
+
+        if (Math.abs(currentScrollY - lastScrollY) > threshold) {
+            if (currentScrollY > lastScrollY && currentScrollY > header.offsetHeight) {
+                header.classList.add('site-header--hidden'); // scroll dolů -> schovat
+            } else {
+                header.classList.remove('site-header--hidden'); // scroll nahoru -> zobrazit
+            }
+            lastScrollY = currentScrollY;
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+        if (!ticking) {
+            window.requestAnimationFrame(onScroll);
+            ticking = true;
+        }
+    }, { passive: true });
+})();
+</script>
+</body>
+</html>
