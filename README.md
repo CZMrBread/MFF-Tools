@@ -51,4 +51,4 @@ Máš nápad na vylepšení, našel/a jsi chybu v datech o předmětech nebo kre
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Dominik Smola
+[GPLv3](LICENSE) © 2026 Dominik Smola
