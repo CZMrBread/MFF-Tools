@@ -295,6 +295,8 @@
     .container {
       width: 100%;
       max-width: 1080px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .step {
@@ -307,6 +309,8 @@
     }
     .step.active { display: block; animation: fadeIn .35s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity:1; transform: translateY(0);} }
+
+    .app-tabs-wrap { width: 100%; text-align: left; }
 
     .step h2 {
       font-size: var(--_typography---h1--font-size);
@@ -432,7 +436,7 @@
       margin-bottom: var(--_spacing---4-px); font-weight: 500; font-size: var(--_typography---form-label--font-size); }
     .progress-info .rem { color: var(--muted); font-weight: 600; }
     .progress-bar { width: 100%; height: 9px; background: var(--variables--blue-12); border-radius: var(--_radius---radius-btns); overflow: hidden; }
-    .progress-fill { height: 100%; width: 0; background: var(--primary--primary-blue); border-radius: var(--_radius---radius-btns); transition: width .4s ease; }
+    .progress-fill { height: 100%; width: 0; background: var(--primary--primary-blue); border-radius: var(--_radius---radius-btns); transition: width .4s ease, background-color .3s ease; }
     .divider { margin: var(--_spacing---20-px) 0; border: 0; border-top: 1px dashed var(--variables--blue-32); }
     .total-line .progress-info { font-size: var(--_typography---text-m--font-size); font-weight: 700; color: var(--primary--primary-blue); }
 
@@ -447,6 +451,174 @@
       .dashboard { grid-template-columns: 1fr; }
       .summary { position: static; }
     }
+
+    /* ============================================================
+       Přepínač Kalkulačka / Rozvrh (zobrazuje se až po výběru oboru)
+       ============================================================ */
+    .tabbar {
+      display: flex; gap: 8px;
+      margin: 0 auto 24px auto;
+      background: var(--primary--background-grey);
+      border: 1px solid var(--variables--blue-12);
+      padding: 6px; border-radius: var(--_radius---radius-8-px);
+      width: fit-content;
+    }
+    .tab-btn {
+      background: transparent; border: none; padding: 10px 20px;
+      border-radius: 6px; cursor: pointer;
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---btn-primary--font-size);
+      font-weight: 600; color: var(--muted); transition: all .2s;
+    }
+    .tab-btn:hover { color: var(--primary--primary-black); }
+    .tab-btn.active { background: var(--primary--background-white); color: var(--primary--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+    /* ============================================================
+       Rozvrh (schedule)
+       ============================================================ */
+    .container-fluid {
+      width: 100%;
+      max-width: none;
+      padding-left: var(--_spacing---24-px);
+      padding-right: var(--_spacing---24-px);
+      box-sizing: border-box;
+    }
+    @media (max-width: 600px) {
+      .container-fluid { padding-left: var(--_spacing---16-px); padding-right: var(--_spacing---16-px); }
+    }
+
+    .years-stepper { display: flex; align-items: center; gap: 10px; }
+    .years-stepper button {
+      width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--variables--blue-12);
+      background: var(--primary--background-white); color: var(--primary--primary-blue);
+      font-weight: 700; font-size: 1rem; cursor: pointer; line-height: 1;
+    }
+    .years-stepper button:hover { background: var(--variables--blue-8); }
+    .years-stepper button:disabled { opacity: .4; cursor: not-allowed; }
+    .years-stepper .count { min-width: 26px; text-align: center; font-weight: 700; color: var(--primary--primary-blue); }
+
+    /* třísloupcové rozložení: předměty dle kategorií (scrolluje s dokumentem) /
+       ročníky (sticky, vlastní scroll) / kontrola plnění (sticky, vlastní scroll) */
+    .sched-columns { display: grid; grid-template-columns: 2fr 1.3fr 1fr; gap: var(--_spacing---24-px); align-items: start; }
+    @media (max-width: 1150px) { .sched-columns { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 900px) { .sched-columns { grid-template-columns: 1fr; } }
+
+    .sched-col-title {
+      font-size: var(--_typography---filter-label--font-size);
+      letter-spacing: var(--_typography---filter-label--letter-spacing);
+      text-transform: uppercase; color: var(--muted); font-weight: 600;
+      margin-bottom: var(--_spacing---12-px);
+    }
+
+    .sched-col-categories { min-width: 0; }
+    @media (max-width: 1150px) { .sched-col-categories { grid-column: 1 / -1; } }
+
+    .sched-col-years-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--_spacing---12-px); flex-wrap: wrap;
+      margin-bottom: var(--_spacing---12-px);
+    }
+    .sched-col-years-head .sched-col-title { margin-bottom: 0; }
+
+    .sched-col-years {
+      position: sticky;
+      top: var(--_spacing---16-px);
+      max-height: calc(100vh - var(--_spacing---32-px));
+      overflow-y: auto;
+      min-width: 0;
+    }
+    .sched-col-summary { min-width: 0; }
+    @media (max-width: 900px) {
+      .sched-col-years { position: static; max-height: none; overflow-y: visible; }
+    }
+
+    /* rozšíření .subject-item (z Kalkulačky) o přetažitelnost a indikátory zařazení v Rozvrhu */
+    .subject-item[draggable="true"] { cursor: grab; }
+    .subject-item[draggable="true"].dragging { opacity: .4; }
+    .subject-item .sem-tag {
+      font-size: var(--_typography---text-xs--font-size); color: var(--muted);
+      background: var(--variables--blue-8); padding: .1rem .4rem; border-radius: 4px; white-space: nowrap;
+      cursor: pointer;
+    }
+    .subject-item .sem-tag:hover { background: var(--variables--blue-12); }
+    .subject-item .placed-at {
+      font-size: var(--_typography---text-xs--font-size); color: var(--primary--primary-blue); font-weight: 700; white-space: nowrap;
+      cursor: pointer; padding: .1rem .3rem; border-radius: 4px;
+    }
+    .subject-item .placed-at:hover { background: var(--variables--blue-8); }
+
+    .year-block { margin-bottom: var(--_spacing---20-px); }
+    .year-block:last-child { margin-bottom: 0; }
+    .year-block h3 {
+      margin: 0 0 var(--_spacing---8-px); font-size: var(--_typography---text-m--font-size);
+      font-weight: 600; color: var(--primary--primary-black); display: flex; align-items: center;
+      justify-content: space-between; gap: 8px;
+    }
+    .year-block-title { display: flex; align-items: center; gap: 8px; }
+    .year-credits { font-size: var(--_typography---text-xs--font-size); font-weight: 700; color: var(--primary--primary-blue);
+      background: var(--variables--blue-8); padding: .15rem .5rem; border-radius: var(--_radius---radius-btns); }
+    .year-reset-btn {
+      font-size: var(--_typography---text-xs--font-size); font-weight: 600; color: var(--muted);
+      background: none; border: 1px solid var(--variables--blue-12); border-radius: var(--_radius---radius-btns);
+      padding: .15rem .55rem; cursor: pointer; flex-shrink: 0;
+    }
+    .year-reset-btn:hover { color: var(--primary--primary-red); border-color: var(--primary--primary-red); }
+
+    .semesters-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--_spacing---12-px); }
+    @media (max-width: 600px) { .semesters-row { grid-template-columns: 1fr; } }
+
+    .semester-slot {
+      border: 1px solid var(--variables--blue-12); border-radius: var(--_radius---radius-8-px);
+      padding: var(--_spacing---8-px); background: var(--primary--background-grey);
+      min-height: 56px; transition: background .15s, border-color .15s;
+    }
+    .semester-slot.drag-over { background: #eef2f5; border-color: var(--primary--primary-blue); }
+    .semester-slot.drag-denied { background: #fdecea; border-color: var(--primary--primary-red); cursor: not-allowed; }
+    .semester-slot .slot-label {
+      font-size: var(--_typography---filter-label--font-size); text-transform: uppercase;
+      letter-spacing: var(--_typography---filter-label--letter-spacing); color: var(--muted); font-weight: 600;
+      margin-bottom: 6px; display: block;
+    }
+    .semester-slot .slot-items { display: flex; flex-direction: column; gap: 6px; }
+    .semester-slot .empty-msg { font-size: var(--_typography---text-xs--font-size); color: var(--muted); }
+
+    .sched-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border: 1px solid var(--variables--blue-12); border-radius: var(--_radius---radius-8-px);
+      background: #e7f6ec; border-color: #bfe6cc; cursor: grab; user-select: none; font-size: var(--_typography---form-label--font-size);
+    }
+    .sched-item.spans-both { background: #eaf2fb; border-color: #c6dcf3; }
+    .sched-item:active { cursor: grabbing; }
+    .sched-item .name { flex: 1; }
+    .sched-item .credits-badge { flex-shrink: 0; margin-left: 0; }
+    .sched-item .remove-btn {
+      flex-shrink: 0; border: none; background: transparent; color: var(--muted);
+      cursor: pointer; font-size: 1rem; line-height: 1; padding: 0 2px;
+    }
+    .sched-item .remove-btn:hover { color: var(--primary--primary-red); }
+    .sched-item[draggable="true"].dragging { opacity: .4; }
+
+    /* mobilní výběr ročníku klepnutím (tap-to-place) */
+    .year-picker-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 999;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .year-picker {
+      background: var(--primary--background-white); width: 100%; max-width: 480px;
+      border-radius: 20px 20px 0 0; padding: var(--_spacing---24-px); box-shadow: 0 -8px 24px rgba(0,0,0,.15);
+      max-height: 80vh; overflow-y: auto;
+    }
+    .year-picker h4 { color: var(--primary--primary-blue); margin-bottom: var(--_spacing---12-px); }
+    .year-picker .opt-list { display: flex; flex-direction: column; gap: 8px; }
+    .year-picker .opt-btn {
+      text-align: left; padding: 12px 16px; border-radius: var(--_radius---radius-8-px);
+      border: 1px solid var(--variables--blue-12); background: var(--primary--background-white);
+      cursor: pointer; font-family: var(--_typography---font-family--silka); font-size: var(--_typography---form-label--font-size);
+    }
+    .year-picker .opt-btn:hover { background: var(--variables--blue-8); }
+    .year-picker .cancel-btn { margin-top: var(--_spacing---12-px); width: 100%; }
+
+    .sched-note { font-size: var(--_typography---text-xs--font-size); color: var(--muted); margin-bottom: var(--_spacing---20-px); line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -465,7 +637,7 @@
 </header>
   <div class="page-content">
   <h1>Kalkulačka kreditů <span>MFF UK</span></h1>
-  <div class="instructions">
+  <div class="instructions" id="app-instructions">
     Vyber stupeň studia a specializaci, pak zaškrtávej splněné předměty. U každé kategorie uvidíš
     získané a požadované kredity a kolik ti ještě zbývá splnit.
   </div>
@@ -485,30 +657,86 @@
       <div id="spec-grid" class="btn-grid"></div>
       <button class="btn ghost small" style="margin-top: var(--_spacing---40-px)" onclick="goToStep(1)">← Zpět na výběr studia</button>
     </div>
+  </div>
 
-    <div id="dashboard" class="dashboard">
-      <div class="panel">
-        <div class="header">
-          <div>
-            <div class="sec-title" id="dash-degree">Specializace</div>
-            <h2 id="dash-title">Můj plán</h2>
+  <div id="app-tabs-wrap" class="app-tabs-wrap" style="display:none;">
+    <div class="container">
+      <div class="tabbar" id="app-tabbar">
+        <button class="tab-btn active" id="tab-btn-calc" onclick="switchTab('calc')">Kalkulačka</button>
+        <button class="tab-btn" id="tab-btn-sched" onclick="switchTab('sched')">Rozvrh</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="dashboard" class="dashboard" style="display:grid;">
+        <div class="panel">
+          <div class="header">
+            <div>
+              <div class="sec-title" id="dash-degree">Specializace</div>
+              <h2 id="dash-title">Můj plán</h2>
+            </div>
+            <button class="btn alt small" onclick="resetProgress()">Změnit obor</button>
           </div>
-          <button class="btn alt small" onclick="resetProgress()">Změnit obor</button>
+          <div id="lists"></div>
         </div>
-        <div id="lists"></div>
+
+        <div class="panel summary">
+          <h3 style="margin:0 0 var(--_spacing---16-px); font-size: var(--_typography---h3--font-size); font-weight: var(--_typography---h3--font-weight);">Kontrola plnění</h3>
+          <div id="summary-body"></div>
+          <div id="status" class="status"></div>
+          <button class="btn ghost small" style="margin-top: var(--_spacing---16-px); width: 100%;" onclick="resetAllProgress()">Reset celkový (zrušit vše splněné)</button>
+          <p class="note">
+            Limity vycházejí ze studijních plánů (Karolinka). „Volitelné“ doplníš libovolnými předměty do
+            celkového počtu kreditů. U magisterských povinně volitelných můžeš předmět označit
+            <b>„bez kreditů“</b> — sníží požadované minimum kategorie, ale nepočítá se do získaných kreditů.
+            Postup se ukládá do prohlížeče.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="sched-dashboard" class="container-fluid" style="display:none;">
+      <div class="header" style="margin-bottom: var(--_spacing---20-px);">
+        <div>
+          <div class="sec-title" id="sched-degree">Specializace</div>
+          <h2 id="sched-title">Můj rozvrh</h2>
+        </div>
+        <button class="btn alt small" onclick="resetProgress()">Změnit obor</button>
       </div>
 
-      <div class="panel summary">
-        <h3 style="margin:0 0 var(--_spacing---16-px); font-size: var(--_typography---h3--font-size); font-weight: var(--_typography---h3--font-weight);">Kontrola plnění</h3>
-        <div id="summary-body"></div>
-        <div id="status" class="status"></div>
-        <button class="btn ghost small" style="margin-top: var(--_spacing---16-px); width: 100%;" onclick="resetAllProgress()">Reset celkový (zrušit vše splněné)</button>
-        <p class="note">
-          Limity vycházejí ze studijních plánů (Karolinka). „Volitelné“ doplníš libovolnými předměty do
-          celkového počtu kreditů. U magisterských povinně volitelných můžeš předmět označit
-          <b>„bez kreditů“</b> — sníží požadované minimum kategorie, ale nepočítá se do získaných kreditů.
-          Postup se ukládá do prohlížeče.
-        </p>
+      <p class="sched-note">
+        Přetáhni (na počítači) nebo klepni (na mobilu) na předmět a zařaď ho do ročníku a semestru.
+        Zařazení předmětu ho zároveň označí jako splněný v Kalkulačce. Předmět „oba“ (celoroční) se
+        počítá jen jednou, i když je vidět v obou semestrech.
+      </p>
+
+      <div class="sched-columns">
+        <div class="sched-col-categories panel">
+          <div class="sched-col-title">Předměty dle kategorií</div>
+          <div id="sched-categories"></div>
+        </div>
+        <div class="sched-col-years panel">
+          <div class="sched-col-years-head">
+            <div class="sched-col-title" style="margin-bottom:0;">Ročníky</div>
+            <div class="years-stepper">
+              <span class="sec-title">Počet</span>
+              <button type="button" onclick="changeYears(-1)" id="years-minus">−</button>
+              <span class="count" id="years-count">3</span>
+              <button type="button" onclick="changeYears(1)" id="years-plus">+</button>
+            </div>
+          </div>
+          <div id="year-blocks"></div>
+        </div>
+        <div class="sched-col-summary panel summary">
+          <h3 style="margin:0 0 var(--_spacing---16-px); font-size: var(--_typography---h3--font-size); font-weight: var(--_typography---h3--font-weight);">Kontrola plnění</h3>
+          <div id="sched-plan-summary-body"></div>
+          <div id="sched-status" class="status"></div>
+          <button class="btn ghost small" style="margin-top: var(--_spacing---16-px); width: 100%;" onclick="resetAllSchedule()">Reset celkový (vyprázdnit celý rozvrh)</button>
+          <p class="note">
+            Zařazení předmětu do ročníku a semestru ho zároveň označí jako splněný v Kalkulačce.
+            Postup se ukládá do prohlížeče.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -545,6 +773,12 @@ let currentDegree = null;
 let completed = new Set();
 let noCredit = new Set();   // předměty označené "bez kreditů" (jen Mgr PV)
 
+// --- Rozvrh (schedule) stav ---
+// placements: { [subjectId]: { year: 1, semester: 'zimní'|'letní'|'oba' } }
+let placements = {};
+let yearsCount = null; // dopočte se dle stupně studia při vstupu do Rozvrhu (3 Bc / 2 Mgr), lze ručně změnit
+const DEFAULT_YEARS = { bakalarske: 3, magisterske: 2 };
+
 function saveState(){
   if(currentSpec) localStorage.setItem('mff_spec', currentSpec);
   if(currentDegree) localStorage.setItem('mff_degree', currentDegree);
@@ -560,9 +794,35 @@ function loadState(){
   return localStorage.getItem('mff_spec');
 }
 
+function schedStorageKey(kind){
+  // rozvrh je vázán na konkrétní obor, aby se plány různých specializací nemíchaly
+  return 'mff_sched_' + kind + '_' + (currentSpec || 'none');
+}
+function saveSchedState(){
+  if(!currentSpec) return;
+  localStorage.setItem(schedStorageKey('placements'), JSON.stringify(placements));
+  localStorage.setItem(schedStorageKey('years'), String(yearsCount));
+}
+function loadSchedState(){
+  placements = {};
+  yearsCount = null;
+  if(!currentSpec) return;
+  const p = localStorage.getItem(schedStorageKey('placements'));
+  if(p){ try{ placements = JSON.parse(p) || {}; }catch(e){ placements = {}; } }
+  const y = localStorage.getItem(schedStorageKey('years'));
+  if(y) yearsCount = parseInt(y, 10) || null;
+}
+
 function goToStep(step){
-  document.querySelectorAll('.step,.dashboard').forEach(e => e.classList.remove('active'));
-  document.getElementById(step === 'dashboard' ? 'dashboard' : 'step-' + step).classList.add('active');
+  document.getElementById('step-1').classList.remove('active');
+  document.getElementById('step-2').classList.remove('active');
+  const wrap = document.getElementById('app-tabs-wrap');
+  if(step === 'dashboard'){
+    wrap.style.display = 'block';
+  } else {
+    wrap.style.display = 'none';
+    document.getElementById('step-' + step).classList.add('active');
+  }
 }
 
 function selectDegree(deg){
@@ -581,7 +841,12 @@ function selectDegree(deg){
   goToStep(2);
 }
 
-function selectSpec(id){ currentSpec = id; saveState(); renderDashboard(); }
+function selectSpec(id){
+  currentSpec = id; saveState();
+  loadSchedState();
+  switchTab('calc');
+  renderDashboard();
+}
 
 function credits(id){ return byId[id] ? (byId[id].credits || 0) : 0; }
 
@@ -598,14 +863,19 @@ function planFor(spec){
 }
 
 function toggleDone(id){
-  if(completed.has(id)) completed.delete(id);
+  if(completed.has(id)){ completed.delete(id); unplaceSubject(id); }
   else { completed.add(id); noCredit.delete(id); }
   saveState(); renderDashboard();
 }
 function toggleNoCredit(id){
   if(noCredit.has(id)) noCredit.delete(id);
-  else { noCredit.add(id); completed.delete(id); }
+  else { noCredit.add(id); completed.delete(id); unplaceSubject(id); }
   saveState(); renderDashboard();
+}
+
+// Odebere zařazení předmětu z Rozvrhu (voláno při odškrtnutí v Kalkulačce), beze zápisu do localStorage navíc mimo Rozvrh
+function unplaceSubject(id){
+  if(placements[id]){ delete placements[id]; saveSchedState(); }
 }
 
 // kredity "bez kreditů" v daném seznamu předmětů
@@ -715,6 +985,9 @@ function renderDashboard(){
   }
 
   renderSummary(plan, isMgr);
+
+  // Udrž Rozvrh vždy v aktuálním stavu, ať uživatel přepne na jeho záložku kdykoliv
+  renderSchedule();
 }
 
 function catBlock(title, subtitle, badgeHtml, subjects, allowNoCredit){
@@ -739,15 +1012,23 @@ function catBlock(title, subtitle, badgeHtml, subjects, allowNoCredit){
 }
 
 function bar(label, earned, target){
-  const pct = target ? Math.min(earned/target*100,100) : (earned>0?100:0);
+  const rawPct = target ? Math.min(earned/target*100,100) : (earned>0?100:0);
   const rem = target!=null ? Math.max(0, target - earned) : null;
   const right = target!=null ? `${earned} / ${target} kr.` : `${earned} kr.`;
+  const isDone = target!=null && earned>=target;
   const remTxt = rem!=null ? (rem>0 ? `zbývá ${rem}` : '✓ splněno') : '';
-  const col = (target!=null && earned>=target) ? '#1f9d55' : 'var(--primary--primary-blue)';
+  // odstupňovaná barva podle progresu: 0 % červená → do 75 % modrá → do 100 % oranžová → 100 % zelená
+  let col, textCol;
+  if(isDone){ col = '#1f9d55'; textCol = '#1f9d55'; }
+  else if(rawPct === 0){ col = 'var(--primary--primary-red)'; textCol = 'var(--primary--primary-red)'; }
+  else if(rawPct >= 75){ col = 'var(--col-mixed)'; textCol = '#8a6d00'; }
+  else { col = 'var(--primary--primary-blue)'; textCol = 'var(--primary--primary-blue)'; }
+  // minimální viditelný pruh i při 0 %, ať barva (červená = nezačato) není neviditelná
+  const pct = (rawPct === 0 && target) ? 3 : rawPct;
   return `<div class="progress-box">
     <div class="progress-info"><span>${label}</span><span>${right}</span></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${col}"></div></div>
-    ${remTxt?`<div class="progress-info" style="margin-top:.2rem"><span></span><span class="rem">${remTxt}</span></div>`:''}
+    ${remTxt?`<div class="progress-info" style="margin-top:.2rem"><span></span><span class="rem" style="color:${textCol}">${remTxt}</span></div>`:''}
   </div>`;
 }
 
@@ -817,15 +1098,18 @@ function renderSummary(plan){
 
 function resetProgress(){
   if(confirm('Opravdu změnit obor? Smaže to aktuální výběr předmětů.')){
+    const oldSpec = currentSpec;
     currentSpec = null; currentDegree = null; completed = new Set(); noCredit = new Set();
     ['mff_spec','mff_degree','mff_completed','mff_nocredit'].forEach(k=>localStorage.removeItem(k));
+    if(oldSpec){ localStorage.removeItem('mff_sched_placements_'+oldSpec); localStorage.removeItem('mff_sched_years_'+oldSpec); }
+    placements = {}; yearsCount = null;
     goToStep(1);
   }
 }
 
 // Zruší "splněno" i "bez kreditů" u zadané sady předmětů (jedna kategorie)
 function resetCategory(ids){
-  ids.forEach(id => { completed.delete(id); noCredit.delete(id); });
+  ids.forEach(id => { completed.delete(id); noCredit.delete(id); unplaceSubject(id); });
   saveState();
   renderDashboard();
 }
@@ -835,9 +1119,480 @@ function resetCategory(ids){
 function resetAllProgress(){
   completed = new Set();
   noCredit = new Set();
+  placements = {};
+  saveSchedState();
   saveState();
   renderDashboard();
 }
+
+// ============================================================
+// Přepínač záložek (Kalkulačka / Rozvrh)
+// ============================================================
+function switchTab(tab){
+  document.getElementById('tab-btn-calc').classList.toggle('active', tab === 'calc');
+  document.getElementById('tab-btn-sched').classList.toggle('active', tab === 'sched');
+  document.getElementById('dashboard').style.display = (tab === 'calc') ? 'grid' : 'none';
+  document.getElementById('sched-dashboard').style.display = (tab === 'sched') ? 'block' : 'none';
+  document.getElementById('app-instructions').textContent = (tab === 'calc')
+    ? 'Vyber stupeň studia a specializaci, pak zaškrtávej splněné předměty. U každé kategorie uvidíš získané a požadované kredity a kolik ti ještě zbývá splnit.'
+    : 'Přetáhni (na počítači) nebo klepni (na mobilu) na předmět a zařaď ho do ročníku a semestru. Zařazení předmětu ho zároveň označí jako splněný.';
+  if(tab === 'sched') renderSchedule();
+}
+
+// ============================================================
+// Rozvrh (schedule)
+// ============================================================
+
+function defaultYearsFor(deg){
+  return DEFAULT_YEARS[deg] || 3;
+}
+
+function changeYears(delta){
+  const min = 1, max = 8;
+  yearsCount = Math.max(min, Math.min(max, (yearsCount || 1) + delta));
+  // odstraň zařazení mimo nový rozsah ročníků
+  Object.keys(placements).forEach(id => {
+    if(placements[id].year > yearsCount) delete placements[id];
+  });
+  saveSchedState();
+  renderSchedule();
+}
+
+function placeSubject(id, year, semester){
+  const subj = byId[id];
+  if(!subj) return;
+  // Předmět s pevným semestrem (zimní/letní) lze zařadit jen do svého semestru — "oba" lze do kteréhokoli.
+  if((subj.semester === 'zimní' || subj.semester === 'letní') && subj.semester !== semester) return;
+  placements[id] = { year, semester };
+  completed.add(id);
+  noCredit.delete(id);
+  saveSchedState();
+  saveState();
+  renderDashboard();
+}
+
+function unplaceFromSchedule(id){
+  delete placements[id];
+  completed.delete(id);
+  saveSchedState();
+  saveState();
+  renderDashboard();
+}
+
+// Vyprázdní jen zadaný ročník (odebere zařazení všech předmětů v něm a odškrtne je v Kalkulačce)
+function resetYear(year){
+  const ids = Object.keys(placements).filter(id => placements[id].year === year);
+  if(ids.length === 0) return;
+  ids.forEach(id => { delete placements[id]; completed.delete(id); });
+  saveSchedState();
+  saveState();
+  renderDashboard();
+}
+
+// Vyprázdní celý rozvrh (všechny ročníky) v rámci aktuální specializace
+function resetAllSchedule(){
+  const ids = Object.keys(placements);
+  if(ids.length === 0) return;
+  ids.forEach(id => { delete placements[id]; completed.delete(id); });
+  saveSchedState();
+  saveState();
+  renderDashboard();
+}
+
+// Vyprázdní zařazení jen u předmětů dané kategorie (jedna karta v levém sloupci Rozvrhu)
+function resetSchedCategory(ids){
+  ids.forEach(id => { delete placements[id]; completed.delete(id); });
+  saveSchedState();
+  saveState();
+  renderDashboard();
+}
+
+let dragSubjectId = null;
+
+function renderSchedule(){
+  const schedDash = document.getElementById('sched-dashboard');
+  if(!currentSpec || !REQS[currentSpec]){
+    // Neměl by nastat (Rozvrh je dostupný jen po výběru oboru), ale pro jistotu
+    // vykresli srozumitelný stav místo tichého ne-vykreslení.
+    document.getElementById('sched-categories').innerHTML = '<p style="color:#999;font-size:.9rem">Nejdřív zvol obor v Kalkulačce.</p>';
+    document.getElementById('year-blocks').innerHTML = '';
+    document.getElementById('sched-plan-summary-body').innerHTML = '';
+    return;
+  }
+
+  try {
+    if(yearsCount == null || isNaN(yearsCount)) yearsCount = defaultYearsFor(currentDegree);
+
+    const spec = SPECS.find(s => s.id === currentSpec);
+    const req = REQS[currentSpec];
+    const isMgr = req.level === 'mgr';
+    document.getElementById('sched-degree').textContent = isMgr ? 'Magisterské studium' : 'Bakalářské studium';
+    document.getElementById('sched-title').textContent = spec ? spec.label : currentSpec;
+    document.getElementById('years-count').textContent = yearsCount;
+    document.getElementById('years-minus').disabled = yearsCount <= 1;
+    document.getElementById('years-plus').disabled = yearsCount >= 8;
+
+    const plan = planFor(currentSpec);
+
+    // vyčisti zařazení předmětů, které už v aktuálním plánu nejsou
+    const validIds = new Set();
+    plan.mandatory.forEach(s => validIds.add(s.id));
+    plan.groups.forEach(g => g.subjects.forEach(s => validIds.add(s.id)));
+    Object.keys(placements).forEach(id => { if(!validIds.has(id)) delete placements[id]; });
+
+    renderSchedCategories(plan, isMgr);
+    renderYearBlocks(plan);
+    renderSchedSummary(plan, isMgr);
+  } catch(err){
+    console.error('Chyba při vykreslování Rozvrhu:', err);
+    document.getElementById('sched-categories').innerHTML = '<p style="color:#c0392b;font-size:.9rem">Nastala chyba při načítání rozvrhu. Zkus obnovit stránku.</p>';
+  }
+}
+
+function semesterTagText(sem){
+  if(sem === 'zimní') return 'ZS';
+  if(sem === 'letní') return 'LS';
+  if(sem === 'oba') return 'ZS nebo LS';
+  return '—';
+}
+
+// --- levý sloupec: předměty rozdělené dle kategorií (stejná tabulka jako v Kalkulačce) ---
+function renderSchedCategories(plan, isMgr){
+  const wrap = document.getElementById('sched-categories');
+  wrap.innerHTML = '';
+
+  // Povinné — stejná logika jako v Kalkulačce (renderDashboard), jen nad "completed" množinou
+  // (zařazení předmětu v Rozvrhu ho automaticky označí jako splněný, takže jde o stejná data)
+  const mandEarned = plan.mandatory.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+  const mandTotal = plan.mandatory.reduce((a,s)=>a+credits(s.id),0);
+  wrap.appendChild(schedCatBlock(
+    'Povinné předměty',
+    `Nutné splnit všechny • ${mandEarned}/${mandTotal} kr.`,
+    (mandEarned>=mandTotal && mandTotal>0) ? pill('hotovo','ok') : pill('splnit vše','req'),
+    plan.mandatory, false
+  ));
+
+  // PV skupiny — identická logika jako v Kalkulačce
+  plan.groups.forEach(g => {
+    const earned = g.subjects.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+    const raw = g.def.min_credits;
+    const min = effMin(raw, g.subjects);
+    const ncCr = ncCreditsIn(g.subjects);
+    let badge;
+    if(raw == null) badge = pill('bez limitu','todo');
+    else if(raw === 0) badge = pill('bez vlastního limitu','todo');
+    else badge = earned>=min ? pill('splněno','ok') : pill('min. '+min+' kr.','req');
+    let subt;
+    if(raw){
+      subt = `Minimum ${min} kr.` + (ncCr ? ` (sníženo o ${ncCr} kr. „bez kreditů“ z ${raw})` : '') + ` • získáno ${earned} kr.`;
+    } else {
+      subt = `Získáno ${earned} kr. (počítá se do celku PV)`;
+    }
+    wrap.appendChild(schedCatBlock('Povinně volitelné — ' + g.def.label, subt, badge, g.subjects, isMgr));
+  });
+}
+
+function schedCatBlock(title, subtitle, badgeHtml, subjects, allowNoCredit){
+  const cat = document.createElement('div'); cat.className = 'cat';
+  const head = document.createElement('div'); head.className = 'cat-head';
+  head.innerHTML = `<h3>${title} ${badgeHtml}</h3>`;
+  const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
+  resetBtn.className = 'btn ghost small cat-reset';
+  resetBtn.textContent = 'Reset kategorie';
+  const ids = subjects.map(s => s.id);
+  resetBtn.onclick = () => resetSchedCategory(ids);
+  head.appendChild(resetBtn);
+  cat.appendChild(head);
+  const sub = document.createElement('div'); sub.className = 'sub'; sub.textContent = subtitle;
+  cat.appendChild(sub);
+  const list = document.createElement('div'); list.className = 'subject-list';
+  if(subjects.length === 0){
+    list.innerHTML = '<p style="color:#999">Žádné předměty.</p>';
+  } else {
+    subjects.forEach(s => list.appendChild(schedSubjectRow(s, allowNoCredit)));
+  }
+  cat.appendChild(list);
+  return cat;
+}
+
+// Řádek předmětu v Rozvrhu — stejný vzhled/třídy jako subjectRow() v Kalkulačce (.subject-item),
+// navíc s možností přetáhnout předmět do ročníku a s indikací, kam už je zařazený.
+function schedSubjectRow(s, allowNoCredit){
+  const isPlaced = !!placements[s.id];
+  const nc = noCredit.has(s.id);
+  const div = document.createElement('label');
+  div.className = 'subject-item' + (isPlaced ? ' done' : '') + (nc ? ' nocredit' : '');
+  div.draggable = true;
+  div.dataset.subjectId = s.id;
+  div.ondragstart = (e) => {
+    dragSubjectId = s.id;
+    div.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', s.id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  div.ondragend = () => { div.classList.remove('dragging'); dragSubjectId = null; };
+
+  // checkbox = rychlé zařazení/odebrání (výchozí 1. ročník, zimní/pevný semestr) —
+  // pro výběr konkrétního ročníku a semestru slouží klik na řádek nebo přetažení
+  const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = isPlaced;
+  cb.onclick = (e) => { e.stopPropagation(); };
+  cb.onchange = () => {
+    if(cb.checked){
+      const sem = (s.semester === 'zimní' || s.semester === 'letní') ? s.semester : 'zimní';
+      placeSubject(s.id, 1, sem);
+    } else {
+      unplaceFromSchedule(s.id);
+    }
+  };
+  const name = document.createElement('span'); name.className = 'name'; name.textContent = s.label;
+  div.append(cb, name);
+
+  if(allowNoCredit){
+    const ncWrap = document.createElement('span');
+    ncWrap.className = 'nc-toggle';
+    ncWrap.title = 'Předmět splněn bez započtení kreditů — sníží požadované minimum, ale nepřičte kredity.';
+    const ncCb = document.createElement('input'); ncCb.type = 'checkbox'; ncCb.checked = nc;
+    ncCb.onclick = (e) => { e.stopPropagation(); };
+    ncCb.onchange = () => toggleNoCredit(s.id);
+    const ncLbl = document.createElement('span'); ncLbl.textContent = 'bez kreditů';
+    ncWrap.append(ncCb, ncLbl);
+    ncWrap.onclick = (e) => { e.preventDefault(); e.stopPropagation(); if(e.target===ncWrap||e.target===ncLbl) toggleNoCredit(s.id); };
+    div.append(ncWrap);
+  }
+
+  if(isPlaced){
+    const p = placements[s.id];
+    const at = document.createElement('span'); at.className = 'placed-at';
+    at.textContent = `${p.year}. r. / ${semesterTagText(p.semester)}`;
+    at.title = 'Klikni pro změnu ročníku/semestru';
+    at.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openYearPicker(s.id); };
+    div.appendChild(at);
+  } else {
+    const semTag = document.createElement('span'); semTag.className = 'sem-tag'; semTag.textContent = semesterTagText(s.semester);
+    semTag.title = 'Klikni pro zařazení do ročníku/semestru';
+    semTag.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openYearPicker(s.id); };
+    div.appendChild(semTag);
+  }
+
+  const credBadge = document.createElement('span'); credBadge.className = 'credits-badge'; credBadge.textContent = (s.credits||0)+' kr.';
+  div.appendChild(credBadge);
+  return div;
+}
+
+function scheduledItem(s){
+  const div = document.createElement('div');
+  div.className = 'sched-item';
+  div.draggable = true;
+  div.dataset.subjectId = s.id;
+  div.ondragstart = (e) => {
+    dragSubjectId = s.id;
+    div.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', s.id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  div.ondragend = () => { div.classList.remove('dragging'); dragSubjectId = null; };
+  div.onclick = (e) => { if(e.target.closest('.remove-btn')) return; openYearPicker(s.id); };
+
+  const name = document.createElement('span'); name.className = 'name'; name.textContent = s.label;
+  const credBadge = document.createElement('span'); credBadge.className = 'credits-badge'; credBadge.textContent = (s.credits||0)+' kr.';
+  const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'remove-btn'; rm.title = 'Odebrat z rozvrhu'; rm.textContent = '✕';
+  rm.onclick = (e) => { e.stopPropagation(); unplaceFromSchedule(s.id); };
+  div.append(name, credBadge, rm);
+  return div;
+}
+
+function attachSlotDropTarget(slotEl, year, semester){
+  slotEl.ondragover = (e) => {
+    e.preventDefault();
+    const subj = byId[dragSubjectId];
+    const allowed = !subj || subj.semester === 'oba' || subj.semester === semester;
+    slotEl.classList.toggle('drag-over', allowed);
+    slotEl.classList.toggle('drag-denied', !allowed);
+    e.dataTransfer.dropEffect = allowed ? 'move' : 'none';
+  };
+  slotEl.ondragleave = () => { slotEl.classList.remove('drag-over'); slotEl.classList.remove('drag-denied'); };
+  slotEl.ondrop = (e) => {
+    e.preventDefault(); slotEl.classList.remove('drag-over'); slotEl.classList.remove('drag-denied');
+    const id = e.dataTransfer.getData('text/plain') || dragSubjectId;
+    if(id) placeSubject(id, year, semester);
+  };
+}
+
+// --- pravý sloupec: ročníky se semestry ---
+function renderYearBlocks(plan){
+  const container = document.getElementById('year-blocks');
+  container.innerHTML = '';
+  const byIdSubj = {};
+  plan.mandatory.forEach(s => byIdSubj[s.id] = s);
+  plan.groups.forEach(g => g.subjects.forEach(s => byIdSubj[s.id] = s));
+
+  for(let y = 1; y <= yearsCount; y++){
+    const block = document.createElement('div'); block.className = 'year-block';
+
+    const placedEntriesInYear = Object.entries(placements).filter(([id,p]) => p.year === y && byIdSubj[id]);
+    const placedInYear = placedEntriesInYear.map(([id]) => byIdSubj[id]);
+    const yearCredits = placedInYear.reduce((a,s)=>a+credits(s.id),0);
+
+    const h = document.createElement('h3');
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'year-block-title';
+    titleSpan.innerHTML = `${y}. ročník <span class="year-credits">${yearCredits} kr.</span>`;
+    h.appendChild(titleSpan);
+
+    if(placedInYear.length > 0){
+      const resetBtn = document.createElement('button');
+      resetBtn.type = 'button';
+      resetBtn.className = 'year-reset-btn';
+      resetBtn.title = `Vyprázdnit ${y}. ročník`;
+      resetBtn.textContent = 'Reset';
+      resetBtn.onclick = () => resetYear(y);
+      h.appendChild(resetBtn);
+    }
+    block.appendChild(h);
+
+    // Filtrujeme podle semestru, do kterého byl předmět SKUTEČNĚ zařazen (placements[id].semester),
+    // ne podle subj.semester — u předmětů typu "oba" si uživatel vybírá jeden konkrétní semestr.
+    const zimniIds = new Set(placedEntriesInYear.filter(([id,p]) => p.semester === 'zimní').map(([id]) => id));
+    const letniIds = new Set(placedEntriesInYear.filter(([id,p]) => p.semester === 'letní').map(([id]) => id));
+    const row = document.createElement('div'); row.className = 'semesters-row';
+    row.appendChild(semesterSlot(y, 'zimní', placedInYear.filter(s => zimniIds.has(s.id))));
+    row.appendChild(semesterSlot(y, 'letní', placedInYear.filter(s => letniIds.has(s.id))));
+    block.appendChild(row);
+
+    container.appendChild(block);
+  }
+}
+
+function semesterSlot(year, semester, items){
+  const slot = document.createElement('div'); slot.className = 'semester-slot';
+  const label = document.createElement('span'); label.className = 'slot-label';
+  label.textContent = semester === 'zimní' ? 'Zimní semestr' : 'Letní semestr';
+  slot.appendChild(label);
+
+  const list = document.createElement('div'); list.className = 'slot-items';
+  if(items.length === 0){
+    list.innerHTML = '<div class="empty-msg">Přetáhni sem předmět</div>';
+  } else {
+    items.forEach(s => list.appendChild(scheduledItem(s)));
+  }
+  slot.appendChild(list);
+
+  attachSlotDropTarget(slot, year, semester);
+  return slot;
+}
+
+// --- souhrn: kontrola plnění plánu (stejná logika jako v Kalkulačce) ---
+function renderSchedSummary(plan, isMgr){
+  const req = plan.req;
+
+  // stejná logika jako renderSummary() v Kalkulačce, ale nad "placements" množinou
+  const planBody = document.getElementById('sched-plan-summary-body');
+  const mandEarned = plan.mandatory.filter(s=>placements[s.id]).reduce((a,s)=>a+credits(s.id),0);
+  const mandTotal = plan.mandatory.reduce((a,s)=>a+credits(s.id),0);
+
+  let pvEarned = 0; const allPv = [];
+  plan.groups.forEach(g => g.subjects.forEach(s => allPv.push(s)));
+  const allPvUniq = [...new Map(allPv.map(s=>[s.id,s])).values()];
+  allPvUniq.forEach(s => { if(placements[s.id]) pvEarned += credits(s.id); });
+
+  // efektivní celkové PV minimum (sníženo o "bez kreditů" napříč všemi PV)
+  const ncTotal = ncCreditsIn(allPvUniq);
+  const effOverall = req.pv_overall_min!=null ? Math.max(0, req.pv_overall_min - ncTotal) : null;
+
+  let html = '';
+  html += `<div class="sec-title">Povinné</div>` + bar('Povinné předměty', mandEarned, mandTotal);
+
+  html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">Povinně volitelné — skupiny</div>`;
+  let groupsOk = true;
+  plan.groups.forEach(g => {
+    const earned = g.subjects.filter(s=>placements[s.id]).reduce((a,s)=>a+credits(s.id),0);
+    const min = effMin(g.def.min_credits, g.subjects);
+    if(min && earned < min) groupsOk = false;
+    if(g.def.min_credits){ html += bar(g.def.label, earned, min); }
+  });
+
+  if(req.pv_overall_min != null){
+    html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">PV celkem</div>` +
+            bar('Povinně volitelné celkem', pvEarned, effOverall) +
+            (ncTotal ? `<div class="progress-info" style="font-size:.72rem;color:var(--muted)"><span>sníženo „bez kreditů“</span><span>−${ncTotal} kr. (z ${req.pv_overall_min})</span></div>` : '');
+  }
+
+  const totalEarned = mandEarned + pvEarned;
+  html += `<hr class="divider">`;
+  html += `<div class="total-line">` + bar('Celkem kreditů', totalEarned, req.total_credits) + `</div>`;
+
+  planBody.innerHTML = html;
+
+  const st = document.getElementById('sched-status');
+  const mandOk = mandTotal>0 && mandEarned>=mandTotal;
+  const overallOk = effOverall==null || pvEarned>=effOverall;
+  const totalOk = totalEarned>=req.total_credits;
+  if(mandOk && groupsOk && overallOk && totalOk){
+    st.className = 'status ok';
+    st.textContent = '✓ Všechny podmínky studijního plánu jsou splněné.';
+  } else {
+    const need = [];
+    if(!mandOk) need.push('povinné');
+    if(!groupsOk) need.push('minima PV skupin');
+    if(!overallOk) need.push('PV celkem');
+    if(!totalOk) need.push((req.total_credits-totalEarned)+' kr. do '+req.total_credits);
+    st.className = 'status todo';
+    st.textContent = 'Zbývá zařadit: ' + need.join(', ') + '.';
+  }
+}
+
+// --- Mobilní výběr ročníku klepnutím ---
+function openYearPicker(id){
+  const subj = byId[id];
+  if(!subj) return;
+  const backdrop = document.createElement('div');
+  backdrop.className = 'year-picker-backdrop';
+  backdrop.onclick = (e) => { if(e.target === backdrop) document.body.removeChild(backdrop); };
+
+  const picker = document.createElement('div'); picker.className = 'year-picker';
+  const h = document.createElement('h4'); h.textContent = subj.label;
+  picker.appendChild(h);
+
+  const list = document.createElement('div'); list.className = 'opt-list';
+  for(let y = 1; y <= yearsCount; y++){
+    if(subj.semester === 'zimní' || subj.semester === 'letní'){
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt-btn';
+      b.textContent = `${y}. ročník — ${subj.semester === 'zimní' ? 'zimní semestr' : 'letní semestr'}`;
+      b.onclick = () => { placeSubject(id, y, subj.semester); document.body.removeChild(backdrop); };
+      list.appendChild(b);
+    } else {
+      // "oba" (nebo neznámý semestr): nabídni oba semestry jako samostatné volby, předmět se zařadí jen do jednoho
+      ['zimní','letní'].forEach(sem => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'opt-btn';
+        b.textContent = `${y}. ročník — ${sem === 'zimní' ? 'zimní semestr' : 'letní semestr'}`;
+        b.onclick = () => { placeSubject(id, y, sem); document.body.removeChild(backdrop); };
+        list.appendChild(b);
+      });
+    }
+  }
+  picker.appendChild(list);
+
+  if(placements[id]){
+    const rm = document.createElement('button');
+    rm.type = 'button'; rm.className = 'btn ghost small cancel-btn';
+    rm.textContent = 'Odebrat z rozvrhu';
+    rm.onclick = () => { unplaceFromSchedule(id); document.body.removeChild(backdrop); };
+    picker.appendChild(rm);
+  }
+
+  const cancel = document.createElement('button');
+  cancel.type = 'button'; cancel.className = 'btn ghost small cancel-btn';
+  cancel.textContent = 'Zrušit';
+  cancel.onclick = () => document.body.removeChild(backdrop);
+  picker.appendChild(cancel);
+
+  backdrop.appendChild(picker);
+  document.body.appendChild(backdrop);
+}
+
 
 async function init() {
     try {
@@ -856,6 +1611,7 @@ async function init() {
         const saved = loadState();
         if (saved && REQS[saved]) { 
             currentSpec = saved; 
+            loadSchedState();
             renderDashboard(); 
         } else {
             goToStep(1);
