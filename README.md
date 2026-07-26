@@ -4,6 +4,9 @@ Sada přehledných webových nástrojů pro (nejen) prváky informatiky na MFF U
 
 🔗 **Živá verze:** [ms.mff.cuni.cz/~smolad](https://www.ms.mff.cuni.cz/~smolad/)
 
+> [!IMPORTANT]
+> Tenhle projekt je z velké části vygenerovaný pomocí AI (kód i tento popis). Data o předmětech a kreditech se snažím udržovat přesná, ale ber je jako pomocnou orientaci, ne autoritativní zdroj — vždy si je ověř v [Karolínce pro svůj ročník](https://www.mff.cuni.cz/cs/studenti/bc-a-mgr-studium/studijni-plany). Chyby nebo nesrovnalosti hlaš prosím v issue nebo pr. Více v sekci [Přispívání](#přispívání)
+
 ## Co tu najdeš
 
 ### 🧭 Průvodce prváka
@@ -17,6 +20,9 @@ Moje osobní stránka jako studentského průvodce pro prváky informatiky — c
 `kalkulačka/index.html`
 
 Interaktivní nástroj pro sledování plnění studijního plánu. Vyber stupeň studia (Bc./Mgr.) a specializaci, odškrtávej splněné předměty a kalkulačka ti spočítá získané a chybějící kredity po jednotlivých kategoriích (povinné, povinně volitelné, volitelné). Postup se ukládá lokálně v prohlížeči (`localStorage`), takže se nic neztratí ani po zavření karty.
+
+> [!NOTE]
+> Data o předmětech a kreditech jsou z velké části zpracovaná pomocí AI. Než se na ně spolehneš při zápisu, ověř si je v [Karolínce pro svůj ročník](https://www.mff.cuni.cz/cs/studenti/bc-a-mgr-studium/studijni-plany).
 
 ### 🗺️ Mapa předmětů
 `specializace/index.html`
@@ -51,4 +57,4 @@ Máš nápad na vylepšení, našel/a jsi chybu v datech o předmětech nebo kre
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Dominik Smola
+[GPLv3](LICENSE) © 2026 Dominik Smola
