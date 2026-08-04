@@ -21,6 +21,8 @@ Moje osobní stránka jako studentského průvodce pro prváky informatiky — c
 
 Interaktivní nástroj pro sledování plnění studijního plánu. Vyber stupeň studia (Bc./Mgr.) a specializaci, odškrtávej splněné předměty a kalkulačka ti spočítá získané a chybějící kredity po jednotlivých kategoriích (povinné, povinně volitelné, volitelné). Postup se ukládá lokálně v prohlížeči (`localStorage`), takže se nic neztratí ani po zavření karty.
 
+V záložce **Rozvrh** si navíc můžeš poskládat povinné a povinně volitelné předměty do jednotlivých ročníků a semestrů — přetažením (na počítači) nebo klepnutím (na mobilu). Zařazení předmětu do rozvrhu ho zároveň označí jako splněný v kalkulačce, takže oba pohledy zůstávají v sync.
+
 > [!NOTE]
 > Data o předmětech a kreditech jsou z velké části zpracovaná pomocí AI. Než se na ně spolehneš při zápisu, ověř si je v [Karolínce pro svůj ročník](https://www.mff.cuni.cz/cs/studenti/bc-a-mgr-studium/studijni-plany).
 
