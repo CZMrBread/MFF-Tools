@@ -634,6 +634,31 @@
     .year-picker .cancel-btn { margin-top: var(--_spacing---12-px); width: 100%; }
 
     .sched-note { font-size: var(--_typography---text-xs--font-size); color: var(--muted); margin-bottom: var(--_spacing---20-px); line-height: 1.5; }
+    .year-picker-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--_spacing---24-px, 1.5rem);
+    }
+
+    .year-picker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--_typography---font-family--silka);
+      font-weight: 600;
+      color: var(--muted, #555);
+    }
+
+    .year-picker select {
+      background: var(--primary--background-white, #fff);
+      border: 1px solid var(--variables--blue-12, #0036571f);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-family: var(--_typography---font-family--silka);
+      font-weight: 600;
+      color: var(--primary--primary-blue, #003657);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -655,6 +680,13 @@
   <div class="instructions" id="app-instructions">
     Vyber stupeň studia a specializaci, pak zaškrtávej splněné předměty. U každé kategorie uvidíš
     získané a požadované kredity a kolik ti ještě zbývá splnit.
+  </div>
+
+  <div class="year-picker-wrap">
+    <label class="year-picker">
+      Akademický rok:
+      <select id="year-select"></select>
+    </label>
   </div>
 
   <div class="container">
@@ -794,24 +826,32 @@ let placements = {};
 let yearsCount = null; // dopočte se dle stupně studia při vstupu do Rozvrhu (3 Bc / 2 Mgr), lze ručně změnit
 const DEFAULT_YEARS = { bakalarske: 3, magisterske: 2 };
 
+// Aktuálně zvolený akademický rok — nastaví se v init() před načtením stavu
+let AKTUALNI_ROK = null;
+
+// Klíč do localStorage vázaný na akademický rok, aby se postup mezi roky nemíchal
+function lsKey(name){
+  return name + '_' + (AKTUALNI_ROK || 'neznamy');
+}
+
 function saveState(){
-  if(currentSpec) localStorage.setItem('mff_spec', currentSpec);
-  if(currentDegree) localStorage.setItem('mff_degree', currentDegree);
-  localStorage.setItem('mff_completed', JSON.stringify([...completed]));
-  localStorage.setItem('mff_nocredit', JSON.stringify([...noCredit]));
+  if(currentSpec) localStorage.setItem(lsKey('mff_spec'), currentSpec);
+  if(currentDegree) localStorage.setItem(lsKey('mff_degree'), currentDegree);
+  localStorage.setItem(lsKey('mff_completed'), JSON.stringify([...completed]));
+  localStorage.setItem(lsKey('mff_nocredit'), JSON.stringify([...noCredit]));
 }
 function loadState(){
-  const c = localStorage.getItem('mff_completed');
+  const c = localStorage.getItem(lsKey('mff_completed'));
   if(c) completed = new Set(JSON.parse(c));
-  const nc = localStorage.getItem('mff_nocredit');
+  const nc = localStorage.getItem(lsKey('mff_nocredit'));
   if(nc) noCredit = new Set(JSON.parse(nc));
-  currentDegree = localStorage.getItem('mff_degree');
-  return localStorage.getItem('mff_spec');
+  currentDegree = localStorage.getItem(lsKey('mff_degree'));
+  return localStorage.getItem(lsKey('mff_spec'));
 }
 
 function schedStorageKey(kind){
-  // rozvrh je vázán na konkrétní obor, aby se plány různých specializací nemíchaly
-  return 'mff_sched_' + kind + '_' + (currentSpec || 'none');
+  // rozvrh je vázán na konkrétní obor i akademický rok, aby se plány nemíchaly
+  return lsKey('mff_sched_' + kind + '_' + (currentSpec || 'none'));
 }
 function saveSchedState(){
   if(!currentSpec) return;
@@ -1115,8 +1155,8 @@ function resetProgress(){
   if(confirm('Opravdu změnit obor? Smaže to aktuální výběr předmětů.')){
     const oldSpec = currentSpec;
     currentSpec = null; currentDegree = null; completed = new Set(); noCredit = new Set();
-    ['mff_spec','mff_degree','mff_completed','mff_nocredit'].forEach(k=>localStorage.removeItem(k));
-    if(oldSpec){ localStorage.removeItem('mff_sched_placements_'+oldSpec); localStorage.removeItem('mff_sched_years_'+oldSpec); }
+    ['mff_spec','mff_degree','mff_completed','mff_nocredit'].forEach(k=>localStorage.removeItem(lsKey(k)));
+    if(oldSpec){ localStorage.removeItem(lsKey('mff_sched_placements_'+oldSpec)); localStorage.removeItem(lsKey('mff_sched_years_'+oldSpec)); }
     placements = {}; yearsCount = null;
     goToStep(1);
   }
@@ -1609,10 +1649,62 @@ function openYearPicker(id){
 }
 
 
+// ===== Výběr akademického roku =====
+// Seznam roků se čte z /~smolad/data/years.json (pole stringů, poslední = nejnovější/výchozí).
+// Když se soubor nepodaří načíst, použije se tento záložní seznam:
+const ROKY_FALLBACK = ["2025-2026"];
+
+async function nactiRoky() {
+    try {
+        const r = await fetch('/~smolad/data/years.json', { cache: 'no-store' });
+        if (r.ok) {
+            const roky = await r.json();
+            if (Array.isArray(roky)) {
+              // Přijmeme jen položky ve tvaru RRRR-RRRR (obrana proti poškozenému years.json)
+              const platne = roky.filter(x => typeof x === 'string' && /^\d{4}-\d{4}$/.test(x));
+              if (platne.length) return platne;
+            }
+        }
+    } catch (e) { /* ignoruj, použije se fallback */ }
+    return ROKY_FALLBACK;
+}
+
+function vybranyRok(roky) {
+    const zUrl = new URLSearchParams(location.search).get('rok');
+    if (zUrl && roky.includes(zUrl)) return zUrl;
+    const ulozeny = localStorage.getItem('mff_akademicky_rok');
+    if (ulozeny && roky.includes(ulozeny)) return ulozeny;
+    return roky[roky.length - 1]; // výchozí = nejnovější rok
+}
+
+function naplnSelectRoku(roky, rok) {
+    const sel = document.getElementById('year-select');
+    if (!sel) return;
+    sel.innerHTML = '';
+    roky.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r;
+        opt.textContent = r.replace('-', '/');
+        if (r === rok) opt.selected = true;
+        sel.appendChild(opt);
+    });
+    sel.addEventListener('change', () => {
+        const novy = sel.value;
+        localStorage.setItem('mff_akademicky_rok', novy);
+        const url = new URL(location.href);
+        url.searchParams.set('rok', novy);
+        location.href = url.toString(); // reload s novým rokem
+    });
+}
+
 async function init() {
     try {
         // A) Wait for the data to actually arrive
-        const response = await fetch('/~smolad/specializace/nodes.json');
+        const roky = await nactiRoky();
+        const rok = vybranyRok(roky);
+        AKTUALNI_ROK = rok;
+        naplnSelectRoku(roky, rok);
+        const response = await fetch(`/~smolad/data/${rok}/nodes.json`);
         NODES = await response.json();
 
         // B) Now that we have the data, populate your derived variables

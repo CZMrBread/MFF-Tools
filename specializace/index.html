@@ -251,6 +251,29 @@
       border-radius: var(--_radius---radius-8-px);
     }
 
+    .year-picker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---btn-primary--font-size);
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .year-picker select {
+      background: var(--primary--background-white);
+      border: 1px solid var(--variables--blue-12);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-family: var(--_typography---font-family--silka);
+      font-size: var(--_typography---btn-primary--font-size);
+      font-weight: 600;
+      color: var(--primary--primary-blue);
+      cursor: pointer;
+    }
+
     .filter-btn {
       background: transparent;
       border: none;
@@ -751,6 +774,10 @@
     jsou v nich sdílené.</div>
 
   <div class="filters">
+    <label class="year-picker">
+      Akademický rok:
+      <select id="year-select"></select>
+    </label>
     <button class="filter-btn" data-filter="all">Všechny stupně</button>
     <button class="filter-btn active" data-filter="bakalarske">Bakalářské</button>
     <button class="filter-btn" data-filter="magisterske">Magisterské</button>
@@ -815,10 +842,62 @@
     const subjToSpecs = {};
     let currentFilter = 'bakalarske';
 
-    Promise.all([
-      d3.json("nodes.json"),
-      d3.json("links.json")
-    ]).then(([nodes, links]) => {
+    // ===== Výběr akademického roku =====
+    // Seznam roků se čte z /~smolad/data/years.json (pole stringů, poslední = nejnovější/výchozí).
+    // Když se soubor nepodaří načíst, použije se tento záložní seznam:
+    const ROKY_FALLBACK = ["2025-2026"];
+
+    async function nactiRoky() {
+      try {
+        const r = await fetch('/~smolad/data/years.json', { cache: 'no-store' });
+        if (r.ok) {
+          const roky = await r.json();
+          if (Array.isArray(roky)) {
+            // Přijmeme jen položky ve tvaru RRRR-RRRR (obrana proti poškozenému years.json)
+            const platne = roky.filter(x => typeof x === 'string' && /^\d{4}-\d{4}$/.test(x));
+            if (platne.length) return platne;
+          }
+        }
+      } catch (e) { /* ignoruj, použije se fallback */ }
+      return ROKY_FALLBACK;
+    }
+
+    function vybranyRok(roky) {
+      const zUrl = new URLSearchParams(location.search).get('rok');
+      if (zUrl && roky.includes(zUrl)) return zUrl;
+      const ulozeny = localStorage.getItem('mff_akademicky_rok');
+      if (ulozeny && roky.includes(ulozeny)) return ulozeny;
+      return roky[roky.length - 1]; // výchozí = nejnovější rok
+    }
+
+    function naplnSelectRoku(roky, rok) {
+      const sel = document.getElementById('year-select');
+      if (!sel) return;
+      sel.innerHTML = '';
+      roky.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r;
+        opt.textContent = r.replace('-', '/');
+        if (r === rok) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      sel.addEventListener('change', () => {
+        const novy = sel.value;
+        localStorage.setItem('mff_akademicky_rok', novy);
+        const url = new URL(location.href);
+        url.searchParams.set('rok', novy);
+        location.href = url.toString(); // reload s novým rokem
+      });
+    }
+
+    nactiRoky().then(roky => {
+      const rok = vybranyRok(roky);
+      naplnSelectRoku(roky, rok);
+      return Promise.all([
+        d3.json(`/~smolad/data/${rok}/nodes.json`),
+        d3.json(`/~smolad/data/${rok}/links.json`)
+      ]);
+    }).then(([nodes, links]) => {
 
       const graphData = { "nodes": nodes, "links": links };
 

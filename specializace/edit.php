@@ -1,7 +1,58 @@
 <?php
+// ===== Výběr akademického roku =====
+// Data leží v podsložce data/ vedle tohoto souboru: data/years.json a data/<rok>/nodes.json + links.json.
+// Pokud edit.php leží jinde než v /~smolad/, upravte $dataDir (např. __DIR__ . '/../data/').
+$dataDir = __DIR__ . '/../data/';
+
+function validateRok($rok) {
+    // Přísný formát: přesně RRRR-RRRR (chrání i proti path traversal).
+    // \z místo $ — dolar by povolil koncový znak nového řádku.
+    return is_string($rok) && preg_match('/^\d{4}-\d{4}\z/', $rok);
+}
+
+function nactiRoky($dataDir) {
+    $roky = [];
+    // Primárně z manifestu years.json (stejný soubor používají i indexy)
+    $manifest = $dataDir . 'years.json';
+    if (file_exists($manifest)) {
+        $data = json_decode(file_get_contents($manifest), true);
+        if (is_array($data)) {
+            foreach ($data as $r) {
+                if (validateRok($r)) $roky[] = $r;
+            }
+        }
+    }
+    // Záloha: najdi složky vypadající jako akademický rok
+    if (!$roky) {
+        foreach (glob($dataDir . '*', GLOB_ONLYDIR) ?: [] as $d) {
+            $b = basename($d);
+            if (validateRok($b)) $roky[] = $b;
+        }
+        sort($roky);
+    }
+    return $roky;
+}
+
+$roky = nactiRoky($dataDir);
+if (!$roky) {
+    http_response_code(500);
+    die('Nenalezen žádný akademický rok. Vytvořte soubor data/years.json (např. ["2025-2026"]) nebo složku data/RRRR-RRRR vedle edit.php.');
+}
+
+$rok = $_GET['rok'] ?? '';
+if (!validateRok($rok) || !in_array($rok, $roky, true)) {
+    $rok = end($roky); // výchozí = nejnovější rok
+}
+$rokQ = 'rok=' . urlencode($rok);
+
+// Složku roku vytvoříme, pokud ještě neexistuje (nový rok začíná s prázdnými daty)
+if (!is_dir($dataDir . $rok)) {
+    mkdir($dataDir . $rok, 0755, true);
+}
+
 // Konfigurace souborů
-$nodesFile = 'nodes.json';
-$linksFile = 'links.json';
+$nodesFile = $dataDir . $rok . '/nodes.json';
+$linksFile = $dataDir . $rok . '/links.json';
 
 // Pomocné funkce pro čtení a zápis
 function getJsonData($filename) {
@@ -33,6 +84,11 @@ function validateLabel($label) {
 function validateStudyType($type) {
     // Povoluje pouze dvě definované hodnoty
     return in_array($type, ['bakalarske', 'magisterske'], true);
+}
+
+function validateSemester($semester) {
+    // Povoluje pouze tři definované hodnoty
+    return in_array($semester, ['zimní', 'letní', 'oba'], true);
 }
 
 // Normalizace klíče pv_group skupiny — čísla necháme jako int, jinak string (např. "telocvik")
@@ -213,10 +269,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } 
     
     elseif ($action === 'save_subj') {
-        $id      = $_POST['id'] ?? '';
-        $label   = $_POST['label'] ?? '';
-        $specs   = is_array($_POST['specs'] ?? null) ? $_POST['specs'] : [];
-        $credits = $_POST['credits'] ?? '';
+        $id       = $_POST['id'] ?? '';
+        $label    = $_POST['label'] ?? '';
+        $specs    = is_array($_POST['specs'] ?? null) ? $_POST['specs'] : [];
+        $credits  = $_POST['credits'] ?? '';
+        $semester = $_POST['semester'] ?? 'oba';
 
         if (!validateId($id)) {
             $msg = "Chyba: Neplatné ID. Povolena jsou pouze písmena, čísla, pomlčky a podtržítka (max 64 znaků).";
@@ -225,6 +282,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         if (!validateLabel($label)) {
             $msg = "Chyba: Název musí být neprázdný řetězec do 200 znaků.";
+            $action = 'list';
+            goto end_post;
+        }
+        if (!validateSemester($semester)) {
+            $msg = "Chyba: Neplatný semestr. Povolené hodnoty: zimní, letní, oba.";
             $action = 'list';
             goto end_post;
         }
@@ -262,7 +324,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'course_type'  => $course_type,
             'mandatory_in' => $mandatory_in,
             'elective_in'  => $elective_in,
-            'credits'      => $credits !== '' ? max(0, (int)$credits) : 0
+            'credits'      => $credits !== '' ? max(0, (int)$credits) : 0,
+            'semester'     => $semester
         ];
         if (!empty($pv_group)) {
             $nodes[$id]['pv_group'] = $pv_group;
@@ -285,7 +348,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         saveJsonData($nodesFile, $nodes);
         saveJsonData($linksFile, $linksRaw);
         $msg = "Předmět '" . htmlspecialchars($id) . "' byl úspěšně uložen včetně vazeb.";
-        $action = 'list';
+        // „Uložit a přidat další" — zůstaneme ve formuláři s prázdnými poli
+        $action = isset($_POST['save_and_new']) ? 'edit_subj' : 'list';
     }
     end_post:
 }
@@ -356,16 +420,27 @@ if ($action === 'delete') {
 
   <div class="container my-5">
     
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
         <h1 class="h3 mb-0 text-dark"><i class="bi bi-diagram-3-fill text-primary"></i> Správa grafu</h1>
-        <?php if ($action !== 'list'): ?>
-            <a href="?action=list" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Zpět na výpis</a>
-        <?php endif; ?>
+        <div class="d-flex align-items-center gap-3">
+            <form method="get" class="d-flex align-items-center gap-2 mb-0">
+                <input type="hidden" name="action" value="list">
+                <label for="rokSelect" class="form-label mb-0 fw-semibold text-nowrap">Akademický rok:</label>
+                <select id="rokSelect" name="rok" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+                    <?php foreach ($roky as $r): ?>
+                        <option value="<?= htmlspecialchars($r) ?>" <?= $r === $rok ? 'selected' : '' ?>><?= htmlspecialchars(str_replace('-', '/', $r)) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </form>
+            <?php if ($action !== 'list'): ?>
+                <a href="?<?= $rokQ ?>&action=list" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Zpět na výpis</a>
+            <?php endif; ?>
+        </div>
     </div>
     
-    <?php if ($msg): ?>
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i><?= htmlspecialchars($msg) ?>
+    <?php if ($msg): $isErr = strpos($msg, 'Chyba:') === 0; ?>
+        <div class="alert <?= $isErr ? 'alert-danger' : 'alert-success' ?> alert-dismissible fade show shadow-sm" role="alert">
+            <i class="bi <?= $isErr ? 'bi-exclamation-triangle-fill' : 'bi-check-circle-fill' ?> me-2"></i><?= htmlspecialchars($msg) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
@@ -375,10 +450,14 @@ if ($action === 'delete') {
         <div class="card shadow-sm mb-4 border-0">
             <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
                 <h2 class="h5 mb-0 text-secondary"><i class="bi bi-bookmark-star-fill text-warning"></i> Specializace</h2>
-                <a href="?action=edit_spec" class="btn btn-success btn-sm"><i class="bi bi-plus-lg"></i> Nová specializace</a>
+                <a href="?<?= $rokQ ?>&action=edit_spec" class="btn btn-success btn-sm"><i class="bi bi-plus-lg"></i> Nová specializace</a>
+            </div>
+            <div class="p-3 border-bottom bg-white d-flex flex-wrap gap-2 align-items-center">
+                <input type="search" id="specSearch" class="form-control form-control-sm" style="max-width: 240px" placeholder="Hledat ID nebo název…">
+                <span id="specCount" class="ms-auto text-muted small"></span>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle mb-0" id="specTable">
                     <thead class="table-light">
                         <tr>
                             <th>ID</th>
@@ -387,14 +466,14 @@ if ($action === 'delete') {
                             <th>Barva</th>
                             <th>Radius</th>
                             <th>Kredity (celkem / povinné)</th>
-                            <th class="text-end">Akce</th>
+                            <th class="text-end" data-nosort>Akce</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($nodes as $node): if ($node['group'] !== 'spec') continue;
                         $req = findReqForSpec($nodes, $node['id']);
                     ?>
-                        <tr>
+                        <tr data-search="<?= htmlspecialchars(mb_strtolower($node['id'] . ' ' . $node['label'])) ?>">
                             <td><span class="badge bg-secondary"><?= htmlspecialchars($node['id']) ?></span></td>
                             <td class="fw-semibold"><?= htmlspecialchars($node['label']) ?></td>
                             <td>
@@ -424,8 +503,8 @@ if ($action === 'delete') {
                             </td>
                             <td class="text-end">
                                 <div class="btn-group" role="group">
-                                    <a href="?action=edit_spec&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-primary btn-sm" title="Upravit"><i class="bi bi-pencil-fill"></i></a> 
-                                    <a href="?action=delete&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Opravdu smazat? Smaže se i navázaný záznam studijních požadavků.')" title="Smazat"><i class="bi bi-trash-fill"></i></a>
+                                    <a href="?<?= $rokQ ?>&action=edit_spec&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-primary btn-sm" title="Upravit"><i class="bi bi-pencil-fill"></i></a> 
+                                    <a href="?<?= $rokQ ?>&action=delete&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Opravdu smazat? Smaže se i navázaný záznam studijních požadavků.')" title="Smazat"><i class="bi bi-trash-fill"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -438,24 +517,54 @@ if ($action === 'delete') {
         <div class="card shadow-sm border-0">
             <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
                 <h2 class="h5 mb-0 text-secondary"><i class="bi bi-journal-text text-info"></i> Předměty</h2>
-                <a href="?action=edit_subj" class="btn btn-success btn-sm"><i class="bi bi-plus-lg"></i> Nový předmět</a>
+                <a href="?<?= $rokQ ?>&action=edit_subj" class="btn btn-success btn-sm"><i class="bi bi-plus-lg"></i> Nový předmět</a>
+            </div>
+            <div class="p-3 border-bottom bg-white d-flex flex-wrap gap-2 align-items-center">
+                <input type="search" id="subjSearch" class="form-control form-control-sm" style="max-width: 240px" placeholder="Hledat ID nebo název…">
+                <select id="subjTypeFilter" class="form-select form-select-sm w-auto">
+                    <option value="">Typ: vše</option>
+                    <option value="mandatory">Povinný</option>
+                    <option value="elective">Povinně volitelný</option>
+                    <option value="mixed">Smíšený</option>
+                    <option value="none">Žádný</option>
+                </select>
+                <select id="subjSemFilter" class="form-select form-select-sm w-auto">
+                    <option value="">Semestr: vše</option>
+                    <option value="zimní">Zimní</option>
+                    <option value="letní">Letní</option>
+                    <option value="oba">Oba</option>
+                </select>
+                <select id="subjSpecFilter" class="form-select form-select-sm w-auto">
+                    <option value="">Specializace: vše</option>
+                    <?php foreach ($nodes as $sp): if ($sp['group'] !== 'spec') continue; ?>
+                        <option value="<?= htmlspecialchars($sp['id']) ?>"><?= htmlspecialchars($sp['label']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <span id="subjCount" class="ms-auto text-muted small"></span>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle mb-0" id="subjTable">
                     <thead class="table-light">
                         <tr>
                             <th>ID</th>
                             <th>Název</th>
                             <th>Typ</th>
+                            <th>Semestr</th>
                             <th>Kredity</th>
                             <th>Sdíleno</th>
                             <th>Radius</th>
-                            <th class="text-end">Akce</th>
+                            <th class="text-end" data-nosort>Akce</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($nodes as $node): if ($node['group'] !== 'subj') continue; ?>
-                        <tr>
+                    <?php foreach ($nodes as $node): if ($node['group'] !== 'subj') continue;
+                        $rowSpecs = array_merge($node['mandatory_in'] ?? [], $node['elective_in'] ?? []);
+                        $rowSem = $node['semester'] ?? '';
+                    ?>
+                        <tr data-search="<?= htmlspecialchars(mb_strtolower($node['id'] . ' ' . $node['label'])) ?>"
+                            data-type="<?= htmlspecialchars($node['course_type'] ?? 'none') ?>"
+                            data-semester="<?= htmlspecialchars($rowSem) ?>"
+                            data-specs=" <?= htmlspecialchars(implode(' ', $rowSpecs)) ?> ">
                             <td><span class="badge bg-secondary"><?= htmlspecialchars($node['id']) ?></span></td>
                             <td class="fw-semibold"><?= htmlspecialchars($node['label']) ?></td>
                             <td>
@@ -466,13 +575,21 @@ if ($action === 'delete') {
                                     else echo '<span class="badge bg-light text-dark border">Žádný</span>';
                                 ?>
                             </td>
+                            <td>
+                                <?php
+                                    if ($rowSem === 'zimní') echo '<span class="badge bg-info text-dark"><i class="bi bi-snow"></i> Zimní</span>';
+                                    elseif ($rowSem === 'letní') echo '<span class="badge bg-warning text-dark"><i class="bi bi-sun"></i> Letní</span>';
+                                    elseif ($rowSem === 'oba') echo '<span class="badge bg-success">Oba</span>';
+                                    else echo '<span class="badge bg-light text-dark border">Nezadáno</span>';
+                                ?>
+                            </td>
                             <td><span class="badge rounded-pill bg-secondary"><?= (int)($node['credits'] ?? 0) ?> kr.</span></td>
                             <td><span class="badge rounded-pill bg-info text-dark"><?= $node['shared_count'] ?? 0 ?>x</span></td>
                             <td><?= htmlspecialchars($node['radius'] ?? 12) ?></td>
                             <td class="text-end">
                                 <div class="btn-group" role="group">
-                                    <a href="?action=edit_subj&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-primary btn-sm" title="Upravit"><i class="bi bi-pencil-fill"></i></a> 
-                                    <a href="?action=delete&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Opravdu smazat?')" title="Smazat"><i class="bi bi-trash-fill"></i></a>
+                                    <a href="?<?= $rokQ ?>&action=edit_subj&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-primary btn-sm" title="Upravit"><i class="bi bi-pencil-fill"></i></a> 
+                                    <a href="?<?= $rokQ ?>&action=delete&id=<?= urlencode($node['id']) ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Opravdu smazat?')" title="Smazat"><i class="bi bi-trash-fill"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -481,6 +598,97 @@ if ($action === 'delete') {
                 </table>
             </div>
         </div>
+
+        <script>
+        // ===== Filtrování a řazení seznamů =====
+        (function() {
+            // --- Filtrování ---
+            function zapniFiltr(tableId, countId, inputs, testRow) {
+                var table = document.getElementById(tableId);
+                if (!table) return;
+                var rows = Array.from(table.querySelectorAll('tbody tr'));
+                var countEl = document.getElementById(countId);
+
+                function aplikuj() {
+                    var visible = 0;
+                    rows.forEach(function(tr) {
+                        var show = testRow(tr);
+                        tr.style.display = show ? '' : 'none';
+                        if (show) visible++;
+                    });
+                    if (countEl) countEl.textContent = 'Zobrazeno ' + visible + ' z ' + rows.length;
+                }
+                inputs.forEach(function(el) {
+                    if (!el) return;
+                    el.addEventListener('input', aplikuj);
+                    el.addEventListener('change', aplikuj);
+                });
+                aplikuj();
+            }
+
+            // Specializace: jen fulltextové hledání
+            var specSearch = document.getElementById('specSearch');
+            zapniFiltr('specTable', 'specCount', [specSearch], function(tr) {
+                var q = (specSearch.value || '').trim().toLowerCase();
+                return !q || (tr.dataset.search || '').indexOf(q) !== -1;
+            });
+
+            // Předměty: hledání + typ + semestr + specializace
+            var sSearch = document.getElementById('subjSearch');
+            var sType   = document.getElementById('subjTypeFilter');
+            var sSem    = document.getElementById('subjSemFilter');
+            var sSpec   = document.getElementById('subjSpecFilter');
+            zapniFiltr('subjTable', 'subjCount', [sSearch, sType, sSem, sSpec], function(tr) {
+                var q = (sSearch.value || '').trim().toLowerCase();
+                if (q && (tr.dataset.search || '').indexOf(q) === -1) return false;
+                if (sType.value && tr.dataset.type !== sType.value) return false;
+                if (sSem.value && tr.dataset.semester !== sSem.value) return false;
+                if (sSpec.value && (tr.dataset.specs || '').indexOf(' ' + sSpec.value + ' ') === -1) return false;
+                return true;
+            });
+
+            // --- Řazení kliknutím na hlavičku sloupce ---
+            function zapniRazeni(tableId) {
+                var table = document.getElementById(tableId);
+                if (!table) return;
+                var ths = Array.from(table.querySelectorAll('thead th'));
+                var tbody = table.querySelector('tbody');
+
+                ths.forEach(function(th, idx) {
+                    if (th.hasAttribute('data-nosort')) return;
+                    th.style.cursor = 'pointer';
+                    th.title = 'Kliknutím seřadit';
+                    th.insertAdjacentHTML('beforeend', ' <span class="sort-arrow text-muted"></span>');
+
+                    th.addEventListener('click', function() {
+                        var dir = th.dataset.sortDir === 'asc' ? 'desc' : 'asc';
+                        ths.forEach(function(o) {
+                            delete o.dataset.sortDir;
+                            var a = o.querySelector('.sort-arrow');
+                            if (a) a.textContent = '';
+                        });
+                        th.dataset.sortDir = dir;
+                        th.querySelector('.sort-arrow').textContent = dir === 'asc' ? '▲' : '▼';
+
+                        var rows = Array.from(tbody.querySelectorAll('tr'));
+                        rows.sort(function(ra, rb) {
+                            var ta = (ra.cells[idx] ? ra.cells[idx].textContent : '').trim();
+                            var tb = (rb.cells[idx] ? rb.cells[idx].textContent : '').trim();
+                            var na = parseFloat(ta.replace(',', '.'));
+                            var nb = parseFloat(tb.replace(',', '.'));
+                            var cmp;
+                            if (!isNaN(na) && !isNaN(nb)) cmp = na - nb;
+                            else cmp = ta.localeCompare(tb, 'cs', { numeric: true, sensitivity: 'base' });
+                            return dir === 'asc' ? cmp : -cmp;
+                        });
+                        rows.forEach(function(r) { tbody.appendChild(r); });
+                    });
+                });
+            }
+            zapniRazeni('specTable');
+            zapniRazeni('subjTable');
+        })();
+        </script>
 
     <?php elseif ($action === 'edit_spec'): 
         $editNode = isset($_GET['id']) ? ($nodes[$_GET['id']] ?? null) : null;
@@ -510,7 +718,7 @@ if ($action === 'delete') {
                 <h2 class="h5 mb-0"><?= $editNode ? '<i class="bi bi-pencil-square text-primary"></i> Úprava specializace' : '<i class="bi bi-plus-square text-success"></i> Nová specializace' ?></h2>
             </div>
             <div class="card-body">
-                <form method="post" action="?action=save_spec" id="specForm">
+                <form method="post" action="?<?= $rokQ ?>&action=save_spec" id="specForm">
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -679,7 +887,7 @@ if ($action === 'delete') {
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3 border-top">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Uložit specializaci</button>
-                        <a href="?action=list" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Zrušit</a>
+                        <a href="?<?= $rokQ ?>&action=list" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Zrušit</a>
                     </div>
                 </form>
             </div>
@@ -778,20 +986,29 @@ if ($action === 'delete') {
                 <h2 class="h5 mb-0"><?= $editNode ? '<i class="bi bi-pencil-square text-primary"></i> Úprava předmětu' : '<i class="bi bi-plus-square text-success"></i> Nový předmět' ?></h2>
             </div>
             <div class="card-body">
-                <form method="post" action="?action=save_subj" id="subjForm">
+                <form method="post" action="?<?= $rokQ ?>&action=save_subj" id="subjForm">
                     <div class="row">
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label fw-bold">ID předmětu / Kód <span class="text-muted fw-normal">(např. NPRG030)</span></label>
                             <input type="text" name="id" class="form-control" value="<?= htmlspecialchars($editNode['id'] ?? '') ?>" required <?= $editNode ? 'readonly' : '' ?>>
                             <?php if($editNode): ?><div class="form-text text-danger"><i class="bi bi-exclamation-triangle"></i> ID nelze u existující položky měnit.</div><?php endif; ?>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label fw-bold">Velikost uzlu (radius)</label>
                             <input type="number" name="radius" class="form-control" value="<?= htmlspecialchars($editNode['radius'] ?? 12) ?>" required min="1">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label fw-bold">Kredity</label>
                             <input type="number" name="credits" class="form-control" value="<?= htmlspecialchars($editNode['credits'] ?? 0) ?>" min="0" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label fw-bold">Semestr</label>
+                            <?php $currentSem = $editNode['semester'] ?? 'oba'; ?>
+                            <select name="semester" class="form-select" required>
+                                <option value="zimní" <?= $currentSem === 'zimní' ? 'selected' : '' ?>>Zimní</option>
+                                <option value="letní" <?= $currentSem === 'letní' ? 'selected' : '' ?>>Letní</option>
+                                <option value="oba" <?= $currentSem === 'oba' ? 'selected' : '' ?>>Oba</option>
+                            </select>
                         </div>
                     </div>
 
@@ -845,7 +1062,8 @@ if ($action === 'delete') {
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end border-top pt-3">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Uložit předmět</button>
-                        <a href="?action=list" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Zrušit</a>
+                        <button type="submit" name="save_and_new" value="1" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Uložit a přidat další</button>
+                        <a href="?<?= $rokQ ?>&action=list" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Zrušit</a>
                     </div>
                 </form>
             </div>
