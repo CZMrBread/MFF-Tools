@@ -12,9 +12,7 @@ Sada přehledných webových nástrojů pro (nejen) prváky informatiky na MFF U
 ### 🧭 Průvodce prváka
 `index.html`
 
-Moje osobní stránka jako studentského průvodce pro prváky informatiky — co zařídit jako první (CAS, ISIC, SIS), jak si nastavit eduroam, info o ubytovacím stipendiu, tipy na volitelné předměty a odpovědi na časté otázky ohledně zápisu rozvrhu a přežití prvního semestru.
-
-> 🚧 Momentálně ve vývoji — chybí doplnit jméno, kontakt a screenshoty k eduroamu.
+Moje osobní stránka jako studentského průvodce pro prváky informatiky — co zařídit jako první (CAS, ISIC, SIS), doporučené nastavení SISu, info o ubytovacím stipendiu, tipy na volitelné předměty a odpovědi na časté otázky ohledně zápisu rozvrhu a přežití prvního semestru.
 
 ### 🧮 Kalkulačka kreditů
 `kalkulačka/index.html`

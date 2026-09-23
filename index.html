@@ -145,9 +145,22 @@
 
         .links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            align-items: stretch;
             gap: 16px; /* --_spacing---gap-16 */
             margin-top: 1.5rem;
+        }
+
+        @media (max-width: 760px) {
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .btn {
@@ -155,16 +168,27 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            box-sizing: border-box;
+            min-height: 3.25rem;
             background-color: var(--primary-red);
             color: var(--background-white);
             text-decoration: none;
-            padding: 0.875rem 1.5rem;
+            padding: 0.875rem 1.25rem;
+            /* průhledný okraj, aby plná i outline varianta měly stejnou výšku */
+            border: 2px solid transparent;
             border-radius: var(--radius-btns); /* Oficiální Matfyz zakulacení */
             font-size: .875rem;
-            line-height: 100%;
+            line-height: 128%;
             font-weight: 600;
             letter-spacing: 0em;
-            transition: opacity 0.2s;
+            text-align: center;
+            text-wrap: balance;
+            transition: opacity 0.2s, background-color 0.2s, color 0.2s;
+        }
+
+        .btn i {
+            flex: none;
+            font-size: 1rem;
         }
 
         .btn:hover {
@@ -183,7 +207,7 @@
         .btn-outline {
             background-color: transparent;
             color: var(--primary-red);
-            border: 2px solid var(--primary-red);
+            border-color: var(--primary-red);
         }
 
         .btn-outline:hover {
@@ -235,34 +259,40 @@
             color: var(--text-secondary);
         }
 
-        .image-row {
-            display: flex;
-            gap: 1rem;
+        .card > h2:first-child,
+        .card > h3:first-child {
             margin-top: 1.5rem;
-            flex-wrap: wrap;
         }
 
-        .image-placeholder {
-            flex: 1;
-            min-width: 250px;
-            background-color: var(--background-white);
-            border: 2px dashed var(--blue-32);
-            border-radius: var(--radius-8-px);
-            text-align: center;
-            color: var(--blue-72);
+        .card p:last-child,
+        .card ul:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .settings-list li {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            overflow: hidden;
+            gap: 0.6rem;
+            align-items: flex-start;
+            padding: 0.35rem 0;
         }
 
-        .image-placeholder img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            display: block;
+        .settings-list .bi {
+            flex: none;
+            margin-top: 0.15rem;
+            font-size: 1.05rem;
+            color: #146c43;
+        }
+
+        .settings-note {
+            font-size: .875rem;
+            color: var(--text-secondary);
+            margin: 0.75rem 0 0;
         }
 
         .future-box {
@@ -310,39 +340,35 @@
 </header>
     <div class="container">
         <header>
-            <h1>🚧 WORK IN PROGRESS 🚧 <br>
-            <i class="bi bi-mortarboard"></i> Vítej na Matfyzu!</h1>
-            <p class="intro">Ahoj, jsem [Tvoje Jméno], tvůj studentský průvodce pro 1. ročník informatiky. Gratuluji k přijetí na MFF UK! Začátky můžou vypadat děsivě, ale slibuju, že se v tom rychle zorientuješ. Tahle stránka ti pomůže přežít první týdny.</p>
+            <h1><i class="bi bi-mortarboard"></i> Vítej na Matfyzu!</h1>
+            <p class="intro">Ahoj, jsem Dominik Smola, tvůj studentský průvodce pro 1. ročník informatiky. Gratuluji k přijetí na MFF UK! Začátky můžou vypadat děsivě, ale slibuju, že se v tom rychle zorientuješ. Tahle stránka ti pomůže přežít první týdny.</p>
         </header>
 
+        <p style="margin-bottom: 1.5rem;"><strong>Rychlé startovní To-Do.</strong> Tři věci, které si zařiď hned na začátku — zaberou deset minut a ušetří ti nervy na celý semestr.</p>
+
         <section class="card">
-            <h2><i class="bi bi-ui-checks"></i> Rychlé startovní To-Do</h2>
-            <ul style="padding-left: 1.5rem; margin-bottom: 0;">
-                <li><strong>Získej heslo do CAS:</strong> Bez Centrální autentizační služby se nehneš. Nastav si ho co nejdřív.</li>
-                <li><strong>Zařiď si průkaz/ISIC:</strong> Budeš ho potřebovat na vstup do budov, menzu i slevy.</li>
-                <li><strong>Proklikej si SIS:</strong> Studijní informační systém bude tvůj nejlepší kamarád. Tady najdeš svůj rozvrh a zapíšeš si předměty.</li>
+            <h2><i class="bi bi-sliders"></i> Nastavení SISu</h2>
+            <p>V <strong>Osobních údajích</strong> pod <em>Možnosti uživatele</em> si zapni tohle — takhle to mám nastavené já:</p>
+            <ul class="settings-list">
+                <li><i class="bi bi-check-square-fill"></i> <span><strong>Prodloužená doba přihlášení</strong> — SIS tě nevyhodí po pár minutách nečinnosti. Zapni si to jen na svém počítači, ne ve studovně.</span></li>
+                <li><i class="bi bi-check-square-fill"></i> <span><strong>Ukládat profil (nastavení filtrů, …)</strong> — SIS si zapamatuje filtry jako semestr a fakultu, takže je nemusíš překlikávat pořád dokola.</span></li>
+                <li><i class="bi bi-check-square-fill"></i> <span><strong>Zasílat upozornění o vypsání nového termínu</strong> — nejdůležitější přepínač před zkouškovým. U oblíbených termínů zmizí místa během pár minut.</span></li>
+                <li><i class="bi bi-check-square-fill"></i> <span><strong>Zasílat upozornění o změně výsledků zkoušek</strong> — o známce se dozvíš e-mailem a nemusíš SIS refreshovat každou hodinu.</span></li>
+                <li><i class="bi bi-check-square-fill"></i> <span><strong>Studijní mezivýsledky: upozornění po editaci položky učitelem</strong> — uvidíš body ze zápočtáků a domácích úkolů, jakmile je učitel zapíše.</span></li>
+                <li><i class="bi bi-check-square-fill"></i> <span><strong>Povolit vyhledání mého studia ostatním studentům</strong> — ať tě spolužáci najdou, když budou zakládat skupinu nebo shánět parťáka na projekt.</span></li>
             </ul>
         </section>
 
-        <section>
-            <h2><i class="bi bi-wifi"></i> Připojení k WiFi (eduroam)</h2>
-            <p>V budovách fakulty se připojíš k síti <strong>eduroam</strong>. <strong>Pozor, chyták:</strong> Tvoje normální heslo do CASu tady fungovat nebude! Musíš si vygenerovat speciální heslo jen pro WiFi.</p>
-            <ol>
-                <li>Přihlas se do <a href="https://cas.cuni.cz/" target="_blank" style="color: var(--primary-red); font-weight: 600;">CASu</a>.</li>
-                <li>Najdi sekci pro nastavení hesla k eduroamu.</li>
-                <li>Vygeneruj si ho a jako přihlašovací jméno použij svůj login ve formátu <code style="background: var(--blue-12); padding: 2px 6px; border-radius: 4px;">číslo_osoby@cuni.cz</code> (ne @mff.cuni.cz!).</li>
-            </ol>
-            
-            <div class="image-row">
-                <div class="image-placeholder">
-                    <img src="" alt="Screenshot 1: Kde najít eduroam heslo v CASu">
-                    <span style="font-size: 0.75rem; margin-top: 0.75rem;"><i class="bi bi-image"></i> Tady bude screenshot kroku 1</span>
-                </div>
-                <div class="image-placeholder">
-                    <img src="" alt="Screenshot 2: Generování hesla">
-                    <span style="font-size: 0.75rem; margin-top: 0.75rem;"><i class="bi bi-image"></i> Tady bude screenshot kroku 2</span>
-                </div>
-            </div>
+        <section class="card">
+            <h2><i class="bi bi-person-badge"></i> Povolení zveřejnit</h2>
+            <p>Hned vedle v <em>Osobních údajích</em> si vybereš, co o tobě uvidí ostatní ve vyhledávání osob. Žádné správné nastavení neexistuje — někomu vyhovuje být dohledatelný, někdo chce mít zapnuté úplné minimum. Projdi si ten seznam a zaškrtej jen to, s čím ti je opravdu příjemné, že to o tobě někdo uvidí.</p>
+        </section>
+
+        <section class="card">
+            <h2><i class="bi bi-envelope-at"></i> Přeposílání školního e-mailu</h2>
+            <p>Tohle si nastav určitě. Všechna důležitá komunikace od fakulty, studijního oddělení i od učitelů chodí na <strong>fakultní adresu</strong> — a do školní schránky se ti chodit koukat nebude chtít.</p>
+            <p>Ve školním <strong>Outlooku</strong> si proto zapni přeposílání na e-mail, který čteš každý den: <em>Nastavení → Pošta → Přeposílání</em>.</p>
+            <p class="settings-note">Nech si zaškrtnuté i zachování kopie ve školní schránce, ať o nic nepřijdeš, kdyby přeposílání někdy vypadlo.</p>
         </section>
 
         <section class="money-card">
@@ -360,7 +386,10 @@
             <div class="links-grid">
                 <a href="https://is.cuni.cz/studium/" target="_blank" class="btn"><i class="bi bi-laptop"></i> SIS (Studijní systém)</a>
                 <a href="https://wiki.matfyz.cz/" target="_blank" class="btn"><i class="bi bi-journal-bookmark-fill"></i> Fakultní Wiki</a>
-                <a href="https://discord.gg/7afJ9ES" target="_blank" class="btn btn-discord"><i class="bi bi-discord"></i> Neoficiální MFF Discord</a> 
+                <a href="https://discord.gg/7afJ9ES" target="_blank" class="btn btn-discord"><i class="bi bi-discord"></i> Neoficiální MFF Discord</a>
+                <a href="https://cs.mff.cuni.cz/cs/pro-studenty/pro-prvaky" target="_blank" class="btn btn-outline"><i class="bi bi-signpost-split"></i> Oficiální průvodce pro prváky</a>
+                <a href="https://www.mff.cuni.cz/cs/studenti/bc-a-mgr-studium/studijni-plany" target="_blank" class="btn btn-outline"><i class="bi bi-journals"></i> Karolínka (studijní plány)</a>
+                <a href="/~smolad/kalkulačka" class="btn btn-outline"><i class="bi bi-calculator"></i> Moje kalkulačka kreditů</a>
             </div>
         </section>
 
@@ -390,6 +419,8 @@
                     </strong>
                 </li>
             </ul>
+            <p style="margin-top: 1.5rem;">Tohle je jen můj užší výběr. Delší soupis doporučených volitelných předmětů — bez popisků, jen jejich přehled — najdeš na fakultní wiki:</p>
+            <a href="https://wiki.matfyz.cz/Doporu%C4%8Den%C3%A9%20voliteln%C3%A9%20p%C5%99edm%C4%9Bty" target="_blank" class="btn btn-outline" style="display: inline-flex; width: auto;"><i class="bi bi-journal-bookmark-fill"></i> Doporučené volitelné předměty na wiki</a>
         </section>
 
         <section>
@@ -419,7 +450,7 @@
 
         <footer>
             <p><strong>Máš dotaz, který tu není?</strong> Napiš mi!</p>
-            <p><i class="bi bi-envelope"></i> Email: tvuj.mail@mff.cuni.cz | <i class="bi bi-discord"></i> Discord: tvoje_jmeno</p>
+            <p><i class="bi bi-envelope"></i> E-mail: <a href="mailto:dsmola9@gmail.com" style="color: var(--primary-red); font-weight: 600;">dsmola9@gmail.com</a> | <i class="bi bi-discord"></i> Discord: <strong>.mr_bread</strong></p>
             <p style="margin-top: 2rem;">Vytvořeno pro prváky informatiky (česká paralelka) s <i class="bi bi-heart-fill" style="color: var(--primary-red);"></i></p>
         </footer>
     </div>
