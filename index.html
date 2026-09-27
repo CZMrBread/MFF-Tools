@@ -295,6 +295,24 @@
             margin: 0.75rem 0 0;
         }
 
+        .app-tip {
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+            margin: 1rem 0 0;
+            padding: 0.75rem 1rem;
+            background: var(--blue-12);
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 0 var(--radius-8-px) var(--radius-8-px) 0;
+        }
+
+        .app-tip .bi {
+            flex: none;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            color: #146c43;
+        }
+
         .future-box {
             background-color: #fff9e6;
             border: 1px solid #ffe69c;
@@ -357,6 +375,7 @@
                 <li><i class="bi bi-check-square-fill"></i> <span><strong>Studijní mezivýsledky: upozornění po editaci položky učitelem</strong> — uvidíš body ze zápočtáků a domácích úkolů, jakmile je učitel zapíše.</span></li>
                 <li><i class="bi bi-check-square-fill"></i> <span><strong>Povolit vyhledání mého studia ostatním studentům</strong> — ať tě spolužáci najdou, když budou zakládat skupinu nebo shánět parťáka na projekt.</span></li>
             </ul>
+            <p class="app-tip"><i class="bi bi-android2"></i> <span><strong>Máš Android?</strong> Stáhni si neoficiální aplikaci <a href="https://github.com/sykoram/sis" target="_blank" rel="noopener noreferrer" style="color: var(--primary-red); font-weight: 600;">SIS pro Android</a>. Je to pohodlnější než mobilní web.</span></p>
         </section>
 
         <section class="card">
@@ -384,9 +403,9 @@
         <section>
             <h2><i class="bi bi-link-45deg"></i> Důležité odkazy</h2>
             <div class="links-grid">
-                <a href="https://is.cuni.cz/studium/" target="_blank" rel="noopener noreferrer" class="btn"><i class="bi bi-laptop"></i> SIS (Studijní systém)</a>
                 <a href="https://wiki.matfyz.cz/" target="_blank" rel="noopener noreferrer" class="btn"><i class="bi bi-journal-bookmark-fill"></i> Fakultní Wiki</a>
                 <a href="https://discord.gg/7afJ9ES" target="_blank" rel="noopener noreferrer" class="btn btn-discord"><i class="bi bi-discord"></i> Neoficiální MFF Discord</a>
+                <a href="https://discord.gg/9S5fDKYS4T" target="_blank" rel="noopener noreferrer" class="btn btn-discord"><i class="bi bi-discord"></i> Kruhový Discord pro prváky</a>
                 <a href="https://cs.mff.cuni.cz/cs/pro-studenty/pro-prvaky" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="bi bi-signpost-split"></i> Oficiální průvodce pro prváky</a>
                 <a href="https://www.mff.cuni.cz/cs/studenti/bc-a-mgr-studium/studijni-plany" target="_blank" rel="noopener noreferrer" class="btn btn-outline"><i class="bi bi-journals"></i> Karolínka (studijní plány)</a>
                 <a href="/~smolad/kalkulačka" class="btn btn-outline"><i class="bi bi-calculator"></i> Moje kalkulačka kreditů</a>
