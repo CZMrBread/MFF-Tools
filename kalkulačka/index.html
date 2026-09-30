@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MFF UK | Kalkulačka kreditů</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="/~smolad/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/~smolad/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/~smolad/favicon-16x16.png">
-  <link rel="manifest" href="/~smolad/site.webmanifest">
-  <link rel="stylesheet" href="/~smolad/styles.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <style>
     :root {
@@ -233,6 +233,36 @@
       text-align: center;
       font-size: var(--_typography---paragraph--font-size);
       line-height: var(--_typography---paragraph--line-height);
+    }
+
+    /* Upozornění, že kalkulačka je jen orientační */
+    .disclaimer {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      max-width: 1000px;
+      margin: 0 auto 16px;
+      padding: var(--_spacing---14-px) var(--_spacing---24-px);
+      background: #fff8e1;
+      border: 1px solid #f5d77a;
+      border-left: 4px solid #e0a800;
+      border-radius: var(--_radius---radius-8-px);
+      color: #5c4400;
+      font-size: var(--_typography---paragraph--font-size);
+      line-height: var(--_typography---paragraph--line-height);
+    }
+
+    .disclaimer .bi {
+      flex-shrink: 0;
+      font-size: 1.2em;
+      line-height: inherit;
+      color: #b38600;
+    }
+
+    .disclaimer a {
+      color: inherit;
+      font-weight: 600;
+      text-decoration: underline;
     }
 
     /* Přepínátko pro stupně studia */
@@ -634,59 +664,110 @@
     .year-picker .cancel-btn { margin-top: var(--_spacing---12-px); width: 100%; }
 
     .sched-note { font-size: var(--_typography---text-xs--font-size); color: var(--muted); margin-bottom: var(--_spacing---20-px); line-height: 1.5; }
-    .year-picker-wrap {
+    .study-picker-wrap {
       display: flex;
       justify-content: center;
       margin-bottom: var(--_spacing---24-px, 1.5rem);
     }
 
-    .year-picker {
+    /* Výběr akademického roku a oboru — jedno "okénko" se dvěma poli */
+    .study-picker {
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--_typography---font-family--silka);
-      font-weight: 600;
-      color: var(--muted, #555);
+      align-items: stretch;
+      max-width: 100%;
+      background: var(--primary--background-white);
+      border: 1px solid var(--variables--blue-12);
+      border-radius: var(--_radius---radius-8-px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
-    .year-picker select {
-      background: var(--primary--background-white, #fff);
-      border: 1px solid var(--variables--blue-12, #0036571f);
-      border-radius: 6px;
-      padding: 6px 10px;
+    .study-picker label {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 0;
+      padding: 6px 14px;
       font-family: var(--_typography---font-family--silka);
+      font-size: 11px;
       font-weight: 600;
-      color: var(--primary--primary-blue, #003657);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
       cursor: pointer;
+    }
+
+    .study-picker label + label {
+      border-left: 1px solid var(--variables--blue-12);
+    }
+
+    .study-picker select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      padding: 0 20px 0 0;
+      background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23003657' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 2px center;
+      font-family: var(--_typography---font-family--silka);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--primary--primary-blue);
+      cursor: pointer;
+    }
+
+    .study-picker select:focus-visible {
+      outline: 2px solid var(--primary--primary-blue);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .study-picker select:disabled {
+      background-image: none;
+      padding-right: 0;
+      cursor: default;
+      opacity: 1;
+    }
+
+    .study-picker label:has(select:disabled) {
+      cursor: default;
     }
   </style>
 </head>
 <body>
 <header class="site-header">
     <div class="header-container">
-        <a href="/~smolad" class="header-logo">
+        <a href="../" class="header-logo">
             <i class="bi bi-box-seam"></i> 
             MFF UK Nástroje
         </a>
         <nav class="main-nav">
-            <a href="/~smolad">Průvodce prváka</a>
-            <a href="/~smolad/kalkulačka">Kalkulačka kreditů</a>
-            <a href="/~smolad/specializace">Mapa předmětů</a>
+            <a href="../">Průvodce prváka</a>
+            <a href="../kalkulačka/">Kalkulačka kreditů</a>
+            <a href="../specializace/">Mapa předmětů</a>
         </nav>
     </div>
 </header>
   <div class="page-content">
   <h1>Kalkulačka kreditů <span>MFF UK</span></h1>
   <div class="instructions" id="app-instructions">
-    Vyber stupeň studia a specializaci, pak zaškrtávej splněné předměty. U každé kategorie uvidíš
+    Vyber obor, stupeň studia a specializaci, pak zaškrtávej splněné předměty. U každé kategorie uvidíš
     získané a požadované kredity a kolik ti ještě zbývá splnit.
   </div>
 
-  <div class="year-picker-wrap">
-    <label class="year-picker">
-      Akademický rok:
-      <select id="year-select"></select>
-    </label>
+  <div class="disclaimer" role="note">
+    <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+    <div>
+      <strong>Kalkulačka je pouze orientační.</strong> Vždy si vše ověř v
+      <a href="https://www.mff.cuni.cz/cs/studenti/bc-a-mgr-studium/studijni-plany" target="_blank" rel="noopener noreferrer">Karolince pro svůj ročník</a>.
+    </div>
+  </div>
+
+  <div class="study-picker-wrap">
+    <div class="study-picker">
+      <label>Akademický rok <select id="year-select"></select></label>
+      <label>Obor <select id="obor-select"></select></label>
+    </div>
   </div>
 
   <div class="container">
@@ -797,7 +878,7 @@
         </div>
         <div class="footer-links">
             <a href="https://github.com/CZMrBread/MFF-Tools" target="_blank" rel="noopener noreferrer">
-                <i class="bi bi-github"></i> Zdrojové kódy na GitHubu
+                <i class="bi bi-github"></i> GitHub
             </a>
             <a href="https://discord.gg/7afJ9ES" target="_blank" rel="noopener noreferrer">
                 <i class="bi bi-discord"></i> Discord
@@ -826,12 +907,15 @@ let placements = {};
 let yearsCount = null; // dopočte se dle stupně studia při vstupu do Rozvrhu (3 Bc / 2 Mgr), lze ručně změnit
 const DEFAULT_YEARS = { bakalarske: 3, magisterske: 2 };
 
-// Aktuálně zvolený akademický rok — nastaví se v init() před načtením stavu
+// Aktuálně zvolený akademický rok a obor — nastaví se v init() před načtením stavu
 let AKTUALNI_ROK = null;
+let AKTUALNI_OBOR = null;
 
-// Klíč do localStorage vázaný na akademický rok, aby se postup mezi roky nemíchal
+// Klíč do localStorage vázaný na akademický rok a obor, aby se postup mezi nimi nemíchal.
+// Informatika si nechává původní klíče bez přípony oboru, aby se neztratil dřívější postup.
 function lsKey(name){
-  return name + '_' + (AKTUALNI_ROK || 'neznamy');
+  const obor = (AKTUALNI_OBOR && AKTUALNI_OBOR !== 'informatika') ? '_' + AKTUALNI_OBOR : '';
+  return name + '_' + (AKTUALNI_ROK || 'neznamy') + obor;
 }
 
 function saveState(){
@@ -914,7 +998,52 @@ function planFor(spec){
                          .sort((a,b)=>a.label.localeCompare(b.label,'cs'));
     return {def, subjects};
   }).filter(g => g.subjects.length > 0);
+  // Nadřazená skupina (includes_groups) započítává i kredity svých podskupin — např. „O“ u Matematických
+  // struktur zahrnuje A, G i KL. g.counted = předměty, jejichž kredity se do minima skupiny počítají.
+  groups.forEach(g => {
+    const inc = (g.def.includes_groups || []).map(id => groups.find(x => x.def.group === id)).filter(Boolean);
+    g.counted = [...new Map([g, ...inc].flatMap(x => x.subjects).map(s => [s.id, s])).values()];
+    g.includedLabels = inc.map(x => x.def.label);
+  });
   return {req, mandatory, groups};
+}
+
+// Skupiny „povinného výběru“: v datech mandatory_choice: true (např. povinný Týmový projekt), automaticky
+// také tělesná výchova (telocvik) a alternativy „právě jeden z“ (alt1, alt2, …). Podle Karolinky jde
+// o povinné předměty — mají vlastní minimum a počítají se do celkových kreditů, ale NE do
+// „Povinně volitelné celkem“ (pv_overall_min je v datech bez nich).
+function isMandatoryChoice(def){
+  return def.mandatory_choice === true || def.group === 'telocvik' || /^alt\d*$/.test(String(def.group));
+}
+function groupTitle(def){
+  return (isMandatoryChoice(def) ? 'Povinné — ' : 'Povinně volitelné — ') + def.label;
+}
+
+// Součty pro souhrn plnění; isDone = completed (Kalkulačka) nebo placements (Rozvrh)
+function planTotals(plan, isDone){
+  const earnedIn = subjects => subjects.filter(s => isDone(s.id)).reduce((a,s)=>a+credits(s.id),0);
+  const choiceGroups = plan.groups.filter(g => isMandatoryChoice(g.def));
+  const pvGroups = plan.groups.filter(g => !isMandatoryChoice(g.def));
+  const allPvUniq = [...new Map(pvGroups.flatMap(g => g.subjects).map(s=>[s.id,s])).values()];
+  const pvEarned = earnedIn(allPvUniq);
+  const choiceEarned = choiceGroups.reduce((a,g)=>a+earnedIn(g.subjects),0);
+  const choiceMin = choiceGroups.reduce((a,g)=>a+(g.def.min_credits||0),0);
+  // efektivní celkové PV minimum (sníženo o "bez kreditů" napříč všemi PV)
+  const ncTotal = ncCreditsIn(allPvUniq);
+  const effOverall = plan.req.pv_overall_min!=null ? Math.max(0, plan.req.pv_overall_min - ncTotal) : null;
+  return {earnedIn, choiceGroups, pvGroups, pvEarned, choiceEarned, choiceMin, ncTotal, effOverall};
+}
+
+// Pruhy pro skupiny s vlastním minimem; vrací html a zda jsou všechna minima splněná
+function groupBars(groups, earnedIn){
+  let html = '', ok = true;
+  groups.forEach(g => {
+    const earned = earnedIn(g.counted);
+    const min = effMin(g.def.min_credits, g.counted);
+    if(min && earned < min) ok = false;
+    if(g.def.min_credits){ html += bar(g.def.label, earned, min); }
+  });
+  return {html, ok};
 }
 
 function toggleDone(id){
@@ -990,6 +1119,11 @@ function completeAllMandatory(){
   renderDashboard();
 }
 
+// " · Fyzika" apod. za stupněm studia v hlavičce plánu
+function oborSuffix(){
+  return AKTUALNI_OBOR ? ' · ' + (OBORY_NAZVY[AKTUALNI_OBOR] || AKTUALNI_OBOR) : '';
+}
+
 function renderDashboard(){
   goToStep('dashboard');
   const plan = planFor(currentSpec);
@@ -997,7 +1131,7 @@ function renderDashboard(){
   if(currentDegree == null) currentDegree = spec ? spec.study_type : null;
   const isMgr = plan.req.level === 'mgr';
   document.getElementById('dash-degree').textContent =
-    (isMgr ? 'Magisterské studium' : 'Bakalářské studium');
+    (isMgr ? 'Magisterské studium' : 'Bakalářské studium') + oborSuffix();
   document.getElementById('dash-title').textContent = spec ? spec.label : currentSpec;
 
   const lists = document.getElementById('lists');
@@ -1015,21 +1149,22 @@ function renderDashboard(){
 
   // PV skupiny
   plan.groups.forEach(g => {
-    const earned = g.subjects.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+    const earned = g.counted.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
     const raw = g.def.min_credits;
-    const min = effMin(raw, g.subjects);
-    const ncCr = ncCreditsIn(g.subjects);
+    const min = effMin(raw, g.counted);
+    const ncCr = ncCreditsIn(g.counted);
+    const incl = g.includedLabels.length ? ` (včetně skupin: ${g.includedLabels.join(', ')})` : '';
     let badge;
     if(raw == null) badge = pill('bez limitu','todo');
     else if(raw === 0) badge = pill('bez vlastního limitu','todo');
     else badge = earned>=min ? pill('splněno','ok') : pill('min. '+min+' kr.','req');
     let subt;
     if(raw){
-      subt = `Minimum ${min} kr.` + (ncCr ? ` (sníženo o ${ncCr} kr. „bez kreditů“ z ${raw})` : '') + ` • získáno ${earned} kr.`;
+      subt = `Minimum ${min} kr.${incl}` + (ncCr ? ` (sníženo o ${ncCr} kr. „bez kreditů“ z ${raw})` : '') + ` • získáno ${earned} kr.`;
     } else {
       subt = `Získáno ${earned} kr. (počítá se do celku PV)`;
     }
-    lists.appendChild(catBlock('Povinně volitelné — ' + g.def.label, subt, badge, g.subjects, isMgr));
+    lists.appendChild(catBlock(groupTitle(g.def), subt, badge, g.subjects, isMgr));
   });
 
   if(REQS[currentSpec].no_pdf_plan){
@@ -1094,26 +1229,16 @@ function renderSummary(plan){
   const mandEarned = plan.mandatory.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
   const mandTotal = plan.mandatory.reduce((a,s)=>a+credits(s.id),0);
 
-  let pvEarned = 0; const allPv = [];
-  plan.groups.forEach(g => g.subjects.forEach(s => allPv.push(s)));
-  const allPvUniq = [...new Map(allPv.map(s=>[s.id,s])).values()];
-  allPvUniq.forEach(s => { if(completed.has(s.id)) pvEarned += credits(s.id); });
-
-  // efektivní celkové PV minimum (sníženo o "bez kreditů" napříč všemi PV)
-  const ncTotal = ncCreditsIn(allPvUniq);
-  const effOverall = req.pv_overall_min!=null ? Math.max(0, req.pv_overall_min - ncTotal) : null;
+  const {earnedIn, choiceGroups, pvGroups, pvEarned, choiceEarned, choiceMin, ncTotal, effOverall} =
+    planTotals(plan, id => completed.has(id));
 
   let html = '';
-  html += `<div class="sec-title">Povinné</div>` + bar('Povinné předměty', mandEarned, mandTotal);
+  const choice = groupBars(choiceGroups, earnedIn);
+  html += `<div class="sec-title">Povinné</div>` + bar('Povinné předměty', mandEarned, mandTotal) + choice.html;
 
-  html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">Povinně volitelné — skupiny</div>`;
-  let groupsOk = true;
-  plan.groups.forEach(g => {
-    const earned = g.subjects.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
-    const min = effMin(g.def.min_credits, g.subjects);
-    if(min && earned < min) groupsOk = false;
-    if(g.def.min_credits){ html += bar(g.def.label, earned, min); }
-  });
+  const pv = groupBars(pvGroups, earnedIn);
+  if(pv.html) html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">Povinně volitelné — skupiny</div>` + pv.html;
+  const groupsOk = pv.ok;
 
   if(req.pv_overall_min != null){
     html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">PV celkem</div>` +
@@ -1121,11 +1246,11 @@ function renderSummary(plan){
             (ncTotal ? `<div class="progress-info" style="font-size:.72rem;color:var(--muted)"><span>sníženo „bez kreditů“</span><span>−${ncTotal} kr. (z ${req.pv_overall_min})</span></div>` : '');
   }
 
-  const totalEarned = mandEarned + pvEarned;
+  const totalEarned = mandEarned + choiceEarned + pvEarned;
   html += `<hr class="divider">`;
   html += `<div class="total-line">` + bar('Celkem kreditů', totalEarned, req.total_credits) + `</div>`;
 
-  const structuralFree = req.total_credits - mandTotal - (effOverall || 0);
+  const structuralFree = req.total_credits - mandTotal - choiceMin - (effOverall || 0);
   if(structuralFree > 0){
     html += `<div class="progress-info" style="font-size:.78rem;color:var(--muted)">
       <span>z toho volitelné (libovolné předměty)</span><span>~${structuralFree} kr.</span></div>`;
@@ -1134,7 +1259,7 @@ function renderSummary(plan){
   body.innerHTML = html;
 
   const st = document.getElementById('status');
-  const mandOk = mandTotal>0 && mandEarned>=mandTotal;
+  const mandOk = mandTotal>0 && mandEarned>=mandTotal && choice.ok;
   const overallOk = effOverall==null || pvEarned>=effOverall;
   const totalOk = totalEarned>=req.total_credits;
   if(mandOk && groupsOk && overallOk && totalOk){
@@ -1281,7 +1406,7 @@ function renderSchedule(){
     const spec = SPECS.find(s => s.id === currentSpec);
     const req = REQS[currentSpec];
     const isMgr = req.level === 'mgr';
-    document.getElementById('sched-degree').textContent = isMgr ? 'Magisterské studium' : 'Bakalářské studium';
+    document.getElementById('sched-degree').textContent = (isMgr ? 'Magisterské studium' : 'Bakalářské studium') + oborSuffix();
     document.getElementById('sched-title').textContent = spec ? spec.label : currentSpec;
     document.getElementById('years-count').textContent = yearsCount;
     document.getElementById('years-minus').disabled = yearsCount <= 1;
@@ -1329,21 +1454,22 @@ function renderSchedCategories(plan, isMgr){
 
   // PV skupiny — identická logika jako v Kalkulačce
   plan.groups.forEach(g => {
-    const earned = g.subjects.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
+    const earned = g.counted.filter(s=>completed.has(s.id)).reduce((a,s)=>a+credits(s.id),0);
     const raw = g.def.min_credits;
-    const min = effMin(raw, g.subjects);
-    const ncCr = ncCreditsIn(g.subjects);
+    const min = effMin(raw, g.counted);
+    const ncCr = ncCreditsIn(g.counted);
+    const incl = g.includedLabels.length ? ` (včetně skupin: ${g.includedLabels.join(', ')})` : '';
     let badge;
     if(raw == null) badge = pill('bez limitu','todo');
     else if(raw === 0) badge = pill('bez vlastního limitu','todo');
     else badge = earned>=min ? pill('splněno','ok') : pill('min. '+min+' kr.','req');
     let subt;
     if(raw){
-      subt = `Minimum ${min} kr.` + (ncCr ? ` (sníženo o ${ncCr} kr. „bez kreditů“ z ${raw})` : '') + ` • získáno ${earned} kr.`;
+      subt = `Minimum ${min} kr.${incl}` + (ncCr ? ` (sníženo o ${ncCr} kr. „bez kreditů“ z ${raw})` : '') + ` • získáno ${earned} kr.`;
     } else {
       subt = `Získáno ${earned} kr. (počítá se do celku PV)`;
     }
-    wrap.appendChild(schedCatBlock('Povinně volitelné — ' + g.def.label, subt, badge, g.subjects, isMgr));
+    wrap.appendChild(schedCatBlock(groupTitle(g.def), subt, badge, g.subjects, isMgr));
   });
 }
 
@@ -1546,26 +1672,16 @@ function renderSchedSummary(plan, isMgr){
   const mandEarned = plan.mandatory.filter(s=>placements[s.id]).reduce((a,s)=>a+credits(s.id),0);
   const mandTotal = plan.mandatory.reduce((a,s)=>a+credits(s.id),0);
 
-  let pvEarned = 0; const allPv = [];
-  plan.groups.forEach(g => g.subjects.forEach(s => allPv.push(s)));
-  const allPvUniq = [...new Map(allPv.map(s=>[s.id,s])).values()];
-  allPvUniq.forEach(s => { if(placements[s.id]) pvEarned += credits(s.id); });
-
-  // efektivní celkové PV minimum (sníženo o "bez kreditů" napříč všemi PV)
-  const ncTotal = ncCreditsIn(allPvUniq);
-  const effOverall = req.pv_overall_min!=null ? Math.max(0, req.pv_overall_min - ncTotal) : null;
+  const {earnedIn, choiceGroups, pvGroups, pvEarned, choiceEarned, ncTotal, effOverall} =
+    planTotals(plan, id => !!placements[id]);
 
   let html = '';
-  html += `<div class="sec-title">Povinné</div>` + bar('Povinné předměty', mandEarned, mandTotal);
+  const choice = groupBars(choiceGroups, earnedIn);
+  html += `<div class="sec-title">Povinné</div>` + bar('Povinné předměty', mandEarned, mandTotal) + choice.html;
 
-  html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">Povinně volitelné — skupiny</div>`;
-  let groupsOk = true;
-  plan.groups.forEach(g => {
-    const earned = g.subjects.filter(s=>placements[s.id]).reduce((a,s)=>a+credits(s.id),0);
-    const min = effMin(g.def.min_credits, g.subjects);
-    if(min && earned < min) groupsOk = false;
-    if(g.def.min_credits){ html += bar(g.def.label, earned, min); }
-  });
+  const pv = groupBars(pvGroups, earnedIn);
+  if(pv.html) html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">Povinně volitelné — skupiny</div>` + pv.html;
+  const groupsOk = pv.ok;
 
   if(req.pv_overall_min != null){
     html += `<div class="sec-title" style="margin-top: var(--_spacing---16-px)">PV celkem</div>` +
@@ -1573,14 +1689,14 @@ function renderSchedSummary(plan, isMgr){
             (ncTotal ? `<div class="progress-info" style="font-size:.72rem;color:var(--muted)"><span>sníženo „bez kreditů“</span><span>−${ncTotal} kr. (z ${req.pv_overall_min})</span></div>` : '');
   }
 
-  const totalEarned = mandEarned + pvEarned;
+  const totalEarned = mandEarned + choiceEarned + pvEarned;
   html += `<hr class="divider">`;
   html += `<div class="total-line">` + bar('Celkem kreditů', totalEarned, req.total_credits) + `</div>`;
 
   planBody.innerHTML = html;
 
   const st = document.getElementById('sched-status');
-  const mandOk = mandTotal>0 && mandEarned>=mandTotal;
+  const mandOk = mandTotal>0 && mandEarned>=mandTotal && choice.ok;
   const overallOk = effOverall==null || pvEarned>=effOverall;
   const totalOk = totalEarned>=req.total_credits;
   if(mandOk && groupsOk && overallOk && totalOk){
@@ -1650,13 +1766,15 @@ function openYearPicker(id){
 
 
 // ===== Výběr akademického roku =====
-// Seznam roků se čte z /~smolad/data/years.json (pole stringů, poslední = nejnovější/výchozí).
+// Seznam roků se čte z data/years.json (pole stringů, poslední = nejnovější/výchozí).
 // Když se soubor nepodaří načíst, použije se tento záložní seznam:
 const ROKY_FALLBACK = ["2025-2026"];
+// Cesty jsou relativní ke stránce (…/kalkulačka/), aby web fungoval pod /~smolad/ i lokálně v kořeni
+const DATA_DIR = '../data/';
 
 async function nactiRoky() {
     try {
-        const r = await fetch('/~smolad/data/years.json', { cache: 'no-store' });
+        const r = await fetch(DATA_DIR + 'years.json', { cache: 'no-store' });
         if (r.ok) {
             const roky = await r.json();
             if (Array.isArray(roky)) {
@@ -1697,6 +1815,58 @@ function naplnSelectRoku(roky, rok) {
     });
 }
 
+// ===== Výběr oboru =====
+// Obory dostupné v daném roce se čtou z data/<rok>/fields.json (pole id oborů),
+// data oboru pak leží v data/<rok>/<obor>/nodes.json.
+// Když se soubor nepodaří načíst, použije se tento záložní seznam:
+const OBORY_FALLBACK = ["informatika"];
+const OBORY_NAZVY = { fyzika: 'Fyzika', informatika: 'Informatika', matematika: 'Matematika', ucitelstvi: 'Učitelství' };
+
+async function nactiObory(rok) {
+    try {
+        const r = await fetch(`${DATA_DIR}${rok}/fields.json`, { cache: 'no-store' });
+        if (r.ok) {
+            const obory = await r.json();
+            if (Array.isArray(obory)) {
+              // Id oboru je zároveň název složky — povolíme jen bezpečné znaky
+              const platne = obory.filter(x => typeof x === 'string' && /^[a-z0-9_-]+$/.test(x));
+              if (platne.length) return platne;
+            }
+        }
+    } catch (e) { /* ignoruj, použije se fallback */ }
+    return OBORY_FALLBACK;
+}
+
+function vybranyObor(obory) {
+    const zUrl = new URLSearchParams(location.search).get('obor');
+    if (zUrl && obory.includes(zUrl)) return zUrl;
+    const ulozeny = localStorage.getItem('mff_obor');
+    if (ulozeny && obory.includes(ulozeny)) return ulozeny;
+    return obory.includes('informatika') ? 'informatika' : obory[0];
+}
+
+function naplnSelectOboru(obory, obor) {
+    const sel = document.getElementById('obor-select');
+    if (!sel) return;
+    sel.innerHTML = '';
+    obory.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o;
+        opt.textContent = OBORY_NAZVY[o] || o;
+        if (o === obor) opt.selected = true;
+        sel.appendChild(opt);
+    });
+    sel.disabled = obory.length < 2;
+    sel.title = sel.disabled ? 'V tomto akademickém roce je k dispozici jen jeden obor' : '';
+    sel.addEventListener('change', () => {
+        const novy = sel.value;
+        localStorage.setItem('mff_obor', novy);
+        const url = new URL(location.href);
+        url.searchParams.set('obor', novy);
+        location.href = url.toString(); // reload s novým oborem
+    });
+}
+
 async function init() {
     try {
         // A) Wait for the data to actually arrive
@@ -1704,7 +1874,12 @@ async function init() {
         const rok = vybranyRok(roky);
         AKTUALNI_ROK = rok;
         naplnSelectRoku(roky, rok);
-        const response = await fetch(`/~smolad/data/${rok}/nodes.json`);
+        const obory = await nactiObory(rok);
+        const obor = vybranyObor(obory);
+        AKTUALNI_OBOR = obor;
+        naplnSelectOboru(obory, obor);
+        const response = await fetch(`${DATA_DIR}${rok}/${obor}/nodes.json`);
+        if (!response.ok) throw new Error(`HTTP ${response.status} pro ${rok}/${obor}/nodes.json`);
         NODES = await response.json();
 
         // B) Now that we have the data, populate your derived variables

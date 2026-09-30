@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interaktivní mapa předmětů</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="/~smolad/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/~smolad/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/~smolad/favicon-16x16.png">
-  <link rel="manifest" href="/~smolad/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <!-- Bootstrap 5 – pokud je již v projektu jinde načtený (řekl jsi, že ano), tento řádek klidně smaž -->
-  <link rel="stylesheet" href="/~smolad/styles.css">
+  <link rel="stylesheet" href="../styles.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <style>
@@ -251,27 +251,80 @@
       border-radius: var(--_radius---radius-8-px);
     }
 
-    .year-picker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 12px;
-      font-family: var(--_typography---font-family--silka);
-      font-size: var(--_typography---btn-primary--font-size);
-      font-weight: 600;
-      color: var(--muted);
+    /* Řádek s výběrem roku/oboru a přepínátkem stupně studia */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
-    .year-picker select {
+    .controls .filters {
+      margin-bottom: 0;
+    }
+
+    /* Výběr akademického roku a oboru — jedno "okénko" se dvěma poli */
+    .study-picker {
+      display: inline-flex;
+      align-items: stretch;
+      max-width: 100%;
       background: var(--primary--background-white);
       border: 1px solid var(--variables--blue-12);
-      border-radius: 6px;
-      padding: 6px 10px;
+      border-radius: var(--_radius---radius-8-px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .study-picker label {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin: 0;
+      padding: 6px 14px;
       font-family: var(--_typography---font-family--silka);
-      font-size: var(--_typography---btn-primary--font-size);
+      font-size: 11px;
       font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .study-picker label + label {
+      border-left: 1px solid var(--variables--blue-12);
+    }
+
+    .study-picker select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      padding: 0 20px 0 0;
+      background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23003657' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 2px center;
+      font-family: var(--_typography---font-family--silka);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: normal;
+      text-transform: none;
       color: var(--primary--primary-blue);
       cursor: pointer;
+    }
+
+    .study-picker select:focus-visible {
+      outline: 2px solid var(--primary--primary-blue);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .study-picker select:disabled {
+      background-image: none;
+      padding-right: 0;
+      cursor: default;
+      opacity: 1;
+    }
+
+    .study-picker label:has(select:disabled) {
+      cursor: default;
     }
 
     .filter-btn {
@@ -672,14 +725,13 @@
       background: var(--col-subj-or);
     }
 
-    .node.filtered-out {
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-
+    /* Po doznění přechodu se skryté prvky úplně vyřadí z vykreslování (visibility), ne jen zprůhlední */
+    .node.filtered-out,
     .link.filtered-out {
       opacity: 0 !important;
+      visibility: hidden;
       pointer-events: none !important;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
     }
 
     /* --- Popover pro předmětové (subj) uzly --- */
@@ -755,14 +807,14 @@
 <body>
 <header class="site-header">
     <div class="header-container">
-        <a href="/~smolad" class="header-logo">
+        <a href="../" class="header-logo">
             <i class="bi bi-box-seam"></i> 
             MFF UK Nástroje
         </a>
         <nav class="main-nav">
-            <a href="/~smolad">Průvodce prváka</a>
-            <a href="/~smolad/kalkulačka">Kalkulačka kreditů</a>
-            <a href="/~smolad/specializace">Mapa předmětů</a>
+            <a href="../">Průvodce prváka</a>
+            <a href="../kalkulačka/">Kalkulačka kreditů</a>
+            <a href="../specializace/">Mapa předmětů</a>
         </nav>
     </div>
 </header>
@@ -773,14 +825,16 @@
   <div class="instructions">Klikněte na <strong>jednu nebo více specializací</strong>. Mapa rozsvítí předměty, které
     jsou v nich sdílené.</div>
 
-  <div class="filters">
-    <label class="year-picker">
-      Akademický rok:
-      <select id="year-select"></select>
-    </label>
-    <button class="filter-btn" data-filter="all">Všechny stupně</button>
-    <button class="filter-btn active" data-filter="bakalarske">Bakalářské</button>
-    <button class="filter-btn" data-filter="magisterske">Magisterské</button>
+  <div class="controls">
+    <div class="study-picker">
+      <label>Akademický rok <select id="year-select"></select></label>
+      <label>Obor <select id="obor-select"></select></label>
+    </div>
+    <div class="filters">
+      <button class="filter-btn" data-filter="all">Všechny stupně</button>
+      <button class="filter-btn active" data-filter="bakalarske">Bakalářské</button>
+      <button class="filter-btn" data-filter="magisterske">Magisterské</button>
+    </div>
   </div>
 
   <div class="legend">
@@ -825,7 +879,7 @@
         </div>
         <div class="footer-links">
             <a href="https://github.com/CZMrBread/MFF-Tools" target="_blank" rel="noopener noreferrer">
-                <i class="bi bi-github"></i> Zdrojové kódy na GitHubu
+                <i class="bi bi-github"></i> GitHub
             </a>
             <a href="https://discord.gg/7afJ9ES" target="_blank" rel="noopener noreferrer">
                 <i class="bi bi-discord"></i> Discord
@@ -843,13 +897,15 @@
     let currentFilter = 'bakalarske';
 
     // ===== Výběr akademického roku =====
-    // Seznam roků se čte z /~smolad/data/years.json (pole stringů, poslední = nejnovější/výchozí).
+    // Seznam roků se čte z data/years.json (pole stringů, poslední = nejnovější/výchozí).
     // Když se soubor nepodaří načíst, použije se tento záložní seznam:
     const ROKY_FALLBACK = ["2025-2026"];
+    // Cesty jsou relativní ke stránce (…/specializace/), aby web fungoval pod /~smolad/ i lokálně v kořeni
+    const DATA_DIR = '../data/';
 
     async function nactiRoky() {
       try {
-        const r = await fetch('/~smolad/data/years.json', { cache: 'no-store' });
+        const r = await fetch(DATA_DIR + 'years.json', { cache: 'no-store' });
         if (r.ok) {
           const roky = await r.json();
           if (Array.isArray(roky)) {
@@ -890,12 +946,67 @@
       });
     }
 
-    nactiRoky().then(roky => {
+    // ===== Výběr oboru =====
+    // Obory dostupné v daném roce se čtou z data/<rok>/fields.json (pole id oborů),
+    // data oboru pak leží v data/<rok>/<obor>/nodes.json + links.json.
+    // Když se soubor nepodaří načíst, použije se tento záložní seznam:
+    const OBORY_FALLBACK = ["informatika"];
+    const OBORY_NAZVY = { fyzika: 'Fyzika', informatika: 'Informatika', matematika: 'Matematika', ucitelstvi: 'Učitelství' };
+
+    async function nactiObory(rok) {
+      try {
+        const r = await fetch(`${DATA_DIR}${rok}/fields.json`, { cache: 'no-store' });
+        if (r.ok) {
+          const obory = await r.json();
+          if (Array.isArray(obory)) {
+            // Id oboru je zároveň název složky — povolíme jen bezpečné znaky
+            const platne = obory.filter(x => typeof x === 'string' && /^[a-z0-9_-]+$/.test(x));
+            if (platne.length) return platne;
+          }
+        }
+      } catch (e) { /* ignoruj, použije se fallback */ }
+      return OBORY_FALLBACK;
+    }
+
+    function vybranyObor(obory) {
+      const zUrl = new URLSearchParams(location.search).get('obor');
+      if (zUrl && obory.includes(zUrl)) return zUrl;
+      const ulozeny = localStorage.getItem('mff_obor');
+      if (ulozeny && obory.includes(ulozeny)) return ulozeny;
+      return obory.includes('informatika') ? 'informatika' : obory[0];
+    }
+
+    function naplnSelectOboru(obory, obor) {
+      const sel = document.getElementById('obor-select');
+      if (!sel) return;
+      sel.innerHTML = '';
+      obory.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o;
+        opt.textContent = OBORY_NAZVY[o] || o;
+        if (o === obor) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      sel.disabled = obory.length < 2;
+      sel.title = sel.disabled ? 'V tomto akademickém roce je k dispozici jen jeden obor' : '';
+      sel.addEventListener('change', () => {
+        const novy = sel.value;
+        localStorage.setItem('mff_obor', novy);
+        const url = new URL(location.href);
+        url.searchParams.set('obor', novy);
+        location.href = url.toString(); // reload s novým oborem
+      });
+    }
+
+    nactiRoky().then(async roky => {
       const rok = vybranyRok(roky);
       naplnSelectRoku(roky, rok);
+      const obory = await nactiObory(rok);
+      const obor = vybranyObor(obory);
+      naplnSelectOboru(obory, obor);
       return Promise.all([
-        d3.json(`/~smolad/data/${rok}/nodes.json`),
-        d3.json(`/~smolad/data/${rok}/links.json`)
+        d3.json(`${DATA_DIR}${rok}/${obor}/nodes.json`),
+        d3.json(`${DATA_DIR}${rok}/${obor}/links.json`)
       ]);
     }).then(([nodes, links]) => {
 
@@ -922,8 +1033,17 @@
 
       // Update the viewBox to match the new dimensions
 
+      // "Společný povinný" = povinný ve všech specializacích daného stupně (má-li stupeň aspoň 2 specializace)
+      const specsByType = {};
+      specNodes.forEach(s => (specsByType[s.study_type] = specsByType[s.study_type] || []).push(s.id));
       subjNodes.forEach(n => {
-        if (n.course_type === 'mandatory' && n.shared_count === 7) n.baseColor = colMandatoryAll;
+        const mand = n.mandatory_in || [];
+        n.commonMandatory = n.course_type === 'mandatory' &&
+          Object.values(specsByType).some(ids => ids.length > 1 && ids.every(id => mand.includes(id)));
+      });
+
+      subjNodes.forEach(n => {
+        if (n.commonMandatory) n.baseColor = colMandatoryAll;
         else if (n.course_type === 'mandatory') n.baseColor = colMandatory;
         else if (n.course_type === 'elective') n.baseColor = colElective;
         else n.baseColor = colMixed;
@@ -970,57 +1090,58 @@
         .call(wrap, 110);
       node.filter(d => d.group === 'subj').append("text").attr("dy", 4).attr("text-anchor", "middle").style("font-size", "8px").text(d => d.id);
 
+      // Pro každý viditelný předmět seznam specializací, ke kterým ho táhneme. Přepočítá se jen při změně
+      // filtru (rebuildPullTargets), ne v každém ticku — dřív se v každém ticku pro každý předmět procházely všechny linky.
+      let pullTargets = [];
+      function rebuildPullTargets(activeLinks, visibleSpecCount) {
+        const bySubj = new Map();
+        activeLinks.forEach(l => {
+          const subj = l.source.group === 'subj' ? l.source : l.target;
+          const spec = l.source.group === 'spec' ? l.source : l.target;
+          if (subj.group !== 'subj' || spec.group !== 'spec') return;
+          if (!bySubj.has(subj)) bySubj.set(subj, []);
+          bySubj.get(subj).push(spec);
+        });
+        pullTargets = Array.from(bySubj, ([d, specs]) => ({
+          d, specs,
+          // Center it perfectly if it is common mandatory or shared by all visible specializations
+          toCenter: d.commonMandatory || (specs.length === visibleSpecCount && visibleSpecCount > 1)
+        }));
+      }
+
+      // Při filtru se vykreslují jen viditelné uzly/linky (skryté stojí mimo simulaci, nemá smysl je posouvat)
+      let activeNodeSel = node, activeLinkSel = link;
+
+      // Výkon: kolize s 1 iterací a rychlejší ustálení (≈190 místo 300 ticků). Změřeno na datech 2026/27:
+      // ~3,5× méně výpočtu na tick, bez překryvů uzlů a se stejně těsnými shluky jako dřív.
       const simulation = d3.forceSimulation(graphData.nodes)
+        .alphaDecay(0.035)
         .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(30).strength(0.1))
         .force("charge", d3.forceManyBody().strength(d => d.group === 'spec' ? 0 : -25))
-        .force("collide", d3.forceCollide().radius(d => d.radius + 6).iterations(3))
+        .force("collide", d3.forceCollide().radius(d => d.radius + 6).iterations(1))
         .force("pullToSpecs", function (alpha) {
-          // Look ONLY at the links that are currently active in the physics engine
-          const activeLinks = simulation.force("link").links();
-
-          graphData.nodes.filter(d => d.group === 'subj').forEach(d => {
-            // Find active connections for this specific subject
-            const myLinks = activeLinks.filter(l => l.source.id === d.id || l.target.id === d.id);
-            if (myLinks.length === 0) return;
-
-            let targetX = 0, targetY = 0;
-            let activeSpecCount = 0;
-
-            myLinks.forEach(l => {
-              // Find the node on the other end of the link
-              const otherNode = l.source.id === d.id ? l.target : l.source;
-              if (otherNode.group === 'spec') {
-                targetX += otherNode.x;
-                targetY += otherNode.y;
-                activeSpecCount++;
-              }
-            });
-
-            if (activeSpecCount === 0) return;
-
-            targetX /= activeSpecCount;
-            targetY /= activeSpecCount;
-
-            // Center it perfectly if it is shared by all 7
-            if (activeSpecCount === 7) {
-              targetX = cx;
-              targetY = cy;
+          for (const { d, specs, toCenter } of pullTargets) {
+            let targetX = cx, targetY = cy;
+            if (!toCenter) {
+              targetX = 0; targetY = 0;
+              for (const s of specs) { targetX += s.x; targetY += s.y; }
+              targetX /= specs.length;
+              targetY /= specs.length;
             }
-
             // Pull strength increased slightly to snap them into place faster
             d.vx += (targetX - d.x) * alpha * 0.6;
             d.vy += (targetY - d.y) * alpha * 0.6;
-          });
+          }
         })
         .on("tick", () => {
-          node.attr("transform", d => {
+          activeNodeSel.attr("transform", d => {
             // Reduced padding to 20 so the expanded radius doesn't hit the walls
             const padding = d.group === 'spec' ? 20 : 15;
             d.x = Math.max(padding, Math.min(width - padding, d.x));
             d.y = Math.max(padding, Math.min(height - padding - 15, d.y));
             return `translate(${d.x},${d.y})`;
           });
-          link.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+          activeLinkSel.attr("x1", d => d.source.x).attr("y1", d => d.source.y).attr("x2", d => d.target.x).attr("y2", d => d.target.y);
 
           // Pokud je otevřený popover na uzlu předmětu, drž ho nad pohybujícím se kruhem
           if (typeof activeSubjPopover !== "undefined" && activeSubjPopover) {
@@ -1269,6 +1390,15 @@
         // Inject the newly filtered data into the physics engine
         simulation.nodes(activeNodes);
         simulation.force("link").links(activeLinks);
+        rebuildPullTargets(activeLinks, activeSpecs.length);
+        if (currentFilter === 'all') {
+          activeNodeSel = node;
+          activeLinkSel = link;
+        } else {
+          const activeNodeSet = new Set(activeNodes), activeLinkSet = new Set(activeLinks);
+          activeNodeSel = node.filter(d => activeNodeSet.has(d));
+          activeLinkSel = link.filter(d => activeLinkSet.has(d));
+        }
 
         // Heat the simulation up fully. The specs will slide to their new circle positions, 
         // and the custom 'pullToSpecs' force will elegantly drag the subjects right along with them.
@@ -1280,16 +1410,18 @@
       function updateHighlights() {
         if (selectedSpecs.size === 0) {
           node.classed("selected", false).classed("highlighted", false).classed("dimmed", false);
-          node.filter(d => d.group === 'subj').select("circle").attr("fill", d => d.baseColor).style("filter", d => `drop-shadow(0 0 6px ${d.baseColor}40)`);
+          node.filter(d => d.group === 'subj').select("circle").attr("fill", d => d.baseColor).style("filter", null);
           link.classed("highlighted", false).classed("dimmed", false).style("stroke", null);
           return;
         }
 
         node.filter(d => d.group === 'spec').classed("selected", d => selectedSpecs.has(d.id));
 
+        const highlightedSubjIds = new Set();
         node.filter(d => d.group === 'subj').each(function (d) {
           const parentSpecs = subjToSpecs[d.id] || [];
           const matchesAllSelected = Array.from(selectedSpecs).every(specId => parentSpecs.includes(specId));
+          if (matchesAllSelected) highlightedSubjIds.add(d.id);
           const elem = d3.select(this);
           elem.classed("highlighted", matchesAllSelected).classed("dimmed", !matchesAllSelected);
 
@@ -1304,7 +1436,7 @@
             });
 
             let dynColor = d.baseColor;
-            if (d.course_type === 'mandatory' && d.shared_count === 7) {
+            if (d.commonMandatory) {
               dynColor = colMandatoryAll;
             } else {
               if (mCount > 0 && eCount === 0) dynColor = colMandatory;
@@ -1322,8 +1454,7 @@
           const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
           const targetId = typeof d.target === 'object' ? d.target.id : d.target;
 
-          const sourceNodeElem = d3.select("#node-" + sourceId);
-          const isSourceActive = sourceNodeElem.classed("highlighted");
+          const isSourceActive = highlightedSubjIds.has(sourceId);
           const isTargetSelected = selectedSpecs.has(targetId);
 
           if (isSourceActive && isTargetSelected) {
@@ -1337,7 +1468,6 @@
         node.filter(d => d.group === 'spec').raise();
       }
 
-      node.filter(d => d.group === 'subj').select("circle").style("filter", d => `drop-shadow(0 0 6px ${d.baseColor}40)`);
 
       node.on("click", (event, d) => {
         if (d.group === 'spec') {
@@ -1354,7 +1484,7 @@
         if (d.group === 'subj') {
           const title = d.label.replace(d.id, '').trim();
           let badgeHtml = '';
-          if (d.course_type === 'mandatory' && d.shared_count === 7) badgeHtml = `<div class="badge" style="background:${colMandatoryAll};">Společný povinný</div>`;
+          if (d.commonMandatory) badgeHtml = `<div class="badge" style="background:${colMandatoryAll};">Společný povinný</div>`;
           else if (d.course_type === 'mandatory') badgeHtml = `<div class="badge" style="background:${colMandatory};">Povinný</div>`;
           else if (d.course_type === 'elective') badgeHtml = `<div class="badge" style="background:${colElective};">Povinně volitelný</div>`;
           else badgeHtml = `<div class="badge" style="background:${colMixed};">Smíšený</div>`;
@@ -1365,14 +1495,11 @@
                    <div class="tooltip-meta">Vyskytuje se v ${d.shared_count} specializacích</div>
                  `);
         } else {
+          // Linky už jsou po inicializaci forceLink navázané přímo na objekty uzlů
           const count = graphData.links.filter(l => {
-            const lTargetId = typeof l.target === 'object' ? l.target.id : l.target;
-            const lSourceId = typeof l.source === 'object' ? l.source.id : l.source;
-            const sourceNode = graphData.nodes.find(n => n.id === lSourceId);
-            const targetNode = graphData.nodes.find(n => n.id === lTargetId);
-
-            if (currentFilter === 'all') return lTargetId === d.id;
-            return lTargetId === d.id && (sourceNode.study_type === currentFilter || targetNode.study_type === currentFilter);
+            if (l.target.id !== d.id) return false;
+            if (currentFilter === 'all') return true;
+            return l.source.study_type === currentFilter || l.target.study_type === currentFilter;
           }).length;
 
           tooltip.style("opacity", 1).html(`

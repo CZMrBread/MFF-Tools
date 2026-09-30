@@ -6155,7 +6155,8 @@
    {
     "group": 0,
     "label": "Týmový projekt",
-    "min_credits": 6
+    "min_credits": 6,
+    "mandatory_choice": true
    },
    {
     "group": 1,
@@ -6191,7 +6192,8 @@
    {
     "group": 3,
     "label": "Týmový projekt",
-    "min_credits": 6
+    "min_credits": 6,
+    "mandatory_choice": true
    }
   ]
  },

@@ -1,0 +1,4441 @@
+[
+ {
+  "id": "s1",
+  "label": "Fyzika (maior) + Matematika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#ff6b6b",
+  "radius": 40
+ },
+ {
+  "id": "s2",
+  "label": "Matematika (maior) + Fyzika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#4ecdc4",
+  "radius": 40
+ },
+ {
+  "id": "s3",
+  "label": "Fyzika (maior) + Informatika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#ffd166",
+  "radius": 40
+ },
+ {
+  "id": "s4",
+  "label": "Informatika (maior) + Fyzika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#a8e6cf",
+  "radius": 40
+ },
+ {
+  "id": "s5",
+  "label": "Matematika (maior) + Deskriptivní geometrie (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#c3a6ff",
+  "radius": 40
+ },
+ {
+  "id": "s6",
+  "label": "Deskriptivní geometrie (maior) + Matematika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#ff9a3c",
+  "radius": 40
+ },
+ {
+  "id": "s7",
+  "label": "Matematika (maior) + Informatika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#f76197",
+  "radius": 40
+ },
+ {
+  "id": "s8",
+  "label": "Informatika (maior) + Matematika (minor)",
+  "group": "spec",
+  "study_type": "bakalarske",
+  "color": "#6bc6ff",
+  "radius": 40
+ },
+ {
+  "id": "m1",
+  "label": "Fyzika (maior) + Matematika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#ff9f6b",
+  "radius": 40
+ },
+ {
+  "id": "m2",
+  "label": "Matematika (maior) + Fyzika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#6bc6ff",
+  "radius": 40
+ },
+ {
+  "id": "m3",
+  "label": "Fyzika (maior) + Informatika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#6bffbf",
+  "radius": 40
+ },
+ {
+  "id": "m4",
+  "label": "Informatika (maior) + Fyzika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#ff6b6b",
+  "radius": 40
+ },
+ {
+  "id": "m5",
+  "label": "Matematika (maior) + Deskriptivní geometrie (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#ffdf6b",
+  "radius": 40
+ },
+ {
+  "id": "m6",
+  "label": "Deskriptivní geometrie (maior) + Matematika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#cb6bff",
+  "radius": 40
+ },
+ {
+  "id": "m7",
+  "label": "Matematika (maior) + Informatika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#6beeff",
+  "radius": 40
+ },
+ {
+  "id": "m8",
+  "label": "Informatika (maior) + Matematika (minor)",
+  "group": "spec",
+  "study_type": "magisterske",
+  "color": "#f76197",
+  "radius": 40
+ },
+ {
+  "id": "NAIL028",
+  "label": "NAIL028 Úvod do robotiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8",
+   "m4",
+   "m8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene",
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NAIL120",
+  "label": "NAIL120 Úvod do umělé inteligence",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NAIL127",
+  "label": "NAIL127 AI v kontextu",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4",
+   "m8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NDBI025",
+  "label": "NDBI025 Databázové systémy",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NDBI046",
+  "label": "NDBI046 Úvod do datového inženýrství",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8",
+   "m4",
+   "m8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene",
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NDIN006",
+  "label": "NDIN006 Pedagogická praxe z informatiky 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NDIN007",
+  "label": "NDIN007 Pedagogická praxe z informatiky 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NDIN008",
+  "label": "NDIN008 Pedagogická praxe z informatiky 3",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NDIN011",
+  "label": "NDIN011 Aplikační software",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NDIN019",
+  "label": "NDIN019 Dětské programovací jazyky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NDIN020",
+  "label": "NDIN020 Metody a strategie výuky informatiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": "pv",
+   "m4": "pv",
+   "m7": "pv",
+   "m8": "pv"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NDIN021",
+  "label": "NDIN021 Plánování a reflexe výuky informatiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": "pv",
+   "m4": "pv",
+   "m7": "pv",
+   "m8": "pv"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NDMI002",
+  "label": "NDMI002 Diskrétní matematika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF101",
+  "label": "NFUF101 Mechanika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 8,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF102",
+  "label": "NFUF102 Úvod do fyzikálních měření",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 1,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF103",
+  "label": "NFUF103 Elektřina a magnetismus",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 8,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF104",
+  "label": "NFUF104 Molekulová fyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF105",
+  "label": "NFUF105 Praktikum I - Mechanika a molekulová fyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF106",
+  "label": "NFUF106 Matematické metody ve fyzice",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF201",
+  "label": "NFUF201 Optika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 7,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF202",
+  "label": "NFUF202 Teoretická mechanika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF203",
+  "label": "NFUF203 Praktikum II — Elektřina a magnetismus",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF204",
+  "label": "NFUF204 Úvod do kvantové mechaniky a kvantové teorie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 8,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF205",
+  "label": "NFUF205 Klasická elektrodynamika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF206",
+  "label": "NFUF206 Praktikum III — Optika a atomová fyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF301",
+  "label": "NFUF301 Atomová fyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF302",
+  "label": "NFUF302 Termodynamika a statistická fyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 7,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF303",
+  "label": "NFUF303 Praktický úvod do elektroniky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF304",
+  "label": "NFUF304 Speciální teorie relativity",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF305",
+  "label": "NFUF305 Proseminář výuky fyziky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF306",
+  "label": "NFUF306 Pedagogická praxe z fyziky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF333",
+  "label": "NFUF333 Vypracování a konzultace bakalářské práce",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s3"
+  ],
+  "elective_in": [],
+  "credits": 6,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF401",
+  "label": "NFUF401 Fyzika kondenzovaného stavu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF402",
+  "label": "NFUF402 Praktikum školních pokusů I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF403",
+  "label": "NFUF403 Didaktika fyziky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF404",
+  "label": "NFUF404 Pedagogická praxe z fyziky II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF405",
+  "label": "NFUF405 Jaderná a částicová fyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF406",
+  "label": "NFUF406 Praktikum školních pokusů II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF407",
+  "label": "NFUF407 Pedagogická praxe z fyziky III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF501",
+  "label": "NFUF501 Astronomie a astrofyzika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF502",
+  "label": "NFUF502 Didaktika fyziky II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF503",
+  "label": "NFUF503 Fyzikální obraz světa",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF555",
+  "label": "NFUF555 Diplomová práce I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m3"
+  ],
+  "elective_in": [],
+  "credits": 8,
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF556",
+  "label": "NFUF556 Diplomová práce II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m3"
+  ],
+  "elective_in": [],
+  "credits": 12,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF701",
+  "label": "NFUF701 Praktické aplikace fyziky kondenzovaného stavu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": "pv",
+   "m2": "pv",
+   "m3": "pv",
+   "m4": "pv"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF702",
+  "label": "NFUF702 Vybrané partie ze základů elektrotechniky pro budoucí učitele fyziky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m1": "pv",
+   "m2": "pv",
+   "m3": "pv",
+   "m4": "pv"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF703",
+  "label": "NFUF703 Nové materiály a technologie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m1": "pv",
+   "m2": "pv",
+   "m3": "pv",
+   "m4": "pv"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF704",
+  "label": "NFUF704 Obecná teorie relativity pro učitele",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m1": "pv",
+   "m2": "pv",
+   "m3": "pv",
+   "m4": "pv"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF815",
+  "label": "NFUF815 Bakalářský seminář z fyziky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s3"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF818",
+  "label": "NFUF818 Psychologická a pedagogická reflexe pedagogické praxe",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s3"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF820",
+  "label": "NFUF820 Heuristické metody ve výuce fyziky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF822",
+  "label": "NFUF822 Heuristické metody ve výuce fyziky II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF831",
+  "label": "NFUF831 Problémy fyzikálního vzdělávání",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NFUF832",
+  "label": "NFUF832 Praktikum školních pokusů III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NFUF833",
+  "label": "NFUF833 Praktikum školních pokusů IV",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NFUF834",
+  "label": "NFUF834 Praktikum školních pokusů V",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NJAZ091",
+  "label": "NJAZ091 Anglický jazyk — zkouška pro bakaláře",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 1,
+  "semester": "oba"
+ },
+ {
+  "id": "NMIN201",
+  "label": "NMIN201 Programování 3",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMIN203",
+  "label": "NMIN203 Mathematica pro začátečníky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 10,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m6": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NMIN264",
+  "label": "NMIN264 Mathematica pro pokročilé",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 10,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m6": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD101",
+  "label": "NMTD101 Deskriptivní geometrie I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 10,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD102",
+  "label": "NMTD102 Deskriptivní geometrie II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD103",
+  "label": "NMTD103 Programování pro deskriptivní geometrii I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD104",
+  "label": "NMTD104 Programování pro deskriptivní geometrii II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD108",
+  "label": "NMTD108 Grafický software",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD201",
+  "label": "NMTD201 Deskriptivní geometrie III",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 7,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD202",
+  "label": "NMTD202 Deskriptivní geometrie IV",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 7,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD203",
+  "label": "NMTD203 Seminář z deskriptivní geometrie I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD204",
+  "label": "NMTD204 Seminář z deskriptivní geometrie II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD205",
+  "label": "NMTD205 Projektivní geometrie I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD206",
+  "label": "NMTD206 Projektivní geometrie II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD301",
+  "label": "NMTD301 Počítačová geometrie I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s7",
+   "s8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD302",
+  "label": "NMTD302 Počítačová geometrie II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s7",
+   "s8"
+  ],
+  "credits": 7,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD303",
+  "label": "NMTD303 Vybrané kapitoly z deskriptivní geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD305",
+  "label": "NMTD305 Dějiny deskriptivní geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD310",
+  "label": "NMTD310 Pedagogická praxe z deskriptivní geometrie I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s5",
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD314",
+  "label": "NMTD314 Vypracování a konzultace bakalářské práce bc",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 1,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s6"
+  ],
+  "elective_in": [],
+  "credits": 6,
+  "semester": "oba"
+ },
+ {
+  "id": "NMTD401",
+  "label": "NMTD401 Neeukleidovská geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD402",
+  "label": "NMTD402 Vybrané kapitoly z diferenciální geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD403",
+  "label": "NMTD403 Algebraická geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD404",
+  "label": "NMTD404 Kartografie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD405",
+  "label": "NMTD405 Didaktika deskriptivní geometrie I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD406",
+  "label": "NMTD406 Didaktika deskriptivní geometrie II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTD410",
+  "label": "NMTD410 Pedagogická praxe z deskriptivní geometrie II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD501",
+  "label": "NMTD501 Kinematická geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD503",
+  "label": "NMTD503 Vybrané kapitoly z geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTD511",
+  "label": "NMTD511 Pedagogická praxe z deskriptivní geometrie III",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m5",
+   "m6"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM101",
+  "label": "NMTM101 Matematická analýza I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 8,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM102",
+  "label": "NMTM102 Matematická analýza II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM103",
+  "label": "NMTM103 Lineární algebra I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM104",
+  "label": "NMTM104 Lineární algebra II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM105",
+  "label": "NMTM105 Aritmetika a algebra I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM106",
+  "label": "NMTM106 Základy planimetrie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM110",
+  "label": "NMTM110 Informační technologie pro učitele",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM161",
+  "label": "NMTM161 Matematický proseminář I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM162",
+  "label": "NMTM162 Matematický proseminář II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM163",
+  "label": "NMTM163 Introduction to Proof",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM201",
+  "label": "NMTM201 Matematická analýza III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM202",
+  "label": "NMTM202 Matematická analýza IV",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM203",
+  "label": "NMTM203 Geometrie I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM204",
+  "label": "NMTM204 Geometrie II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM205",
+  "label": "NMTM205 Stereometrie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM206",
+  "label": "NMTM206 Aritmetika a algebra II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM207",
+  "label": "NMTM207 Finanční matematika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM208",
+  "label": "NMTM208 Kombinatorika",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM261",
+  "label": "NMTM261 Geometrické porozumění trojrozměrnému prostoru a funkcím dvou proměnných 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NMTM262",
+  "label": "NMTM262 Komplexní analýza pro učitele 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NMTM263",
+  "label": "NMTM263 Introduction to Number Theory",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM264",
+  "label": "NMTM264 Kuželosečky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM266",
+  "label": "NMTM266 Planimetrie pro pokročilé",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM268",
+  "label": "NMTM268 Geometrická algebra",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM301",
+  "label": "NMTM301 Diferenciální geometrie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM303",
+  "label": "NMTM303 Základy zobrazovacích metod",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM305",
+  "label": "NMTM305 Dějiny matematiky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM306",
+  "label": "NMTM306 Dějiny matematiky II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM307",
+  "label": "NMTM307 Metody řešení matematických úloh",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM310",
+  "label": "NMTM310 Pedagogická praxe z matematiky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM314",
+  "label": "NMTM314 Vypracování a konzultace bakalářské práce bc",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s2",
+   "s5",
+   "s7"
+  ],
+  "elective_in": [],
+  "credits": 6,
+  "semester": "oba"
+ },
+ {
+  "id": "NMTM331",
+  "label": "NMTM331 Bakalářský seminář z matematiky I 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "M_obor",
+   "s2": "M_obor",
+   "s5": "M_obor",
+   "s6": "M_obor",
+   "s7": "M_obor",
+   "s8": "M_obor"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM332",
+  "label": "NMTM332 Bakalářský seminář z matematiky II 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "M_obor",
+   "s2": "M_obor",
+   "s5": "M_obor",
+   "s6": "M_obor",
+   "s7": "M_obor",
+   "s8": "M_obor"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM362",
+  "label": "NMTM362 Research on Classroom Communication",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 10,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m6": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM401",
+  "label": "NMTM401 Matematická analýza V",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM402",
+  "label": "NMTM402 Matematická analýza VI",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM403",
+  "label": "NMTM403 Pravděpodobnost a matematická statistika I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM404",
+  "label": "NMTM404 Pravděpodobnost a matematická statistika II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM405",
+  "label": "NMTM405 Didaktika matematiky I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM406",
+  "label": "NMTM406 Didaktika matematiky II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM410",
+  "label": "NMTM410 Pedagogická praxe z matematiky II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM462",
+  "label": "NMTM462 Rozvíjení konceptuálních znalostí ve školské matematice 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 9,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NMTM463",
+  "label": "NMTM463 Aktivity s talentovanými žáky v matematice na ZŠ a SŠ 1",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NMTM464",
+  "label": "NMTM464 Qualitative Research Methods in Education Research",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m2": "doporucene",
+   "m5": "pv",
+   "m6": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMTM501",
+  "label": "NMTM501 Algebra",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM503",
+  "label": "NMTM503 Logika a teorie množin",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM505",
+  "label": "NMTM505 Geometrie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMTM511",
+  "label": "NMTM511 Pedagogická praxe z matematiky III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NMUG264",
+  "label": "NMUG264 Stereotomie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s5",
+   "s6"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s5": "doporucene",
+   "s6": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMUG361",
+  "label": "NMUG361 Aplikace deskriptivní geometrie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 10,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m6": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NMUG404",
+  "label": "NMUG404 Vybrané kapitoly z diferenciální geometrie",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 3,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMUM365",
+  "label": "NMUM365 Seminář z kombinatoriky a teorie grafů",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 9,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NMUM468",
+  "label": "NMUM468 Praktické aspekty vyučování matematice",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m2",
+   "m5",
+   "m6",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "m2": "doporucene",
+   "m5": "pv",
+   "m6": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NPED015",
+  "label": "NPED015 Pedagogický seminář I",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4",
+   "m8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPED016",
+  "label": "NPED016 Pedagogický seminář II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4",
+   "m8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NPED045",
+  "label": "NPED045 Multimediální vzdělávání v pojetí psychologického výzkumu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8",
+   "m4",
+   "m8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene",
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPED048",
+  "label": "NPED048 Pokročilý seminář z didaktiky informatiky",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m4",
+   "m8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NPEP301",
+  "label": "NPEP301 Úvod do psychologie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NPEP302",
+  "label": "NPEP302 Pedagogická propedeutika p",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NPEP401",
+  "label": "NPEP401 Pedagogika I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NPEP402",
+  "label": "NPEP402 Pedagogika II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NPEP403",
+  "label": "NPEP403 Psychologie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 6,
+  "semester": "letní"
+ },
+ {
+  "id": "NPEP501",
+  "label": "NPEP501 Diagnostika a autodiagnostika pro učitele",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "zimní"
+ },
+ {
+  "id": "NPEP601",
+  "label": "NPEP601 Rétorika a komunikace s lidmi I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "F_obec",
+   "s2": "M_obec",
+   "s3": "F_obec",
+   "s4": "I_obec",
+   "s5": "M_obec",
+   "s6": "DG_obec",
+   "s7": "M_obec",
+   "s8": "I_obec"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPEP602",
+  "label": "NPEP602 Sociální dovednosti a práce s lidmi I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "F_obec",
+   "s2": "M_obec",
+   "s3": "F_obec",
+   "s4": "I_obec",
+   "s5": "M_obec",
+   "s6": "DG_obec",
+   "s7": "M_obec",
+   "s8": "I_obec"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPEP603",
+  "label": "NPEP603 Rétorika a komunikace s lidmi II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "F_obec",
+   "s2": "M_obec",
+   "s3": "F_obec",
+   "s4": "I_obec",
+   "s5": "M_obec",
+   "s6": "DG_obec",
+   "s7": "M_obec",
+   "s8": "I_obec"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NPEP604",
+  "label": "NPEP604 Sociální dovednosti a práce s lidmi II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "F_obec",
+   "s2": "M_obec",
+   "s3": "F_obec",
+   "s4": "I_obec",
+   "s5": "M_obec",
+   "s6": "DG_obec",
+   "s7": "M_obec",
+   "s8": "I_obec"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NPEP801",
+  "label": "NPEP801 Pedagogický seminář I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPEP802",
+  "label": "NPEP802 Pedagogický seminář II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "m1": "doporucene",
+   "m2": "doporucene",
+   "m3": "doporucene",
+   "m4": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NPFL012",
+  "label": "NPFL012 Úvod do počítačové lingvistiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8",
+   "m4",
+   "m8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene",
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPGR003",
+  "label": "NPGR003 Základy počítačové grafiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NPRG005",
+  "label": "NPRG005 Neprocedurální programování",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NPRG013",
+  "label": "NPRG013 Programování v jazyce Java",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPRG030",
+  "label": "NPRG030 Programování 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NPRG031",
+  "label": "NPRG031 Programování 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NPRG035",
+  "label": "NPRG035 Programování v jazyce C#",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPRG036",
+  "label": "NPRG036 Datové formáty",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8",
+   "m4",
+   "m8"
+  ],
+  "credits": 5,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene",
+   "m4": "doporucene",
+   "m8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NPRG045",
+  "label": "NPRG045 Ročníkový projekt",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "oba"
+ },
+ {
+  "id": "NPRG062",
+  "label": "NPRG062 Algoritmizace",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NSWI090",
+  "label": "NSWI090 Počítačové sítě",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NSWI120",
+  "label": "NSWI120 Principy počítačů",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NSWI141",
+  "label": "NSWI141 Úvod do počítačových sítí",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NSWI170",
+  "label": "NSWI170 Počítačové systémy",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NSWI177",
+  "label": "NSWI177 Úvod do Linuxu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "letní"
+ },
+ {
+  "id": "NSZZ031",
+  "label": "NSZZ031 Vypracování a konzultace bakalářské práce",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s4",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 6,
+  "semester": "oba"
+ },
+ {
+  "id": "NSZZ501",
+  "label": "NSZZ501 Diplomová práce I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m2",
+   "m4",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 8,
+  "semester": "zimní"
+ },
+ {
+  "id": "NSZZ502",
+  "label": "NSZZ502 Diplomová práce II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m2",
+   "m4",
+   "m5",
+   "m6",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 12,
+  "semester": "letní"
+ },
+ {
+  "id": "NTIN060",
+  "label": "NTIN060 Algoritmy a datové struktury 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "letní"
+ },
+ {
+  "id": "NTIN090",
+  "label": "NTIN090 Základy složitosti a vyčíslitelnosti",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NTVY014",
+  "label": "NTVY014 Tělesná výchova I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik",
+   "s8": "telocvik"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NTVY015",
+  "label": "NTVY015 Tělesná výchova II",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik",
+   "s8": "telocvik"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NTVY016",
+  "label": "NTVY016 Tělesná výchova III",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik",
+   "s8": "telocvik"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NTVY017",
+  "label": "NTVY017 Tělesná výchova IV",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik",
+   "s8": "telocvik"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NTVY018",
+  "label": "NTVY018 Letní výcvikový kurz 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik",
+   "s8": "telocvik"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NTVY019",
+  "label": "NTVY019 Zimní výcvikový kurz 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 8,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s3",
+   "s4",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 1,
+  "pv_group": {
+   "s1": "telocvik",
+   "s2": "telocvik",
+   "s3": "telocvik",
+   "s4": "telocvik",
+   "s5": "telocvik",
+   "s6": "telocvik",
+   "s7": "telocvik",
+   "s8": "telocvik"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NUFY029",
+  "label": "NUFY029 Teoretická mechanika",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s2",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NUFY085",
+  "label": "NUFY085 Matematické metody ve fyzice II",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s2",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NUFY113",
+  "label": "NUFY113 Optika krok za krokem",
+  "group": "subj",
+  "radius": 8,
+  "shared_count": 2,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s2",
+   "s4"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "zimní"
+ },
+ {
+  "id": "NUIN014",
+  "label": "NUIN014 Informační technologie",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": "pv",
+   "m4": "pv",
+   "m7": "pv",
+   "m8": "pv"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NUIN017",
+  "label": "NUIN017 Speciální oborový seminář",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "elective_in": [],
+  "credits": 3,
+  "semester": "letní"
+ },
+ {
+  "id": "NUIN018",
+  "label": "NUIN018 Vývoj počítačových her — pro učitele 1",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 4,
+  "semester": "zimní"
+ },
+ {
+  "id": "NUIN019",
+  "label": "NUIN019 Základy tvorby webu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "m3",
+   "m4",
+   "m7",
+   "m8"
+  ],
+  "credits": 4,
+  "pv_group": {
+   "m3": "pv",
+   "m4": "pv",
+   "m7": "pv",
+   "m8": "pv"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NUIN021",
+  "label": "NUIN021 Algoritmy a automaty pro učitele",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 5,
+  "semester": "zimní"
+ },
+ {
+  "id": "NUIN022",
+  "label": "NUIN022 Proseminář z matematiky",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mandatory",
+  "mandatory_in": [
+   "s3",
+   "s4",
+   "s7",
+   "s8"
+  ],
+  "elective_in": [],
+  "credits": 2,
+  "semester": "letní"
+ },
+ {
+  "id": "NUIN024",
+  "label": "NUIN024 Proseminář z lineární algebry 2",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 4,
+  "course_type": "mixed",
+  "mandatory_in": [
+   "s3",
+   "s7"
+  ],
+  "elective_in": [
+   "s4",
+   "s8"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s4": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NUMV047",
+  "label": "NUMV047 Pravděpodobnost a finanční matematika pro střední školu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 9,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NUMV048",
+  "label": "NUMV048 Statistika a pojistná matematika pro střední školu",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 9,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "NUMV058",
+  "label": "NUMV058 Řecké matematické texty I",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 6,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8"
+  ],
+  "credits": 3,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene"
+  },
+  "semester": "zimní"
+ },
+ {
+  "id": "NUMV090",
+  "label": "NUMV090 Teorie her",
+  "group": "subj",
+  "radius": 12,
+  "shared_count": 9,
+  "course_type": "elective",
+  "mandatory_in": [],
+  "elective_in": [
+   "s1",
+   "s2",
+   "s5",
+   "s6",
+   "s7",
+   "s8",
+   "m2",
+   "m5",
+   "m7"
+  ],
+  "credits": 2,
+  "pv_group": {
+   "s1": "doporucene",
+   "s2": "doporucene",
+   "s5": "doporucene",
+   "s6": "doporucene",
+   "s7": "doporucene",
+   "s8": "doporucene",
+   "m2": "doporucene",
+   "m5": "pv",
+   "m7": "doporucene"
+  },
+  "semester": "letní"
+ },
+ {
+  "id": "req_s1",
+  "group": "program_req",
+  "spec": "s1",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 159,
+  "pv_overall_min": 6,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "F_obec",
+    "label": "Fyzika – PV obecná část",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obor",
+    "label": "Matematika – PV oborová část",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_s2",
+  "group": "program_req",
+  "spec": "s2",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 164,
+  "pv_overall_min": 6,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obec",
+    "label": "Matematika – PV obecná část",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obor",
+    "label": "Matematika – PV oborová část",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_s3",
+  "group": "program_req",
+  "spec": "s3",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 163,
+  "pv_overall_min": 4,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "F_obec",
+    "label": "Fyzika – PV obecná část",
+    "min_credits": 4
+   }
+  ]
+ },
+ {
+  "id": "req_s4",
+  "group": "program_req",
+  "spec": "s4",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 166,
+  "pv_overall_min": 4,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "I_obec",
+    "label": "Informatika – PV obecná část",
+    "min_credits": 4
+   }
+  ]
+ },
+ {
+  "id": "req_s5",
+  "group": "program_req",
+  "spec": "s5",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 154,
+  "pv_overall_min": 6,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obec",
+    "label": "Matematika – PV obecná část",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obor",
+    "label": "Matematika – PV oborová část",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_s6",
+  "group": "program_req",
+  "spec": "s6",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 154,
+  "pv_overall_min": 6,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "DG_obec",
+    "label": "DG – PV obecná část",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obor",
+    "label": "Matematika – PV oborová část",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_s7",
+  "group": "program_req",
+  "spec": "s7",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 156,
+  "pv_overall_min": 6,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obec",
+    "label": "Matematika – PV obecná část",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obor",
+    "label": "Matematika – PV oborová část",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_s8",
+  "group": "program_req",
+  "spec": "s8",
+  "level": "bc",
+  "total_credits": 180,
+  "mandatory_credits": 154,
+  "pv_overall_min": 6,
+  "pv_groups": [
+   {
+    "group": "telocvik",
+    "label": "Tělesná výchova",
+    "min_credits": 4
+   },
+   {
+    "group": "I_obec",
+    "label": "Informatika – PV obecná část",
+    "min_credits": 4
+   },
+   {
+    "group": "M_obor",
+    "label": "Matematika – PV oborová část",
+    "min_credits": 2
+   }
+  ]
+ },
+ {
+  "id": "req_m1",
+  "group": "program_req",
+  "spec": "m1",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 109,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.)",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m2",
+  "group": "program_req",
+  "spec": "m2",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 109,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.)",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m3",
+  "group": "program_req",
+  "spec": "m3",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 92,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.)",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m4",
+  "group": "program_req",
+  "spec": "m4",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 92,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.)",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m5",
+  "group": "program_req",
+  "spec": "m5",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 112,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.) – z doporučených",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m6",
+  "group": "program_req",
+  "spec": "m6",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 112,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.) – z doporučených",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m7",
+  "group": "program_req",
+  "spec": "m7",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 95,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.)",
+    "min_credits": 3
+   }
+  ]
+ },
+ {
+  "id": "req_m8",
+  "group": "program_req",
+  "spec": "m8",
+  "level": "mgr",
+  "total_credits": 120,
+  "mandatory_credits": 95,
+  "pv_overall_min": 3,
+  "pv_groups": [
+   {
+    "group": "pv",
+    "label": "Povinně volitelné (min. 3 kr.)",
+    "min_credits": 3
+   }
+  ]
+ }
+]
