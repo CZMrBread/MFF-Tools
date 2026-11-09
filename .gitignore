@@ -1,0 +1,28 @@
+# Závislosti
+node_modules/
+
+# Build a cache
+dist/
+*.tsbuildinfo
+.vite/
+coverage/
+
+# Kopie data/ – generuje `npm run sync-data` (spouští se před dev a build)
+/public/data/
+
+# Lokální prostředí a logy
+.env
+.env.*
+*.local
+npm-debug.log*
+*.log
+
+# Editor a systém
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+docs/*
+!docs/*.md

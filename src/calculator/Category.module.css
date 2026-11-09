@@ -1,0 +1,168 @@
+/*
+ * Blok kategorie (nadpis se štítkem, podtitulek, seznam předmětů) a řádek předmětu –
+ * v Kalkulačce i v levém sloupci Rozvrhu (1:1 ze staré stránky, včetně rozšíření
+ * .subject-item o přetahování a indikátory zařazení).
+ */
+
+.cat {
+  margin: var(--_spacing---24-px) 0;
+}
+.catHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--_spacing---8-px);
+  flex-wrap: wrap;
+  margin: 0 0 var(--_spacing---4-px);
+}
+.cat h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--_spacing---8-px);
+  flex-wrap: wrap;
+  font-size: var(--_typography---text-m--font-size);
+  font-weight: 600;
+  letter-spacing: var(--_typography---text-m--letter-spacing);
+  color: var(--primary--primary-black);
+}
+.cat .sub {
+  font-size: var(--_typography---text-xs--font-size);
+  color: var(--muted);
+  margin-bottom: var(--_spacing---12-px);
+}
+.catReset {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.subjectList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_spacing---6-px);
+}
+.subjectItem {
+  display: flex;
+  align-items: center;
+  gap: var(--_spacing---12-px);
+  padding: var(--_spacing---12-px) var(--_spacing---14-px);
+  border: 1px solid var(--variables--blue-12);
+  border-radius: var(--_radius---radius-8-px);
+  background: var(--primary--background-white);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  user-select: none;
+}
+.subjectItem:hover {
+  background: #eef2f5;
+}
+.subjectItem.done {
+  background: #e7f6ec;
+  border-color: #bfe6cc;
+}
+.subjectItem.nocredit {
+  background: var(--variables--blue-8);
+  border-style: dashed;
+}
+.subjectItem.nocredit .name {
+  color: var(--muted);
+  font-style: italic;
+}
+.subjectItem input[type="checkbox"] {
+  transform: scale(1.3);
+  accent-color: var(--primary--primary-blue);
+  cursor: pointer;
+}
+.subjectItem .name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  font-size: var(--_typography---form-label--font-size);
+}
+@media (max-width: 600px) {
+  .subjectItem {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .subjectItem .name {
+    flex-basis: 100%;
+    order: 1;
+  }
+  .subjectItem input[type="checkbox"]:first-child {
+    order: 0;
+  }
+  .subjectItem .ncToggle,
+  .subjectItem .semTag,
+  .subjectItem .placedAt,
+  .subjectItem .creditsBadge {
+    order: 2;
+  }
+  .subjectItem .creditsBadge {
+    margin-left: 0;
+  }
+}
+.creditsBadge {
+  margin-left: auto;
+  background: var(--variables--blue-8);
+  color: var(--primary--primary-blue);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--_radius---radius-8-px);
+  font-size: var(--_typography---text-xs--font-size);
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* "bez kreditů" přepínátko */
+.ncToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  font-size: var(--_typography---text-xs--font-size);
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  border: 1px dashed var(--variables--blue-32);
+  border-radius: var(--_radius---radius-8-px);
+}
+.ncToggle input {
+  transform: scale(1.05);
+  accent-color: var(--primary--primary-red);
+  cursor: pointer;
+}
+.ncToggle:hover {
+  color: var(--primary--primary-black);
+}
+
+/* rozšíření .subject-item o přetažitelnost a indikátory zařazení v Rozvrhu */
+.subjectItem[draggable="true"] {
+  cursor: grab;
+}
+.subjectItem[draggable="true"].dragging {
+  opacity: 0.4;
+}
+.subjectItem .semTag {
+  font-size: var(--_typography---text-xs--font-size);
+  color: var(--muted);
+  background: var(--variables--blue-8);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.subjectItem .semTag:hover {
+  background: var(--variables--blue-12);
+}
+.subjectItem .placedAt {
+  font-size: var(--_typography---text-xs--font-size);
+  color: var(--primary--primary-blue);
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
+.subjectItem .placedAt:hover {
+  background: var(--variables--blue-8);
+}

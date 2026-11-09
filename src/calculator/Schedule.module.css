@@ -1,0 +1,288 @@
+/*
+ * Záložka Rozvrh: přepínač počtu ročníků, třísloupcové rozložení, ročníky se
+ * semestry, zařazené předměty a výběr ročníku klepnutím (1:1 ze staré stránky).
+ */
+
+.yearsStepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.yearsStepper button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--variables--blue-12);
+  background: var(--primary--background-white);
+  color: var(--primary--primary-blue);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.yearsStepper button:hover {
+  background: var(--variables--blue-8);
+}
+.yearsStepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.yearsStepper .count {
+  min-width: 26px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--primary--primary-blue);
+}
+
+/* třísloupcové rozložení: předměty dle kategorií (scrolluje s dokumentem) /
+   ročníky (sticky, vlastní scroll) / kontrola plnění (sticky, vlastní scroll) */
+.schedColumns {
+  display: grid;
+  grid-template-columns: 2fr 1.3fr 1fr;
+  gap: var(--_spacing---24-px);
+  align-items: start;
+}
+@media (max-width: 1150px) {
+  .schedColumns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 900px) {
+  .schedColumns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.schedColTitle {
+  font-size: var(--_typography---filter-label--font-size);
+  letter-spacing: var(--_typography---filter-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: var(--_spacing---12-px);
+}
+
+.schedColCategories {
+  min-width: 0;
+}
+@media (max-width: 1150px) {
+  .schedColCategories {
+    grid-column: 1 / -1;
+  }
+}
+
+.schedColYearsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--_spacing---12-px);
+  flex-wrap: wrap;
+  margin-bottom: var(--_spacing---12-px);
+}
+.schedColYearsHead .schedColTitle {
+  margin-bottom: 0;
+}
+
+.schedColYears {
+  position: sticky;
+  top: var(--_spacing---16-px);
+  max-height: calc(100vh - var(--_spacing---32-px));
+  overflow-y: auto;
+  min-width: 0;
+}
+.schedColSummary {
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .schedColYears {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+.yearBlock {
+  margin-bottom: var(--_spacing---20-px);
+}
+.yearBlock:last-child {
+  margin-bottom: 0;
+}
+.yearBlock h3 {
+  margin: 0 0 var(--_spacing---8-px);
+  font-size: var(--_typography---text-m--font-size);
+  font-weight: 600;
+  color: var(--primary--primary-black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.yearBlockTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.yearCredits {
+  font-size: var(--_typography---text-xs--font-size);
+  font-weight: 700;
+  color: var(--primary--primary-blue);
+  background: var(--variables--blue-8);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--_radius---radius-btns);
+}
+.yearResetBtn {
+  font-size: var(--_typography---text-xs--font-size);
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--variables--blue-12);
+  border-radius: var(--_radius---radius-btns);
+  padding: 0.15rem 0.55rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.yearResetBtn:hover {
+  color: var(--primary--primary-red);
+  border-color: var(--primary--primary-red);
+}
+
+.semestersRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--_spacing---12-px);
+}
+@media (max-width: 600px) {
+  .semestersRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.semesterSlot {
+  border: 1px solid var(--variables--blue-12);
+  border-radius: var(--_radius---radius-8-px);
+  padding: var(--_spacing---8-px);
+  background: var(--primary--background-grey);
+  min-height: 56px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.semesterSlot.dragOver {
+  background: #eef2f5;
+  border-color: var(--primary--primary-blue);
+}
+.semesterSlot.dragDenied {
+  background: #fdecea;
+  border-color: var(--primary--primary-red);
+  cursor: not-allowed;
+}
+.semesterSlot .slotLabel {
+  font-size: var(--_typography---filter-label--font-size);
+  text-transform: uppercase;
+  letter-spacing: var(--_typography---filter-label--letter-spacing);
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+.semesterSlot .slotItems {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.semesterSlot .emptyMsg {
+  font-size: var(--_typography---text-xs--font-size);
+  color: var(--muted);
+}
+
+.schedItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--variables--blue-12);
+  border-radius: var(--_radius---radius-8-px);
+  background: #e7f6ec;
+  border-color: #bfe6cc;
+  cursor: grab;
+  user-select: none;
+  font-size: var(--_typography---form-label--font-size);
+}
+/* Třídu spans-both stará stránka definovala, ale nikde nepřiřazovala. */
+.schedItem.spansBoth {
+  background: #eaf2fb;
+  border-color: #c6dcf3;
+}
+.schedItem:active {
+  cursor: grabbing;
+}
+.schedItem .name {
+  flex: 1;
+}
+.schedItem .badge {
+  flex-shrink: 0;
+  margin-left: 0;
+}
+.schedItem .removeBtn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 2px;
+}
+.schedItem .removeBtn:hover {
+  color: var(--primary--primary-red);
+}
+.schedItem[draggable="true"].dragging {
+  opacity: 0.4;
+}
+
+/* mobilní výběr ročníku klepnutím (tap-to-place) */
+.yearPickerBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.yearPicker {
+  background: var(--primary--background-white);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px 20px 0 0;
+  padding: var(--_spacing---24-px);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.yearPicker h4 {
+  color: var(--primary--primary-blue);
+  margin-bottom: var(--_spacing---12-px);
+}
+.yearPicker .optList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.yearPicker .optBtn {
+  text-align: left;
+  padding: 12px 16px;
+  border-radius: var(--_radius---radius-8-px);
+  border: 1px solid var(--variables--blue-12);
+  background: var(--primary--background-white);
+  cursor: pointer;
+  font-family: var(--_typography---font-family--silka);
+  font-size: var(--_typography---form-label--font-size);
+}
+.yearPicker .optBtn:hover {
+  background: var(--variables--blue-8);
+}
+.yearPicker .cancelBtn {
+  margin-top: var(--_spacing---12-px);
+  width: 100%;
+}

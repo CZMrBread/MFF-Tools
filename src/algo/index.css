@@ -1,0 +1,7172 @@
+/*
+ * Stránka /algo/ hlavní aplikace (src/algo/AlgoPage.tsx). Všechna pravidla obsahu jsou pod
+ * .algo-root a proměnné mají prefix --algo-, takže nic neprosakuje do hlavičky webu ani jinam
+ * (soubor se navíc načítá jen jako chunk této stránky). Mimo .algo-root jsou jen proměnné
+ * témat a pozadí stránky (:root), okraj a písmo <body> a tmavá varianta hlavičky webu (na konci).
+ * --site-header-h (výšku hlavičky webu, 0 = schovaná) a --algo-site-header-space (místo hlavičky
+ * v toku stránky, i když je schovaná) zapisuje useSiteHeaderOffset (siteHeader.ts).
+ */
+:root {
+  /* nativní prvky (posuvníky, range, zaškrtávátka, select) podle tématu; ruční volba níže */
+  color-scheme: light dark;
+  /* výchozí hodnota; skutečnou výšku hlavičky zapisuje siteHeader.ts inline stylem na <html> */
+  --algo-site-header-space: 0px;
+
+  --algo-bg: #f6f7fb;
+  --algo-panel: #ffffff;
+  --algo-panel-2: #eef0f6;
+  --algo-border: #d9dce6;
+  --algo-text: #1c2130;
+  --algo-muted: #5d6478;
+  /* --algo-accent je barva odkazů a čar i pozadí pod --algo-accent-text → oba směry musí mít kontrast ≥ 4,5 : 1 */
+  --algo-accent: #2f5bea;
+  --algo-accent-text: #ffffff;
+  /* chybové hlášky a neplatná pole */
+  --algo-danger: #c0392b;
+  --algo-code-bg: #1f2433;
+  --algo-code-text: #d7dbe8;
+  /* aktivní řádek pseudokódu: čísla řádků a komentáře (--algo-code-comment) na něm mají ≥ 4,5 : 1 */
+  --algo-code-active: #2c3a75;
+  --algo-code-comment: #a3abc4;
+  /* proužek u aktivního řádku pseudokódu */
+  --algo-code-mark: #8aa4ff;
+
+  /* Barvy značek. Čáry a obrysy mají proti panelu ≥ 3 : 1 (WCAG 1.4.11); žlutá je jako výplň příliš světlá,
+     proto má vlastní tmavší odstín pro čáry a obrysy (--algo-c-compare-line). */
+  --algo-c-plain: #7f89a6;
+  --algo-c-compare: #f2b01e;
+  --algo-c-compare-line: #a86f00;
+  --algo-c-swap: #e0432f;
+  --algo-c-active: #2f5bea;
+  --algo-c-min: #8e44ad;
+  --algo-c-pivot: #c2610c;
+  --algo-c-bound: #16a085;
+  /* text v barvě c-bound / c-pivot a hodnota 1 (hradla, sčítačka) – kontrast ≥ 4,5 : 1 i na podbarvení */
+  --algo-c-bound-text: #0a6150;
+  --algo-c-pivot-text: #8f4405;
+  --algo-c-one: #2448c8;
+  --algo-c-sorted: #23934c;
+  --algo-c-empty: #e3e6ef;
+  /* zelený text (Dokončeno ✓) – na panelu i pozadí ≥ 4,5 : 1 */
+  --algo-success-text: #1b7a3e;
+  /* ⓘ / ⚠ na konci běhu bez úspěchu (Step.outcome) – na --algo-panel-2 ≥ 4,5 : 1 */
+  --algo-info-text: #2448c8;
+  --algo-warn-text: #8a5300;
+  /* text ukazatele p v seznamu (čára zůstává --algo-c-swap) – ≥ 4,5 : 1 */
+  --algo-danger-text: #c0341f;
+  /* podíl žluté v podbarvení zvýrazněného klíče (a,b)-stromu (.hot-bg) */
+  --algo-hot-pct: 50%;
+
+  /* barvy komponent (Kruskal, souvislost): výplň + obrys; vrcholy grafu (.n-compK) i les Union-Find (.uf-compK).
+     Stejné v obou tématech – popisek ve světlém kroužku je vždy tmavý (--algo-comp-text). */
+  --algo-comp0-fill: #f6c9c3;
+  --algo-comp0-line: #c0392b;
+  --algo-comp1-fill: #c9dcf7;
+  --algo-comp1-line: #2f5bea;
+  --algo-comp2-fill: #c5ecd2;
+  --algo-comp2-line: #27ae60;
+  --algo-comp3-fill: #fde7b5;
+  --algo-comp3-line: #d68910;
+  --algo-comp4-fill: #e2cdf1;
+  --algo-comp4-line: #8e44ad;
+  --algo-comp5-fill: #c3ebe5;
+  --algo-comp5-line: #16a085;
+  --algo-comp6-fill: #f9d2e6;
+  --algo-comp6-line: #c2185b;
+  --algo-comp7-fill: #e0e0e0;
+  --algo-comp7-line: #555;
+  --algo-comp-text: #111;
+
+  --algo-c-node: #ffffff;
+  --algo-c-node-border: #4b5675;
+  /* výplň už navštíveného vrcholu (.n-visited) – musí se lišit od --algo-c-node */
+  --algo-c-visited-fill: #d5dae8;
+  --algo-c-edge: #7d869f;
+  --algo-c-edge-tree: #2f5bea;
+  --algo-c-visited: #23934c;
+  --algo-c-frontier: #f2b01e;
+  --algo-c-current: #e0432f;
+
+  /* štítky úrovně na kartách modulů (text na pozadí ≥ 4,5 : 1) */
+  --algo-tag-bc-fg: #1d4ed8;
+  --algo-tag-bc-bg: #dbe4ff;
+  --algo-tag-mgr-fg: #6b21a8;
+  --algo-tag-mgr-bg: #f0e1fb;
+
+  background: var(--algo-bg);
+}
+.algo-root {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: var(--algo-text);
+  line-height: 1.45;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Tmavé téma: ručně (data-theme) nebo podle systému, pokud není vynuceno světlé.
+   POZOR: oba bloky níže musí mít stejné hodnoty – při změně upravte oba. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --algo-bg: #12151d;
+  --algo-panel: #1a1e29;
+  --algo-panel-2: #222736;
+  --algo-border: #2f3547;
+  --algo-text: #e6e9f2;
+  --algo-muted: #9aa3bd;
+  /* světlý akcent (odkazy, ukazatele ≥ 7 : 1) → text na něm musí být tmavý */
+  --algo-accent: #8aa4ff;
+  --algo-accent-text: #0e1320;
+  --algo-danger: #ff8a7a;
+  --algo-code-bg: #0e1118;
+  --algo-code-active: #26326a;
+  --algo-c-plain: #6b7590;
+  --algo-c-empty: #2a3040;
+  --algo-c-node: #222736;
+  --algo-c-node-border: #9aa3bd;
+  --algo-c-visited-fill: #3a4460;
+  --algo-c-bound-text: #5fd3b8;
+  --algo-c-pivot-text: #f5a35c;
+  --algo-c-one: #a9bdff;
+  --algo-c-edge: #7d869f;
+  --algo-c-compare-line: #f2b01e;
+  --algo-c-min: #b06fd0;
+  --algo-success-text: #5fd08a;
+  --algo-info-text: #a9bdff;
+  --algo-warn-text: #f2b01e;
+  --algo-danger-text: #ff7a66;
+  --algo-hot-pct: 35%;
+  --algo-tag-bc-fg: #c9d6ff;
+  --algo-tag-bc-bg: #26326a;
+  --algo-tag-mgr-fg: #e7c9ff;
+  --algo-tag-mgr-bg: #3e2752;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --algo-bg: #12151d;
+    --algo-panel: #1a1e29;
+    --algo-panel-2: #222736;
+    --algo-border: #2f3547;
+    --algo-text: #e6e9f2;
+    --algo-muted: #9aa3bd;
+    /* světlý akcent (odkazy, ukazatele ≥ 7 : 1) → text na něm musí být tmavý */
+    --algo-accent: #8aa4ff;
+    --algo-accent-text: #0e1320;
+    --algo-danger: #ff8a7a;
+    --algo-code-bg: #0e1118;
+    --algo-code-active: #26326a;
+    --algo-c-plain: #6b7590;
+    --algo-c-empty: #2a3040;
+    --algo-c-node: #222736;
+    --algo-c-node-border: #9aa3bd;
+    --algo-c-visited-fill: #3a4460;
+    --algo-c-bound-text: #5fd3b8;
+    --algo-c-pivot-text: #f5a35c;
+    --algo-c-one: #a9bdff;
+    --algo-c-edge: #7d869f;
+    --algo-c-compare-line: #f2b01e;
+    --algo-c-min: #b06fd0;
+    --algo-success-text: #5fd08a;
+    --algo-info-text: #a9bdff;
+    --algo-warn-text: #f2b01e;
+    --algo-danger-text: #ff7a66;
+    --algo-hot-pct: 35%;
+    --algo-tag-bc-fg: #c9d6ff;
+    --algo-tag-bc-bg: #26326a;
+    --algo-tag-mgr-fg: #e7c9ff;
+    --algo-tag-mgr-bg: #3e2752;
+  }
+}
+
+.algo-root,
+.algo-root * {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  /* hlavička webu má stejné písmo jako na ostatních stránkách (obsah algo má vlastní, viz .algo-root) */
+  font-family: "Silka Webfont", Arial, sans-serif;
+}
+.algo-root h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.4rem;
+}
+.algo-root h2 {
+  font-size: 1.1rem;
+  margin: 1.2rem 0 0.4rem;
+}
+.algo-root a {
+  color: var(--algo-accent);
+}
+.algo-root a:focus:not(:focus-visible),
+.algo-root button:focus:not(:focus-visible) {
+  outline: none;
+}
+.algo-root :focus-visible {
+  outline: 2px solid var(--algo-accent);
+  outline-offset: 2px;
+}
+.algo-root button {
+  font: inherit;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--algo-border);
+  border-radius: 6px;
+  background: var(--algo-panel);
+  color: var(--algo-text);
+  cursor: pointer;
+}
+.algo-root button:hover:not(:disabled):not([aria-disabled="true"]) {
+  border-color: var(--algo-accent);
+}
+.algo-root button:disabled,
+.algo-root button.is-disabled[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+.algo-root button.primary {
+  background: var(--algo-accent);
+  color: var(--algo-accent-text);
+  border-color: var(--algo-accent);
+  min-width: 3rem;
+}
+/* méně důležité akce (Vyprázdnit, Vrátit…) – tlumené, bez rámečku do hoveru */
+.algo-root button.secondary {
+  background: transparent;
+  color: var(--algo-muted);
+  border-style: dashed;
+}
+.algo-root button.secondary:hover:not(:disabled) {
+  color: var(--algo-text);
+}
+.algo-root input[type="text"],
+.algo-root input[type="number"],
+.algo-root textarea,
+.algo-root select {
+  font: inherit;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--algo-border);
+  border-radius: 6px;
+  background: var(--algo-panel);
+  color: var(--algo-text);
+}
+.algo-root kbd {
+  background: var(--algo-panel-2);
+  border: 1px solid var(--algo-border);
+  border-radius: 4px;
+  padding: 0 0.3rem;
+  font-size: 0.85em;
+}
+
+/* ---------- layout ---------- */
+.algo-root .layout {
+  display: flex;
+  min-height: calc(100vh - var(--site-header-h, 0px));
+}
+.algo-root .sidebar {
+  width: 250px;
+  flex: 0 0 250px;
+  background: var(--algo-panel);
+  border-right: 1px solid var(--algo-border);
+  padding: 1rem 0.75rem;
+  overflow-y: auto;
+  /* lepí se pod hlavičku webu (auto-hide: schovaná hlavička = 0) */
+  position: sticky;
+  top: var(--site-header-h, 0px);
+  height: calc(100vh - var(--site-header-h, 0px));
+  height: calc(100dvh - var(--site-header-h, 0px));
+  transition:
+    top 0.3s ease,
+    height 0.3s ease;
+}
+.algo-root .brand {
+  display: block;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: var(--algo-text);
+  margin-bottom: 1rem;
+}
+.algo-root .nav-cat-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--algo-muted);
+  margin: 0.9rem 0 0.3rem 0.5rem;
+}
+.algo-root .sidebar a:not(.brand) {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  color: var(--algo-text);
+  text-decoration: none;
+  font-size: 0.93rem;
+}
+.algo-root .sidebar a:not(.brand):hover {
+  background: var(--algo-panel-2);
+}
+.algo-root .sidebar a.active {
+  background: var(--algo-accent);
+  color: var(--algo-accent-text);
+}
+/* první výsledek hledání = cíl Enteru v poli */
+.algo-root .sidebar a.enter-target:not(.active) {
+  background: var(--algo-panel-2);
+}
+.algo-root .sidebar a.enter-target::after {
+  content: " ↵";
+  float: right;
+  opacity: 0.7;
+  font-size: 0.85em;
+}
+.algo-root .content {
+  flex: 1;
+  padding: 1.25rem 1.5rem 3rem;
+  min-width: 0;
+}
+/* horní lišta s ☰ a názvem modulu – jen na úzké obrazovce (viz sekce POHLEDY A KOSTRA APLIKACE) */
+.algo-root .topbar {
+  display: none;
+}
+@media (max-width: 900px) {
+  .algo-root .sidebar {
+    position: fixed;
+    left: -260px;
+    /* zavřené menu nesmí zůstat v pořadí Tab → po odjetí visibility: hidden */
+    visibility: hidden;
+    transition:
+      left 0.2s,
+      visibility 0s 0.2s;
+    z-index: 10;
+  }
+  .algo-root .sidebar.open {
+    left: 0;
+    visibility: visible;
+    transition: left 0.2s;
+  }
+  .algo-root .content {
+    padding: 0.75rem 1rem 3rem;
+  }
+}
+
+/* ---------- home ---------- */
+.algo-root .home {
+  max-width: 1240px;
+}
+.algo-root .home > p {
+  max-width: 760px;
+}
+
+/* ---------- visualizer ---------- */
+.algo-root .viz-desc p {
+  margin: 0.3rem 0;
+  max-width: 900px;
+}
+.algo-root .complexity {
+  color: var(--algo-muted);
+  font-size: 0.92rem;
+}
+.algo-root .viz-input {
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+.algo-root .viz-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 1rem;
+  align-items: start;
+}
+@media (max-width: 1200px) {
+  .algo-root .viz-main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.algo-root .viz-canvas {
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-radius: 10px;
+  padding: 0.75rem;
+  /* široký obsah (tabulky, dlouhé řetězce) jde posunout, místo aby se ořízl nebo roztáhl stránku */
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.algo-root .viz-message {
+  margin: 0;
+  padding: 0.55rem 0.8rem;
+  background: var(--algo-panel-2);
+  border-radius: 8px;
+  /* stabilní výška (2 řádky) – ovládání pod zprávou při krokování neposkakuje */
+  min-height: 3.5rem;
+  font-size: 0.97rem;
+  border-left: 4px solid transparent;
+}
+.algo-root .viz-code {
+  position: sticky;
+  top: calc(1rem + var(--site-header-h, 0px));
+  transition: top 0.3s ease;
+}
+
+/* ---------- controls ---------- */
+.algo-root .controls {
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-radius: 10px;
+  padding: 0.4rem 0.8rem;
+  /* přehrávání zůstává po ruce u spodního okraje okna i pod vysokým plátnem (jako lišta ve VisuAlgo) */
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+}
+.algo-root .controls-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.algo-root .step-counter {
+  margin-left: 0.5rem;
+  color: var(--algo-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 5.5rem;
+}
+.algo-root .speed {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--algo-muted);
+  font-size: 0.9rem;
+}
+.algo-root .speed input {
+  width: 80px;
+  min-height: 24px;
+}
+/* slovo „rychlost“ jen pro čtečky – posuvník má aria-label a hodnotu („1×“), řádek se vejde i na 1366 px */
+.algo-root .speed-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* posuvník kroků v jednom řádku s tlačítky a rychlostí – přilepená lišta je nízká a nepřekrývá plátno */
+.algo-root .controls .seek {
+  flex: 1 1 4rem;
+  min-width: 4rem;
+  min-height: 24px;
+  margin: 0;
+}
+
+/* ---------- legend / vars ---------- */
+.algo-root .legend {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  padding: 0;
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: var(--algo-muted);
+}
+.algo-root .swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 3px;
+  vertical-align: -2px;
+  margin-right: 0.3rem;
+  background: var(--algo-c-plain);
+}
+.algo-root .vars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin-top: 0.5rem;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+}
+/* počítadla operací na stránce třídění – odlišená od proměnných algoritmu */
+.algo-root .sort-stats {
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+.algo-root .var-name {
+  color: var(--algo-accent);
+}
+.algo-root .var-value {
+  font-weight: 600;
+}
+
+/* ---------- pseudocode ---------- */
+.algo-root .pseudocode {
+  position: relative; /* offsetTop řádků se počítá vůči panelu (posun aktivního řádku do záběru) */
+  max-height: calc(100vh - 2rem - var(--site-header-h, 0px));
+  overflow-y: auto;
+  margin: 0;
+  background: var(--algo-code-bg);
+  color: var(--algo-code-text);
+  border-radius: 10px;
+  padding: 0.6rem 0;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.algo-root .pc-line {
+  display: flex;
+  align-items: flex-start;
+  padding-right: 0.75rem;
+  transition: background 0.15s;
+}
+.algo-root .pc-line.active {
+  background: var(--algo-code-active);
+  box-shadow: inset 4px 0 0 var(--algo-code-mark);
+}
+.algo-root .pc-line.active .pc-num {
+  color: var(--algo-code-text);
+  font-weight: 700;
+}
+.algo-root .pc-line.comment {
+  color: var(--algo-code-comment);
+}
+.algo-root .pc-num {
+  width: 1.6rem;
+  flex: 0 0 1.6rem;
+  color: var(--algo-code-comment);
+  text-align: right;
+  margin-right: 0.6rem;
+  user-select: none;
+}
+.algo-root .pc-text {
+  white-space: pre-wrap;
+  text-indent: -1.5rem;
+  padding-left: 1.5rem;
+}
+
+/* ---------- number input ---------- */
+.algo-root .number-input label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+}
+.algo-root .number-input input[type="text"] {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+.algo-root .input-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+.algo-root .n-input {
+  display: flex !important;
+  align-items: center;
+  gap: 0.3rem;
+}
+.algo-root .n-input input {
+  width: 4.5rem;
+}
+
+/* ---------- array view ---------- */
+.algo-root .array-view + .array-view {
+  margin-top: 0.75rem;
+  border-top: 1px dashed var(--algo-border);
+  padding-top: 0.5rem;
+}
+.algo-root .array-label {
+  font-size: 0.85rem;
+  color: var(--algo-muted);
+  margin-bottom: 0.2rem;
+}
+.algo-root .array-svg {
+  display: block;
+}
+/* přesun sloupců a krabiček animuje views/useFlip (Web Animations) – CSS přechod transformace by se s ním pral */
+.algo-root .bar rect {
+  transition:
+    fill var(--algo-step-color-ms),
+    height var(--algo-step-ms),
+    y var(--algo-step-ms);
+}
+/* změna rozložení (výška z canvasFit, šířka okna) není krok – sloupce rovnou v nové výšce (useRelayoutFreeze) */
+.algo-root .array-svg.relayout .bar rect {
+  transition: none;
+}
+.algo-root .bar-value {
+  font-size: 13px;
+  fill: var(--algo-text);
+}
+/* indexy pod sloupci: 12 px ve viewBoxu, aby i po zmenšení kresby na 1280 × 720 měly ≥ 10,5 px */
+.algo-root .bar-index {
+  font-size: 12px;
+  fill: var(--algo-muted);
+}
+.algo-root .bar-plain rect,
+.algo-root .swatch.bar-plain {
+  fill: var(--algo-c-plain);
+  background: var(--algo-c-plain);
+}
+.algo-root .bar-compare rect,
+.algo-root .swatch.bar-compare {
+  fill: var(--algo-c-compare);
+  background: var(--algo-c-compare);
+}
+.algo-root .bar-swap rect,
+.algo-root .swatch.bar-swap {
+  fill: var(--algo-c-swap);
+  background: var(--algo-c-swap);
+}
+.algo-root .bar-active rect,
+.algo-root .swatch.bar-active {
+  fill: var(--algo-c-active);
+  background: var(--algo-c-active);
+}
+.algo-root .bar-min rect,
+.algo-root .swatch.bar-min {
+  fill: var(--algo-c-min);
+  background: var(--algo-c-min);
+}
+.algo-root .bar-pivot rect,
+.algo-root .swatch.bar-pivot {
+  fill: var(--algo-c-pivot);
+  background: var(--algo-c-pivot);
+}
+.algo-root .bar-bound rect,
+.algo-root .swatch.bar-bound {
+  fill: var(--algo-c-bound);
+  background: var(--algo-c-bound);
+}
+.algo-root .bar-sorted rect,
+.algo-root .swatch.bar-sorted {
+  fill: var(--algo-c-sorted);
+  background: var(--algo-c-sorted);
+}
+.algo-root .bar-empty {
+  fill: var(--algo-c-empty);
+}
+.algo-root .range path {
+  fill: none;
+  stroke: var(--algo-muted);
+  stroke-width: 1.5;
+}
+.algo-root .range text {
+  font-size: 11px;
+  fill: var(--algo-muted);
+}
+
+/* ---------- operace nad strukturou ---------- */
+.algo-root .op-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  align-items: center;
+}
+.algo-root .op-bar label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+}
+.algo-root .op-bar input[type="number"] {
+  width: 4.5rem;
+}
+.algo-root .op-bar .sep {
+  width: 1px;
+  height: 1.6rem;
+  background: var(--algo-border);
+  margin: 0 0.3rem;
+}
+
+/* ---------- krabičky ---------- */
+.algo-root .boxlist-svg {
+  display: block;
+}
+.algo-root .box rect {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .box text {
+  fill: var(--algo-text);
+  font-size: 16px;
+  font-weight: 600;
+}
+.algo-root .box-new rect {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 25%, var(--algo-c-node));
+}
+.algo-root .box-active rect {
+  stroke: var(--algo-c-active);
+  fill: color-mix(in srgb, var(--algo-c-active) 25%, var(--algo-c-node));
+}
+.algo-root .box-compare rect {
+  stroke: var(--algo-c-compare-line);
+  fill: color-mix(in srgb, var(--algo-c-compare) 30%, var(--algo-c-node));
+}
+.algo-root .box-found rect {
+  stroke: var(--algo-c-min);
+  fill: color-mix(in srgb, var(--algo-c-min) 30%, var(--algo-c-node));
+}
+.algo-root .box-removed rect {
+  stroke: var(--algo-c-swap);
+  fill: color-mix(in srgb, var(--algo-c-swap) 30%, var(--algo-c-node));
+  stroke-dasharray: 4 3;
+}
+.algo-root .box-arrow {
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+}
+.algo-root .arrow-head {
+  fill: var(--algo-c-node-border);
+}
+.algo-root .box-null {
+  fill: var(--algo-muted);
+  font-size: 20px;
+}
+.algo-root .box-empty-text {
+  fill: var(--algo-muted);
+  font-size: 14px;
+  font-style: italic;
+}
+.algo-root .pointer {
+  transition: transform var(--algo-step-ms) ease;
+}
+.algo-root .pointer text {
+  fill: var(--algo-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+.algo-root .pointer-line {
+  stroke: var(--algo-accent);
+  stroke-width: 1.5;
+}
+/* text ukazatele p tmavší než čára (--algo-c-swap má na panelu jen 4,2 : 1) */
+.algo-root .pointer.ptr-p text {
+  fill: var(--algo-danger-text);
+}
+.algo-root .pointer.ptr-p .pointer-line {
+  stroke: var(--algo-c-swap);
+}
+
+.algo-root .swatch.sw-new {
+  background: var(--algo-c-sorted);
+}
+.algo-root .swatch.sw-active {
+  background: var(--algo-c-active);
+}
+.algo-root .swatch.sw-compare {
+  background: var(--algo-c-compare);
+}
+.algo-root .swatch.sw-found {
+  background: var(--algo-c-min);
+}
+.algo-root .swatch.sw-removed {
+  background: var(--algo-c-swap);
+}
+.algo-root .swatch.sw-queried {
+  background: var(--algo-c-bound);
+}
+
+/* ---------- strom ---------- */
+.algo-root .tree-svg {
+  display: block;
+}
+/* přesun vrcholů animuje JS (views/useTween) společně s hranami – CSS přechod transformace by se s ním pral */
+.algo-root .tree-node circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .tree-node text {
+  fill: var(--algo-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+/* popisek pod vrcholem (s=…, δ, index haldy): 12 px a o 2 px níž, ať se větší písmo nedotýká kroužku */
+.algo-root .tree-node .tree-sub {
+  fill: var(--algo-muted);
+  font-size: 12px;
+  font-weight: 400;
+  transform: translateY(2px);
+}
+.algo-root .tree-edge line {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.5;
+}
+.algo-root .tree-edge text {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .tree-edge.e-active line {
+  stroke: var(--algo-c-active);
+  stroke-width: 2.5;
+}
+.algo-root .tree-edge.e-rotate line {
+  stroke: var(--algo-c-swap);
+  stroke-width: 2.5;
+}
+.algo-root .n-active circle {
+  stroke: var(--algo-c-active);
+  fill: color-mix(in srgb, var(--algo-c-active) 25%, var(--algo-c-node));
+}
+.algo-root .n-compare circle {
+  stroke: var(--algo-c-compare-line);
+  fill: color-mix(in srgb, var(--algo-c-compare) 35%, var(--algo-c-node));
+}
+.algo-root .n-swap circle {
+  stroke: var(--algo-c-swap);
+  fill: color-mix(in srgb, var(--algo-c-swap) 30%, var(--algo-c-node));
+}
+.algo-root .n-min circle {
+  stroke: var(--algo-c-min);
+  fill: color-mix(in srgb, var(--algo-c-min) 30%, var(--algo-c-node));
+}
+.algo-root .n-found circle {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+/* navštívený: vlastní výplň + čárkovaný obrys, aby rozdíl nestál jen na jasu */
+.algo-root .n-visited circle {
+  stroke: var(--algo-c-node-border);
+  fill: var(--algo-c-visited-fill);
+  stroke-dasharray: 3 2;
+}
+.algo-root .n-new circle {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+.algo-root .n-removed circle {
+  stroke: var(--algo-c-swap);
+  stroke-dasharray: 4 3;
+}
+.algo-root .n-queried circle {
+  stroke-width: 3;
+  stroke: var(--algo-c-bound);
+}
+.algo-root .n-bad circle {
+  stroke: var(--algo-c-swap);
+  stroke-width: 3;
+}
+.algo-root .swatch.sw-bad {
+  background: transparent;
+  border: 3px solid var(--algo-c-swap);
+}
+
+/* ---------- graf ---------- */
+.algo-root .graph-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 800px) {
+  .algo-root .graph-input {
+    grid-template-columns: 1fr;
+  }
+}
+.algo-root .graph-input label {
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+}
+.algo-root .graph-input textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  resize: vertical;
+}
+.algo-root .graph-input-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.algo-root .graph-input-right select {
+  max-width: 100%;
+}
+.algo-root .hint {
+  font-size: 0.82rem;
+  color: var(--algo-muted);
+}
+.algo-root .muted {
+  color: var(--algo-muted);
+}
+.algo-root .graph-svg {
+  display: block;
+  margin: 0 auto;
+  user-select: none;
+}
+.algo-root .graph-node circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .graph-node .node-label {
+  fill: var(--algo-text);
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.algo-root .graph-node .node-sub {
+  fill: var(--algo-muted);
+  font-size: 11px;
+  pointer-events: none;
+}
+.algo-root .graph-edge path {
+  fill: none;
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.8;
+  transition:
+    stroke var(--algo-step-color-ms),
+    stroke-width var(--algo-step-color-ms);
+}
+.algo-root .graph-arrow {
+  fill: var(--algo-c-edge);
+}
+.algo-root .edge-label-bg {
+  fill: var(--algo-panel);
+  stroke: var(--algo-border);
+  stroke-width: 0.8;
+}
+.algo-root .edge-label {
+  fill: var(--algo-text);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.algo-root .graph-node.n-open circle {
+  stroke: var(--algo-c-compare-line);
+  fill: color-mix(in srgb, var(--algo-c-frontier) 40%, var(--algo-c-node));
+}
+.algo-root .graph-node.n-current circle {
+  stroke: var(--algo-c-current);
+  fill: color-mix(in srgb, var(--algo-c-current) 35%, var(--algo-c-node));
+  stroke-width: 3;
+}
+.algo-root .graph-node.n-closed circle {
+  stroke: var(--algo-c-visited);
+  fill: color-mix(in srgb, var(--algo-c-visited) 35%, var(--algo-c-node));
+}
+.algo-root .graph-node.n-bad circle {
+  stroke: var(--algo-c-swap);
+  stroke-width: 3;
+}
+.algo-root .graph-node.n-comp0 circle {
+  fill: var(--algo-comp0-fill);
+  stroke: var(--algo-comp0-line);
+}
+.algo-root .graph-node.n-comp1 circle {
+  fill: var(--algo-comp1-fill);
+  stroke: var(--algo-comp1-line);
+}
+.algo-root .graph-node.n-comp2 circle {
+  fill: var(--algo-comp2-fill);
+  stroke: var(--algo-comp2-line);
+}
+.algo-root .graph-node.n-comp3 circle {
+  fill: var(--algo-comp3-fill);
+  stroke: var(--algo-comp3-line);
+}
+.algo-root .graph-node.n-comp4 circle {
+  fill: var(--algo-comp4-fill);
+  stroke: var(--algo-comp4-line);
+}
+.algo-root .graph-node.n-comp5 circle {
+  fill: var(--algo-comp5-fill);
+  stroke: var(--algo-comp5-line);
+}
+.algo-root .graph-node.n-comp6 circle {
+  fill: var(--algo-comp6-fill);
+  stroke: var(--algo-comp6-line);
+}
+.algo-root .graph-node.n-comp7 circle {
+  fill: var(--algo-comp7-fill);
+  stroke: var(--algo-comp7-line);
+}
+/* tmavý text jen uvnitř světle vybarveného kruhu – popisek pod vrcholem (.node-sub) leží na pozadí panelu */
+.algo-root .graph-node[class*="n-comp"] .node-label {
+  fill: var(--algo-comp-text);
+}
+
+.algo-root .graph-edge.e-tree path {
+  stroke: var(--algo-c-edge-tree);
+  stroke-width: 3;
+}
+.algo-root .graph-arrow.e-tree {
+  fill: var(--algo-c-edge-tree);
+}
+.algo-root .graph-edge.e-active path {
+  stroke: var(--algo-c-current);
+  stroke-width: 3;
+}
+.algo-root .graph-arrow.e-active {
+  fill: var(--algo-c-current);
+}
+.algo-root .graph-edge.e-relax path {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 3;
+}
+.algo-root .graph-arrow.e-relax {
+  fill: var(--algo-c-pivot);
+}
+.algo-root .graph-edge.e-back path {
+  stroke: var(--algo-c-swap);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+}
+.algo-root .graph-arrow.e-back {
+  fill: var(--algo-c-swap);
+}
+.algo-root .graph-edge.e-forward path {
+  stroke: var(--algo-c-min);
+  stroke-width: 2.5;
+  stroke-dasharray: 2 4;
+}
+.algo-root .graph-arrow.e-forward {
+  fill: var(--algo-c-min);
+}
+.algo-root .graph-edge.e-cross path {
+  stroke: var(--algo-c-bound);
+  stroke-width: 2.5;
+  stroke-dasharray: 8 4 2 4;
+}
+.algo-root .graph-arrow.e-cross {
+  fill: var(--algo-c-bound);
+}
+.algo-root .graph-edge.e-candidate path {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.5;
+}
+.algo-root .graph-arrow.e-candidate {
+  fill: var(--algo-c-compare-line);
+}
+/* zahozená / už viděná hrana: tlumená, ale ≥ 3 : 1 a odlišená čárkováním (ne jen průhledností) */
+.algo-root .graph-edge.e-rejected path {
+  stroke: var(--algo-muted);
+  stroke-dasharray: 3 5;
+  opacity: 0.75;
+}
+.algo-root .graph-arrow.e-rejected {
+  fill: var(--algo-muted);
+  opacity: 0.75;
+}
+.algo-root .graph-edge.e-seen path {
+  stroke-dasharray: 2 3;
+}
+
+.algo-root .swatch.sw-open {
+  background: var(--algo-c-frontier);
+}
+.algo-root .swatch.sw-current {
+  background: var(--algo-c-current);
+}
+.algo-root .swatch.sw-closed {
+  background: var(--algo-c-visited);
+}
+.algo-root .swatch.sw-tree {
+  background: var(--algo-c-edge-tree);
+}
+.algo-root .swatch.sw-back {
+  background: var(--algo-c-swap);
+}
+.algo-root .swatch.sw-forward {
+  background: var(--algo-c-min);
+}
+.algo-root .swatch.sw-cross {
+  background: var(--algo-c-bound);
+}
+.algo-root .swatch.sw-relax {
+  background: var(--algo-c-pivot);
+}
+.algo-root .swatch.sw-candidate {
+  background: var(--algo-c-compare);
+}
+.algo-root .swatch.sw-rejected {
+  background: var(--algo-muted);
+  opacity: 0.75;
+}
+.algo-root .swatch.sw-comp {
+  background: linear-gradient(90deg, #c0392b, #2f5bea, #27ae60, #d68910);
+}
+
+/* ---------- tabulka ---------- */
+.algo-root .gtable {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+}
+.algo-root .gtable-title {
+  color: var(--algo-muted);
+  margin-bottom: 0.2rem;
+}
+.algo-root .gtable table {
+  border-collapse: collapse;
+}
+.algo-root .gtable th,
+.algo-root .gtable td {
+  border: 1px solid var(--algo-border);
+  padding: 0.2rem 0.55rem;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+.algo-root .gtable th {
+  background: var(--algo-panel-2);
+  font-weight: 600;
+}
+.algo-root .gtable tr.hl td {
+  background: color-mix(in srgb, var(--algo-c-compare) 30%, var(--algo-panel));
+}
+/* jednotlivé buňky (TableView cellMarks; přebijí zvýraznění řádku) */
+.algo-root .gtable td.cell-hot,
+.algo-root .gtable tr.hl td.cell-hot {
+  background: color-mix(in srgb, var(--algo-c-compare) 55%, var(--algo-panel));
+  font-weight: 600;
+}
+.algo-root .gtable td.cell-active,
+.algo-root .gtable tr.hl td.cell-active {
+  background: color-mix(in srgb, var(--algo-c-active) 25%, var(--algo-panel));
+}
+.algo-root .gtable td.cell-done,
+.algo-root .gtable tr.hl td.cell-done {
+  background: color-mix(in srgb, var(--algo-c-sorted) 22%, var(--algo-panel));
+}
+.algo-root .gtable td.cell-found,
+.algo-root .gtable tr.hl td.cell-found {
+  background: color-mix(in srgb, var(--algo-c-min) 25%, var(--algo-panel));
+}
+/* jednořádkové tabulky (fronta, zásobník, topologické pořadí) jako dlaždice, které se zalamují
+   (TableView v GraphView.tsx); nejvýš ~5 řádků, pak vlastní posuvník (GRAPH-02) */
+.algo-root .gtable-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: calc(5 * (1.45em + 0.4rem + 2px) + 4 * 2px);
+  overflow-y: auto;
+}
+.algo-root .gtable-tile {
+  border: 1px solid var(--algo-border);
+  padding: 0.2rem 0.55rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.45;
+}
+.algo-root .gtable-tile.cell-hot {
+  background: color-mix(in srgb, var(--algo-c-compare) 55%, var(--algo-panel));
+  font-weight: 600;
+}
+.algo-root .gtable-tile.cell-active {
+  background: color-mix(in srgb, var(--algo-c-active) 25%, var(--algo-panel));
+}
+.algo-root .gtable-tile.cell-done {
+  background: color-mix(in srgb, var(--algo-c-sorted) 22%, var(--algo-panel));
+}
+.algo-root .gtable-tile.cell-found {
+  background: color-mix(in srgb, var(--algo-c-min) 25%, var(--algo-panel));
+}
+
+/* ---------- (a,b)-strom ---------- */
+.algo-root .mtree-node rect {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .mtree-node text {
+  fill: var(--algo-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+.algo-root .mtree-node .mtree-sep {
+  stroke: var(--algo-border);
+}
+.algo-root .mtree-node .hot-bg {
+  /* podíl žluté podle tématu: v tmavém by 50 % s ní měl světlý text jen 4,1 : 1 */
+  fill: color-mix(
+    in srgb,
+    var(--algo-c-compare) var(--algo-hot-pct),
+    var(--algo-c-node)
+  );
+  stroke: none;
+}
+.algo-root .mtree-edge {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.5;
+}
+.algo-root .mtree-node.n-active > rect {
+  stroke: var(--algo-c-active);
+  fill: color-mix(in srgb, var(--algo-c-active) 20%, var(--algo-c-node));
+}
+.algo-root .mtree-node.n-new > rect {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 30%, var(--algo-c-node));
+}
+.algo-root .mtree-node.n-found > rect {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+.algo-root .mtree-node.n-bad > rect {
+  stroke: var(--algo-c-swap);
+  stroke-width: 3;
+}
+.algo-root .mtree-node.n-swap > rect {
+  stroke: var(--algo-c-swap);
+  fill: color-mix(in srgb, var(--algo-c-swap) 25%, var(--algo-c-node));
+}
+.algo-root .mtree-node.n-compare > rect {
+  stroke: var(--algo-c-compare-line);
+  fill: color-mix(in srgb, var(--algo-c-compare) 30%, var(--algo-c-node));
+}
+.algo-root .mtree-node.n-removed > rect {
+  stroke: var(--algo-c-swap);
+  stroke-dasharray: 4 3;
+}
+
+/* ---------- buňky (pole, heš, bity) ---------- */
+.algo-root .box-free rect {
+  fill: var(--algo-c-empty);
+  stroke: var(--algo-border);
+}
+.algo-root .swatch.sw-free {
+  background: var(--algo-c-empty);
+  border: 1px solid var(--algo-border);
+}
+.algo-root .box-one rect {
+  fill: color-mix(in srgb, var(--algo-c-active) 30%, var(--algo-c-node));
+  stroke: var(--algo-c-active);
+}
+.algo-root .cell-active rect {
+  stroke: var(--algo-c-active);
+  stroke-width: 2.5;
+}
+.algo-root .cell-compare rect {
+  stroke: var(--algo-c-compare-line);
+  fill: color-mix(in srgb, var(--algo-c-compare) 35%, var(--algo-c-node));
+}
+.algo-root .cell-new rect {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+.algo-root .cell-found rect {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+.algo-root .cell-removed rect {
+  stroke: var(--algo-c-swap);
+  fill: color-mix(in srgb, var(--algo-c-swap) 30%, var(--algo-c-node));
+}
+.algo-root .cell-tomb rect {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-muted);
+  stroke-dasharray: 3 3;
+}
+.algo-root .swatch.sw-tomb {
+  background: var(--algo-panel-2);
+  border: 1px dashed var(--algo-muted);
+}
+.algo-root .swatch.sw-hit {
+  background: var(--algo-c-sorted);
+}
+.algo-root .swatch.sw-miss {
+  background: var(--algo-c-swap);
+}
+.algo-root .swatch.sw-range {
+  background: color-mix(in srgb, var(--algo-c-compare) 40%, var(--algo-panel));
+}
+
+/* ---------- hešování řetězce ---------- */
+/* výšku řádku (--algo-hc-row-h) a počet sloupců počítá ChainView z výšky plátna (chainLayout v ui.ts) */
+.algo-root .hash-chain {
+  --algo-hc-row-h: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.algo-root .hash-chain.hc-cols {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  column-gap: 1rem;
+}
+.algo-root .hc-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--algo-hc-row-h);
+  padding: 1px 4px;
+  border-radius: 6px;
+  min-width: 0;
+}
+.algo-root .hc-row.cell-active {
+  background: color-mix(in srgb, var(--algo-c-active) 15%, transparent);
+}
+.algo-root .hc-idx {
+  width: 2rem;
+  text-align: right;
+  color: var(--algo-muted);
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  margin-right: 6px;
+}
+.algo-root .hc-key {
+  display: inline-block;
+  min-width: 2.4rem;
+  text-align: center;
+  padding: 0 6px;
+  line-height: calc(var(--algo-hc-row-h) - 7px);
+  border: 1.5px solid var(--algo-c-node-border);
+  border-radius: 6px;
+  background: var(--algo-c-node);
+  font-weight: 600;
+  font-size: clamp(0.75rem, calc(var(--algo-hc-row-h) * 0.5), 1.05rem);
+  position: relative;
+}
+.algo-root .hc-key + .hc-key {
+  margin-left: 8px;
+}
+.algo-root .hc-key + .hc-key::before {
+  content: "→";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--algo-muted);
+  font-weight: 400;
+}
+.algo-root .hc-key.key-compare {
+  border-color: var(--algo-c-compare-line);
+  background: color-mix(in srgb, var(--algo-c-compare) 35%, var(--algo-c-node));
+}
+.algo-root .hc-key.key-new,
+.algo-root .hc-key.key-found {
+  border-color: var(--algo-c-sorted);
+  background: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+.algo-root .hc-key.key-removed {
+  border-color: var(--algo-c-swap);
+  background: color-mix(in srgb, var(--algo-c-swap) 30%, var(--algo-c-node));
+}
+.algo-root .hc-null {
+  color: var(--algo-muted);
+}
+
+/* ---------- stránkování ---------- */
+.algo-root .paging-seq {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 0.6rem;
+}
+.algo-root .paging-seq .pg {
+  display: inline-block;
+  min-width: 1.8rem;
+  text-align: center;
+  padding: 2px 4px;
+  border: 1px solid var(--algo-border);
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+}
+.algo-root .paging-seq .pg.cur {
+  background: var(--algo-accent);
+  color: var(--algo-accent-text);
+  border-color: var(--algo-accent);
+}
+/* zpracované: ztlumená barva (AA i v tmavém tématu) a čárkovaný okraj místo průhlednosti */
+.algo-root .paging-seq .pg.done {
+  color: var(--algo-muted);
+  border-style: dashed;
+}
+.algo-root .paging-table {
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.algo-root .paging-table th,
+.algo-root .paging-table td {
+  border: 1px solid var(--algo-border);
+  padding: 0.3rem 0.7rem;
+  text-align: center;
+}
+.algo-root .paging-table th {
+  background: var(--algo-panel-2);
+}
+.algo-root .paging-table td.hit {
+  background: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-panel));
+}
+.algo-root .paging-table td.miss {
+  background: color-mix(in srgb, var(--algo-c-swap) 30%, var(--algo-panel));
+}
+.algo-root .paging-table td.num {
+  font-weight: 600;
+}
+
+/* ---------- sufixové pole ---------- */
+.algo-root .sa-table {
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.algo-root .sa-table th,
+.algo-root .sa-table td {
+  border: 1px solid var(--algo-border);
+  /* em: odsazení se mění se zvětšením tabulky (SuffixPage, saZoom) – dlouhé α se pak vejde */
+  padding: 0.15em 0.5em;
+}
+.algo-root .sa-table th {
+  background: var(--algo-panel-2);
+}
+/* omezená výška (dlouhé α na malém plátně, suffixView saClamp): záhlaví lepí při posouvání uvnitř */
+.algo-root .table-scroll.sa-clamped .sa-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.algo-root .sa-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.algo-root .sa-table td.mono {
+  font-family: ui-monospace, Menlo, monospace;
+}
+.algo-root .sa-table .col-hot {
+  background: color-mix(in srgb, var(--algo-c-compare) 25%, var(--algo-panel));
+}
+.algo-root .sa-table tr.row-active td {
+  background: color-mix(in srgb, var(--algo-c-active) 20%, var(--algo-panel));
+}
+.algo-root .sa-table tr.row-compare td {
+  background: color-mix(in srgb, var(--algo-c-compare) 30%, var(--algo-panel));
+}
+.algo-root .sa-table tr.row-range td {
+  background: color-mix(in srgb, var(--algo-c-compare) 12%, var(--algo-panel));
+}
+.algo-root .sa-table tr.row-found td {
+  background: color-mix(in srgb, var(--algo-c-sorted) 30%, var(--algo-panel));
+}
+.algo-root .sa-table mark {
+  background: color-mix(in srgb, var(--algo-c-min) 40%, transparent);
+  color: inherit;
+  border-radius: 2px;
+}
+
+/* ---------- k-d strom ---------- */
+.algo-root .kd-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: stretch;
+}
+.algo-root .kd-plane {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.algo-root .kd-frame {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-border);
+}
+.algo-root .kd-region {
+  fill: color-mix(in srgb, var(--algo-c-active) 18%, transparent);
+  stroke: var(--algo-c-active);
+  stroke-width: 1;
+}
+.algo-root .kd-query {
+  fill: color-mix(in srgb, var(--algo-c-compare) 25%, transparent);
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+}
+.algo-root .kd-split {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1;
+}
+.algo-root .kd-split.n-active {
+  stroke: var(--algo-c-active);
+  stroke-width: 2;
+}
+.algo-root .kd-pt circle {
+  fill: var(--algo-c-node-border);
+}
+.algo-root .kd-pt text {
+  font-size: 9px;
+  fill: var(--algo-muted);
+}
+.algo-root .kd-pt.pt-set circle {
+  fill: var(--algo-c-compare);
+}
+.algo-root .kd-pt.pt-active circle {
+  fill: var(--algo-c-active);
+  r: 7;
+}
+.algo-root .kd-pt.pt-found circle {
+  fill: var(--algo-c-sorted);
+  r: 7;
+}
+/* navštívený bod mimo Q: fialová (≥ 3 : 1 na plátně i v oblasti vrcholu v obou tématech), jiná než šedý neoznačený bod */
+.algo-root .kd-pt.pt-visited circle {
+  fill: var(--algo-c-min);
+}
+.algo-root .swatch.sw-pt-visited {
+  background: var(--algo-c-min);
+  border-radius: 50%;
+}
+.algo-root .n-pruned circle {
+  stroke: var(--algo-c-swap);
+  stroke-dasharray: 3 3;
+  opacity: 0.6;
+}
+
+/* ---------- lock-free ---------- */
+.algo-root .lf-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.algo-root .lf-node {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2.6rem;
+  padding: 3px 8px;
+  border: 1.5px solid var(--algo-c-node-border);
+  border-radius: 6px;
+  background: var(--algo-c-node);
+  font-weight: 600;
+}
+.algo-root .lf-node small {
+  font-weight: 400;
+  color: var(--algo-muted);
+  font-size: 0.7rem;
+}
+.algo-root .lf-node.lf-read {
+  border-color: var(--algo-c-compare-line);
+  background: color-mix(in srgb, var(--algo-c-compare) 35%, var(--algo-c-node));
+}
+.algo-root .lf-node.lf-own {
+  border-color: var(--algo-c-active);
+  background: color-mix(in srgb, var(--algo-c-active) 25%, var(--algo-c-node));
+}
+.algo-root .lf-node.lf-new {
+  border-color: var(--algo-c-sorted);
+  background: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+}
+/* na zvýrazněném pozadí by ztlumená barva neměla kontrast (tmavé téma 2,8 : 1) */
+.algo-root .lf-node.lf-read small,
+.algo-root .lf-node.lf-own small,
+.algo-root .lf-node.lf-new small {
+  color: inherit;
+  opacity: 0.85;
+}
+.algo-root .lf-null {
+  color: var(--algo-muted);
+  font-size: 1.2rem;
+}
+.algo-root .lf-procs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+@media (max-width: 700px) {
+  .algo-root .lf-procs {
+    grid-template-columns: 1fr;
+  }
+}
+.algo-root .lf-proc {
+  border: 1px solid var(--algo-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.algo-root .lf-proc.shown {
+  border-color: var(--algo-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--algo-accent) 25%, transparent);
+}
+.algo-root .lf-proc-title {
+  font-weight: 600;
+}
+.algo-root .lf-broken {
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--algo-c-swap) 20%, var(--algo-panel));
+  border: 1px solid var(--algo-c-swap);
+  font-weight: 600;
+}
+.algo-root .lf-ctl {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+  margin-right: 0.6rem;
+}
+
+/* ---------- přepínač tématu ---------- */
+.algo-root .theme-toggle {
+  display: flex;
+  gap: 2px;
+  margin: 0.2rem 0 0.6rem;
+  background: var(--algo-panel-2);
+  border-radius: 8px;
+  padding: 2px;
+}
+.algo-root .theme-toggle button {
+  flex: 1;
+  padding: 0.25rem 0;
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  color: var(--algo-muted);
+  border-radius: 6px;
+}
+.algo-root .theme-toggle button.on {
+  background: var(--algo-panel);
+  color: var(--algo-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   SDÍLENÉ JÁDRO (src/core) – Visualizer, ovládání, legenda, pseudokód, vstupní pole, chyby.
+   Další sekce (pohledy, moduly) navazují za tímto blokem.
+   ========================================================================== */
+
+/* ---------- Visualizer: hlavička, popis, historie, tip ---------- */
+.algo-root .viz-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1rem;
+}
+.algo-root .viz-title-row h1 {
+  margin-right: auto;
+}
+.algo-root .viz-share {
+  font-size: 0.85rem;
+}
+/* zdroj modulu („Průvodce 9.5, str. 230 · DS I, přednáška 2“) hned za nadpisem, na jeho řádku */
+.algo-root .viz-source {
+  color: var(--algo-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+.algo-root .viz-title-row:has(.viz-source) h1 {
+  margin-right: 0;
+}
+.algo-root .viz-title-row .viz-source {
+  margin-right: auto;
+}
+/* telefon: nadpis na celý řádek, zdroj a „Kopírovat odkaz“ spolu pod ním (dva řádky, ne tři) */
+@media (max-width: 700px) {
+  .algo-root .viz-title-row:has(.viz-source) h1 {
+    flex-basis: 100%;
+  }
+  .algo-root .viz-title-row .viz-source {
+    flex: 1 1 0;
+    min-width: 0;
+    white-space: normal;
+  }
+}
+/* popis: sbalený na dva řádky (se „…“), tlačítko „více“ ho rozbalí – plátno zůstane na obrazovce */
+.algo-root .viz-desc {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.2rem 0.75rem;
+}
+.algo-root .viz-desc-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.algo-root .viz-desc:not(.open) .viz-desc-body {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.algo-root .viz-desc:not(.open) .viz-desc-body p {
+  margin: 0;
+}
+.algo-root .viz-desc-toggle {
+  flex: none;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.85rem;
+}
+/* sbalená nápověda vpravo: „Zkuste“, poznámky ke vstupu, klávesy */
+.algo-root .viz-more {
+  border: 1px solid var(--algo-border);
+  border-radius: 8px;
+  background: var(--algo-panel);
+  font-size: 0.88rem;
+}
+.algo-root .viz-more > summary {
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+  color: var(--algo-muted);
+}
+.algo-root .viz-more[open] > summary {
+  border-bottom: 1px solid var(--algo-border);
+}
+.algo-root .viz-more-body {
+  padding: 0.4rem 0.7rem 0.5rem;
+}
+.algo-root .viz-more-body .viz-tip {
+  margin: 0 0 0.5rem;
+}
+.algo-root .viz-notes .hint {
+  margin: 0 0 0.4rem;
+}
+.algo-root .viz-options {
+  font-size: 0.88rem;
+  color: var(--algo-muted);
+}
+.algo-root .viz-options p {
+  margin: 0;
+}
+/* přepínač varianty grafového algoritmu (GraphAlgorithm.variants, fáze 4) – řádek přepínačů jako „styl knihy“ */
+.algo-root .graph-variants {
+  margin: 0 0 0.25rem;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.8rem;
+}
+.algo-root .graph-variants legend {
+  float: left;
+  padding: 0;
+  margin-right: 0.2rem;
+}
+.algo-root .graph-variants label {
+  white-space: nowrap;
+  cursor: pointer;
+}
+.algo-root .viz-code .legend {
+  margin: 0;
+}
+.algo-root .viz-history {
+  display: flex;
+  /* historie vždy na jednom řádku (přetečení se ořízne zleva), tlačítka vpravo – plátno pak při dalších
+     operacích nemění výšku (SORTDS-14) */
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--algo-border);
+  font-size: 0.88rem;
+}
+.algo-root .viz-history-label {
+  color: var(--algo-muted);
+  flex: none;
+}
+.algo-root .viz-history-list {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+}
+/* zarovnáno doprava + overflow hidden = přesah (nejstarší položky) se ořízne vlevo */
+.algo-root .viz-history-track {
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+.algo-root .viz-history-items {
+  flex: none;
+  white-space: nowrap;
+}
+.algo-root .viz-history-track.clipped {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 2em);
+  mask-image: linear-gradient(to right, transparent, #000 2em);
+}
+.algo-root .viz-history-item {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+}
+.algo-root .viz-history-buttons {
+  display: flex;
+  flex: none;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+.algo-root .viz-history-buttons button {
+  white-space: nowrap;
+}
+/* telefon: tlačítka smějí pod historii (historie sama zůstane na jednom řádku) */
+@media (max-width: 700px) {
+  .algo-root .viz-history {
+    flex-wrap: wrap;
+  }
+}
+.algo-root .viz-tip {
+  margin: 0.6rem 0 1rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--algo-c-compare) 14%, var(--algo-panel));
+  border: 1px solid
+    color-mix(in srgb, var(--algo-c-compare) 45%, var(--algo-border));
+  font-size: 0.92rem;
+}
+
+/* ---------- Visualizer: plátno, operace, zpráva ---------- */
+.algo-root .viz-canvas-col {
+  min-width: 0;
+}
+.algo-root .viz-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.6rem 0;
+}
+.algo-root .viz-op {
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+}
+.algo-root .viz-op b {
+  color: var(--algo-text);
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+}
+.algo-root .viz-op.done .viz-op-label,
+.algo-root .viz-done-mark {
+  color: var(--algo-success-text);
+  font-weight: 700;
+}
+.algo-root .viz-message.done {
+  border-left-color: var(--algo-c-sorted);
+}
+.algo-root .viz-message.done.neutral {
+  border-left-color: var(--algo-accent);
+}
+.algo-root .viz-message.done.neutral .viz-done-mark {
+  color: var(--algo-info-text);
+}
+.algo-root .viz-message.warn {
+  border-left-color: var(--algo-c-compare-line);
+}
+.algo-root .viz-message.warn .viz-done-mark {
+  color: var(--algo-warn-text);
+}
+.algo-root .viz-message.error {
+  border-left-color: var(--algo-danger);
+  background: color-mix(in srgb, var(--algo-danger) 12%, var(--algo-panel-2));
+}
+/* aktivní řádek pseudokódu pod zprávou – jen když panel kódu není vedle plátna */
+.algo-root .viz-line {
+  display: none;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 1.9rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 6px;
+  background: var(--algo-code-active);
+  color: var(--algo-code-text);
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.algo-root .viz-line-num {
+  color: var(--algo-code-comment);
+}
+.algo-root .viz-line code {
+  font: inherit;
+}
+@media (max-width: 1200px) {
+  .algo-root .viz-line {
+    display: flex;
+  }
+}
+/* krok bez řádku pseudokódu: místo zůstane (zpráva neposkočí), tmavý pruh ne */
+.algo-root .viz-line.empty {
+  visibility: hidden;
+}
+/* široké tabulky uvnitř plátna (stránkování, sufixové pole…): obalit <div className="table-scroll"> */
+.algo-root .table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.algo-root .op-bar label {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.algo-root .op-bar input {
+  max-width: 100%;
+}
+
+/* ---------- ovládání přehrávače ---------- */
+.algo-root .controls-buttons {
+  display: flex;
+  gap: 0.3rem;
+}
+.algo-root .controls-buttons button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.55rem;
+}
+.algo-root .controls-buttons button.ctl-play {
+  min-width: 3.4rem;
+}
+.algo-root .ctl-icon {
+  flex: none;
+}
+.algo-root .ctl-text {
+  font-size: 0.9rem;
+}
+.algo-root .speed-value {
+  min-width: 2.6rem;
+  font-variant-numeric: tabular-nums;
+}
+.algo-root .seek:disabled {
+  opacity: 0.4;
+}
+.algo-root .kbd-hint {
+  display: none;
+  margin: 0.4rem 0 0;
+  font-size: 0.78rem;
+  color: var(--algo-muted);
+}
+/* nápověda ke zkratkám jen tam, kde je klávesnice a myš */
+@media (hover: hover) and (pointer: fine) {
+  .algo-root .kbd-hint {
+    display: block;
+  }
+}
+@media (max-width: 600px) {
+  .algo-root .ctl-text {
+    display: none;
+  }
+  .algo-root .step-counter {
+    min-width: 0;
+    margin-left: 0.2rem;
+  }
+  /* na telefonu se řádek nevejde: posuvník kroků a rychlost spolu pod tlačítka */
+  .algo-root .controls .seek {
+    order: 10;
+    margin-top: 0.2rem;
+  }
+  .algo-root .controls .speed {
+    order: 11;
+    margin-left: 0.4rem;
+  }
+  .algo-root .speed input {
+    width: 80px;
+  }
+}
+/* dotyk: větší plochy */
+@media (pointer: coarse) {
+  .algo-root .controls-buttons button {
+    min-width: 2.9rem;
+    min-height: 2.9rem;
+  }
+  .algo-root .seek {
+    height: 1.8rem;
+  }
+}
+/* Úzká obrazovka: ovládání zůstává po ruce u spodního okraje, i když je plátno vysoké. */
+@media (max-width: 900px) {
+  .algo-root .controls {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+  }
+  /* prvek s fokusem nesmí zůstat pod přilepenou lištou (výšku zapisuje Visualizer) */
+  .algo-root .viz {
+    --algo-controls-h: 0px;
+  }
+  .algo-root .viz-main button,
+  .algo-root .viz-main input,
+  .algo-root .viz-main select,
+  .algo-root .viz-main textarea,
+  .algo-root .viz-main summary,
+  .algo-root .viz-main [tabindex] {
+    scroll-margin-bottom: calc(var(--algo-controls-h) + 1rem);
+  }
+}
+
+/* ---------- legenda: tvary vzorků (význam nenese jen barva) ---------- */
+.algo-root .legend li {
+  display: inline-flex;
+  align-items: center;
+}
+.algo-root .legend-glyph {
+  font-weight: 700;
+  color: var(--algo-text);
+  margin-right: 0.25rem;
+}
+/* obrys: barevný rámeček (barvu dává background třídy sw-*), vnitřek překrytý barvou panelu */
+.algo-root .swatch.swatch-ring {
+  border: 3px solid transparent;
+  box-shadow: inset 0 0 0 1rem var(--algo-bg); /* legenda leží na pozadí stránky */
+  border-radius: 50%;
+}
+/* čárkovaný obrys: výplň dává background třídy sw-*, obrys skutečný border (bez masky – ta ho dřív přerušovala) */
+.algo-root .swatch.swatch-dashed {
+  border: 1.5px dashed var(--algo-c-node-border);
+  border-radius: 50%;
+  outline: none;
+}
+/* dotaz Q k-d stromu: čárkovaný obdélník s průsvitnou žlutou výplní jako .kd-query */
+.algo-root .swatch.sw-compare.swatch-dashed {
+  background: color-mix(in srgb, var(--algo-c-compare) 25%, var(--algo-bg));
+  border-color: var(--algo-c-compare-line);
+  border-radius: 2px;
+  outline: none; /* jinak by plný outline žlutých vzorků (níže) zakryl čárkování */
+}
+.algo-root .swatch.swatch-line,
+.algo-root .swatch.swatch-line-dashed {
+  width: 1.5rem;
+  height: 4px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.algo-root .swatch.swatch-line-dashed {
+  mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 8px);
+}
+
+/* ---------- pseudokód: sazba a prázdný stav ---------- */
+.algo-root .pseudocode.empty {
+  max-height: none;
+  padding: 1rem;
+  border: 1px dashed var(--algo-border);
+  background: var(--algo-panel);
+  color: var(--algo-muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  white-space: normal;
+}
+.algo-root .pc-comment {
+  color: var(--algo-code-comment);
+  font-style: italic;
+}
+.algo-root .pseudocode sub,
+.algo-root .pseudocode sup,
+.algo-root .viz-op sub,
+.algo-root .viz-op sup,
+.algo-root .viz-line sub,
+.algo-root .viz-line sup,
+.algo-root .viz-history sub,
+.algo-root .viz-history sup {
+  font-size: 0.72em;
+  line-height: 0;
+}
+
+/* ---------- vstupní pole (core/Fields.tsx, core/NumberInput.tsx) ---------- */
+.algo-root .field {
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+}
+.algo-root .int-field {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+.algo-root .int-field .field-label {
+  padding-top: 0.4rem;
+}
+.algo-root .field-box {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.algo-root .field-box input {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+.algo-root .field input[aria-invalid="true"] {
+  border-color: var(--algo-danger);
+  box-shadow: 0 0 0 1px var(--algo-danger);
+}
+.algo-root .field-error {
+  max-width: 14rem;
+  color: var(--algo-danger);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+.algo-root .list-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+.algo-root .list-field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+.algo-root .list-field-label input {
+  width: 100%;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+.algo-root .field-limits {
+  font-size: 0.8rem;
+}
+.algo-root .list-field-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.algo-root .field-status {
+  flex-basis: 100%;
+  min-height: 1.2rem;
+  font-size: 0.82rem;
+}
+.algo-root .field-status.error {
+  color: var(--algo-danger);
+}
+/* staré pravidlo .number-input label { display: block } nesmí rozbít IntField uvnitř */
+.algo-root .number-input .int-field {
+  display: inline-flex;
+}
+
+/* ---------- chyba při vykreslení (core/ErrorBoundary.tsx) ---------- */
+.algo-root .error-panel {
+  max-width: 760px;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--algo-danger);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--algo-danger) 8%, var(--algo-panel));
+}
+.algo-root .error-panel h2 {
+  margin-top: 0;
+}
+.algo-root .error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.algo-root .error-panel pre {
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   POHLEDY A KOSTRA APLIKACE (src/views, src/App.tsx) – měřená SVG, menu, úvodní stránka,
+   pomocné třídy pro stránky. Barvy jen přes proměnné (obě témata), kontrast textu ≥ 4,5 : 1,
+   čar a obrysů ≥ 3 : 1.
+   ========================================================================== */
+
+/* ---------- přístupnost: odkaz na obsah, skrytý text, fokus po navigaci ---------- */
+.algo-root .skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -4rem;
+  z-index: 40;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  background: var(--algo-accent);
+  color: var(--algo-accent-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+.algo-root .skip-link:focus {
+  top: 0.5rem;
+}
+/* nadpis / <main> dostanou fokus programově (navigace) – rámeček by tam jen rušil */
+.algo-root h1[tabindex="-1"]:focus,
+.algo-root main[tabindex="-1"]:focus {
+  outline: none;
+}
+.algo-root .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- vyhledávací pole (úvodní stránka i menu) ---------- */
+.algo-root .search-field {
+  width: 100%;
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--algo-border);
+  border-radius: 6px;
+  background: var(--algo-panel);
+  color: var(--algo-text);
+}
+.algo-root .search-field::placeholder {
+  color: var(--algo-muted);
+  opacity: 1;
+}
+.algo-root .search-count {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--algo-muted);
+}
+/* prázdná živá oblast (nic se nehledá) nezabírá místo */
+.algo-root .search-count:empty {
+  margin: 0;
+}
+
+/* ---------- menu ---------- */
+.algo-root .sidebar .search-field {
+  margin: 0 0 0.2rem;
+  font-size: 0.9rem;
+}
+.algo-root .nav-cat ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.algo-root .nav-cat-title {
+  font-weight: 600;
+}
+.algo-root .nav-empty {
+  margin: 0.6rem 0.5rem;
+  font-size: 0.88rem;
+  color: var(--algo-muted);
+}
+.algo-root .backdrop {
+  display: none;
+}
+.algo-root .sidebar-close {
+  display: none;
+}
+
+/* ---------- úzká obrazovka: horní lišta s názvem modulu, vysouvací menu s podkladem ---------- */
+@media (max-width: 900px) {
+  .algo-root .layout {
+    flex-direction: column;
+  }
+  .algo-root .topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    position: sticky;
+    top: var(--site-header-h, 0px);
+    transition: top 0.3s ease;
+    z-index: 8;
+    min-height: 3rem;
+    padding: 0.35rem 1rem;
+    background: var(--algo-bg);
+    border-bottom: 1px solid var(--algo-border);
+  }
+  .algo-root .menu-toggle {
+    min-width: 2.75rem;
+    min-height: 2.6rem;
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+  .algo-root .topbar-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  /* vysouvací menu začíná pod hlavičkou webu (ta má z-index 1000) */
+  .algo-root .sidebar {
+    top: var(--site-header-h, 0px);
+  }
+  .algo-root .sidebar.open {
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.3);
+  }
+  .algo-root .sidebar-close {
+    display: block;
+    position: absolute;
+    top: 0.7rem;
+    right: 0.6rem;
+    min-width: 2.4rem;
+    min-height: 2.4rem;
+  }
+  .algo-root .sidebar .brand {
+    padding-right: 3rem;
+  }
+  .algo-root .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    top: var(--site-header-h, 0px);
+    z-index: 9;
+    background: rgba(0, 0, 0, 0.45);
+  }
+  /* plátno posunuté do záběru (nová operace) nesmí zajet pod lepící lištu ani pod hlavičku webu:
+     posun nahoru hlavičku zase ukáže, proto její plná výška (ne --site-header-h, které je ve chvíli
+     posunu u schované hlavičky 0) */
+  .algo-root .viz-canvas {
+    scroll-margin-top: calc(3.5rem + var(--algo-site-header-space, 0px));
+  }
+}
+
+/* ---------- úvodní stránka (rozcestník modulů; na rozdíl od modulů se smí posouvat) ---------- */
+.algo-root .home-hero h1 {
+  margin: 0.1rem 0 0.35rem;
+  font-size: clamp(1.45rem, 1.1rem + 1.2vw, 2rem);
+  letter-spacing: -0.01em;
+}
+.algo-root .home-lead {
+  max-width: 760px;
+  margin: 0 0 1rem;
+  color: var(--algo-muted);
+}
+.algo-root .home-notice {
+  max-width: 760px;
+  padding: 0.5rem 0.8rem;
+  border-left: 4px solid var(--algo-danger);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--algo-danger) 10%, var(--algo-panel));
+}
+/* velké hledání + přepínač úrovně v jednom řádku (na telefonu pod sebou) */
+.algo-root .home-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.6rem;
+  max-width: 860px;
+  margin: 0 0 0.35rem;
+}
+.algo-root .home-search .search-hero {
+  flex: 1 1 320px;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.65rem 0.95rem;
+  font-size: 1.08rem;
+  border-width: 2px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.algo-root .home-search .search-hero:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--algo-accent) 40%, transparent);
+  outline-offset: 1px;
+  border-color: var(--algo-accent);
+}
+.algo-root .level-filter {
+  display: inline-flex;
+  flex: none;
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid var(--algo-border);
+  border-radius: 12px;
+  background: var(--algo-panel-2);
+}
+.algo-root .level-filter .level-btn {
+  min-width: 3.4rem;
+  min-height: 2.6rem;
+  padding: 0.3rem 0.85rem;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--algo-muted);
+  font-weight: 600;
+}
+.algo-root .level-filter .level-btn:hover:not([aria-pressed="true"]) {
+  background: var(--algo-panel);
+  color: var(--algo-text);
+}
+.algo-root .level-filter .level-btn[aria-pressed="true"] {
+  background: var(--algo-accent);
+  color: var(--algo-accent-text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+/* Naposledy otevřené: kompaktní řada odkazů */
+.algo-root .home-recent h2,
+.algo-root .home-start h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+}
+.algo-root .home-recent {
+  margin: 1rem 0 0.4rem;
+}
+.algo-root .recent-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.algo-root .recent-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0.55rem 0.75rem;
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-left: 4px solid var(--algo-accent);
+  border-radius: 8px;
+  color: var(--algo-text);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.algo-root .recent-card:hover {
+  background: var(--algo-panel-2);
+  border-color: var(--algo-accent);
+}
+.algo-root .home-start {
+  max-width: 860px;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-radius: 10px;
+}
+.algo-root .home-start p {
+  margin: 0.3rem 0;
+}
+.algo-root .home-start-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  list-style: none;
+  margin: 0.6rem 0;
+  padding: 0;
+}
+.algo-root .home-start-list a {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--algo-accent);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.algo-root .home-start-list a:hover {
+  background: var(--algo-panel-2);
+}
+/* klávesové zkratky jen tam, kde je klávesnice a myš */
+.algo-root .home-keys {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--algo-muted);
+}
+@media (hover: hover) and (pointer: fine) {
+  .algo-root .home-keys {
+    display: block;
+  }
+}
+/* čipy skupin (kotvy – posun přes scrollIntoView, adresa se nemění) */
+.algo-root .home-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.8rem 0 0.2rem;
+}
+.algo-root .home-chips .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.4rem;
+  padding: 0.3rem 0.45rem 0.3rem 0.85rem;
+  border: 1px solid var(--algo-border);
+  border-radius: 999px;
+  background: var(--algo-panel);
+  color: var(--algo-text);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.algo-root .home-chips .chip:hover:not(:disabled) {
+  border-color: var(--algo-accent);
+  color: var(--algo-accent);
+}
+.algo-root .chip-count {
+  min-width: 1.6rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: var(--algo-panel-2);
+  color: var(--algo-muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+/* sekce skupiny: posun čipem ji nezasune pod hlavičku webu ani horní lištu (telefon) */
+.algo-root .home-cat {
+  scroll-margin-top: calc(var(--algo-site-header-space, 0px) + 1rem);
+}
+.algo-root .home-cat h2 {
+  margin-top: 1.6rem;
+  font-size: 1.15rem;
+}
+.algo-root .home-cat h2:focus {
+  outline: none;
+}
+.algo-root .home-cat-intro {
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+  color: var(--algo-muted);
+}
+/* mřížka karet: desktop 3–4 sloupce (s levou lištou), telefon 1 */
+.algo-root .card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.9rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.algo-root .card-grid > li {
+  min-width: 0;
+}
+/* celá karta je odkaz (název z .card-title přes aria-labelledby) */
+.algo-root .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-radius: 12px;
+  color: var(--algo-text);
+  text-decoration: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.15s;
+}
+.algo-root .card:hover {
+  border-color: var(--algo-accent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+.algo-root .card:focus-visible {
+  outline: 3px solid var(--algo-accent);
+  outline-offset: 2px;
+  border-color: var(--algo-accent);
+}
+.algo-root .card:hover .card-title,
+.algo-root .card:focus-visible .card-title {
+  text-decoration: underline;
+}
+@media (prefers-reduced-motion: reduce) {
+  .algo-root .card,
+  .algo-root .card:hover {
+    transition: none;
+    transform: none;
+  }
+}
+.algo-root .card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.65rem 0.85rem 0.75rem;
+}
+.algo-root .card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.algo-root .card-title {
+  font-weight: 600;
+  color: var(--algo-accent);
+}
+.algo-root .card-desc {
+  font-size: 0.86rem;
+  color: var(--algo-muted);
+}
+.algo-root .card-source {
+  margin-top: auto;
+  padding-top: 0.25rem;
+  font-size: 0.76rem;
+  color: var(--algo-muted);
+}
+.algo-root .level-tag {
+  flex: none;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.algo-root .level-bc {
+  color: var(--algo-tag-bc-fg);
+  background: var(--algo-tag-bc-bg);
+}
+.algo-root .level-mgr {
+  color: var(--algo-tag-mgr-fg);
+  background: var(--algo-tag-mgr-bg);
+}
+/* náhled modulu: statická zmenšená kresba výchozího příkladu (jen obrázek, kliká se na kartu) */
+.algo-root .thumb {
+  position: relative;
+  height: 132px;
+  overflow: hidden;
+  background: var(--algo-panel-2);
+  border-bottom: 1px solid var(--algo-border);
+  pointer-events: none;
+  user-select: none;
+}
+.algo-root .thumb-art {
+  position: absolute;
+  inset: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.algo-root .thumb-art > *,
+.algo-root .thumb-art .view-wrap,
+.algo-root .thumb-art .tree-wrap {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  overflow: hidden;
+}
+.algo-root .thumb-art .view-wrap,
+.algo-root .thumb-art .boxlist-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+/* SVG pohledu se vepíše do náhledu se zachovaným poměrem stran (viewBox), bez animací */
+.algo-root .thumb-art svg {
+  flex: 1 1 auto;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  min-height: 0;
+}
+.algo-root .thumb-art * {
+  transition: none !important;
+  animation: none !important;
+}
+.algo-root .thumb-art .array-label {
+  display: none;
+}
+/* HTML pohledy (tabulky, řetězce, karty procesů) se zmenší celé */
+.algo-root .thumb-html .thumb-art {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.algo-root .thumb-html .thumb-art > * {
+  width: auto;
+  height: auto;
+  zoom: 0.5;
+}
+.algo-root .thumb-placeholder .ph-svg {
+  opacity: 0.55;
+}
+.algo-root .ph-svg rect,
+.algo-root .ph-svg circle {
+  fill: var(--algo-panel);
+  stroke: var(--algo-c-plain);
+  stroke-width: 2;
+}
+.algo-root .ph-svg .ph-line {
+  stroke: var(--algo-c-plain);
+  stroke-width: 2;
+}
+/* náhled ještě nevykreslený (karta daleko od záběru) – jemné pozadí místo kresby */
+.algo-root .thumb-pending {
+  background: linear-gradient(
+    100deg,
+    var(--algo-panel-2) 40%,
+    color-mix(in srgb, var(--algo-panel) 60%, var(--algo-panel-2)) 50%,
+    var(--algo-panel-2) 60%
+  );
+}
+/* velký monitor: 4 širší sloupce s většími náhledy místo prázdného pruhu vpravo */
+@media (min-width: 1600px) {
+  .algo-root .home {
+    max-width: 1560px;
+  }
+  .algo-root .card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .algo-root .thumb {
+    height: 168px;
+  }
+}
+@media (max-width: 600px) {
+  .algo-root .card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .algo-root .thumb {
+    height: 150px;
+  }
+  .algo-root .home-search .search-hero {
+    flex-basis: 100%;
+  }
+  .algo-root .level-filter {
+    width: 100%;
+  }
+  .algo-root .level-filter .level-btn {
+    flex: 1;
+  }
+  /* čipy v jedné řadě posouvané do strany (stránka sama do strany nejede) */
+  .algo-root .home-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-right: -1rem;
+    padding: 0 1rem 0.3rem 0;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .algo-root .home-chips .chip {
+    flex: none;
+    scroll-snap-align: start;
+  }
+  .algo-root .recent-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .algo-root .recent-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    font-size: 0.92rem;
+  }
+}
+
+/* ---------- pohledy (src/views): skutečná velikost v px, širší obsah se posouvá ---------- */
+.algo-root .view-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+/* vysoký strom (BST ze setříděného vstupu) se posouvá i svisle – ovládání zůstane na obrazovce */
+.algo-root .tree-wrap {
+  max-height: 70vh;
+  overflow: auto;
+}
+.algo-root .boxlist-wrap {
+  overflow-x: auto;
+}
+/* širší obsah, než je obal (telefon): u kraje, kam jde posunout, je stín („scroll shadows“ – kryt
+   v barvě plátna jede s obsahem, stín drží okraj obalu); bez přesahu kryt stín zakryje */
+.algo-root .view-wrap,
+.algo-root .boxlist-wrap {
+  background:
+    linear-gradient(to right, var(--algo-panel) 60%, transparent) left center /
+      1.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--algo-panel) 60%, transparent) right center /
+      1.5rem 100% no-repeat local,
+    radial-gradient(
+        farthest-side at 0 50%,
+        color-mix(in srgb, var(--algo-text) 28%, transparent),
+        transparent
+      )
+      left center / 0.8rem 100% no-repeat scroll,
+    radial-gradient(
+        farthest-side at 100% 50%,
+        color-mix(in srgb, var(--algo-text) 28%, transparent),
+        transparent
+      )
+      right center / 0.8rem 100% no-repeat scroll;
+}
+.algo-root .bar-axis {
+  stroke: var(--algo-muted);
+  stroke-width: 1.2;
+}
+/* znak značky pod sloupcem – druhý kanál vedle barvy (MARK_GLYPH v views/ArrayView.tsx) */
+.algo-root .bar-glyph {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--algo-text);
+}
+.algo-root .bar-compare rect {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 1.5;
+}
+/* žluté vzorky legendy: obrys tmavším odstínem (u swatch-dashed se outline vypíná) */
+.algo-root .swatch.bar-compare,
+.algo-root .swatch.sw-compare,
+.algo-root .swatch.sw-open,
+.algo-root .swatch.sw-candidate {
+  outline: 1.5px solid var(--algo-c-compare-line);
+  outline-offset: -1.5px;
+}
+/* indexy pod buňkami uvnitř <g class="box"> (pole, bity, heš): .box text by je přebil na 16 px tučně */
+.algo-root .box text.bar-index {
+  font-size: 12px;
+  font-weight: 400;
+  fill: var(--algo-muted);
+}
+/* zvýrazněný klíč (a,b)-stromu: kromě podbarvení i tučně a podtržený */
+.algo-root .mtree-node .hot text {
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+/* graf: tah jen za vrchol (jinde jde stránku posouvat prstem), větší neviditelný úchop, fokus z klávesnice */
+.algo-root .graph-svg.draggable .graph-node {
+  touch-action: none;
+  cursor: grab;
+}
+.algo-root .graph-svg.draggable .graph-node:active {
+  cursor: grabbing;
+}
+.algo-root .graph-node > .node-hit {
+  fill: transparent !important;
+  stroke: none !important;
+}
+.algo-root .graph-node:focus {
+  outline: none;
+}
+.algo-root .graph-node:focus-visible > circle:not(.node-hit) {
+  stroke: var(--algo-accent);
+  stroke-width: 4;
+}
+
+/* ---------- vzorky legendy pro další stavy ---------- */
+/* Safari < 15.4 zná masku jen s prefixem */
+.algo-root .swatch.swatch-line-dashed {
+  -webkit-mask: repeating-linear-gradient(
+    90deg,
+    #000 0 5px,
+    transparent 5px 8px
+  );
+}
+/* odstraňovaný vrchol stromu (kreslí se čárkovaným obrysem bez výplně) */
+.algo-root .swatch.sw-removed-dashed {
+  background: transparent;
+  border: 2px dashed var(--algo-c-swap);
+}
+/* už prošlý vrchol – stejně jako .n-visited circle */
+.algo-root .swatch.sw-visited {
+  background: var(--algo-c-visited-fill);
+  border: 1.5px dashed var(--algo-c-node-border);
+}
+/* už viděná hrana (BFS) – s tvarem 'line-dashed' */
+.algo-root .swatch.sw-seen {
+  background: var(--algo-c-edge);
+}
+/* fáze 2: vodiče hradlových sítí (0 / 1) a pojmenované barvy pro nové moduly (texty, sítě, FFT) */
+.algo-root .swatch.sw-wire0 {
+  background: var(--algo-c-plain);
+}
+.algo-root .swatch.sw-wire1 {
+  background: var(--algo-c-active);
+}
+.algo-root .swatch.sw-red {
+  background: var(--algo-danger);
+}
+.algo-root .swatch.sw-green {
+  background: var(--algo-c-sorted);
+}
+.algo-root .swatch.sw-blue {
+  background: var(--algo-c-active);
+}
+.algo-root .swatch.sw-purple {
+  background: var(--algo-c-min);
+}
+.algo-root .swatch.sw-orange {
+  background: var(--algo-c-pivot);
+}
+.algo-root .swatch.sw-teal {
+  background: var(--algo-c-bound);
+}
+/* Bloom: testovaný bit = 1 (odlišený od nově nastaveného) */
+.algo-root .cell-hit rect {
+  stroke: var(--algo-c-min);
+  fill: color-mix(in srgb, var(--algo-c-min) 30%, var(--algo-c-node));
+}
+
+/* ---------- pomocné třídy pro stránky ---------- */
+/* skupina vstupních polí jedné operace: <fieldset className="op-group"><legend>Vložit</legend>…</fieldset> */
+.algo-root .op-groups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.algo-root .op-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.3rem 0.65rem 0.5rem;
+  border: 1px solid var(--algo-border);
+  border-radius: 8px;
+}
+.algo-root .op-group > legend {
+  padding: 0 0.3rem;
+  font-size: 0.78rem;
+  color: var(--algo-muted);
+}
+.algo-root .viz-input .hint {
+  margin: 0.4rem 0 0;
+}
+/* chyby a upozornění k zadanému vstupu (seznam pod polem) */
+.algo-root .hint.input-error {
+  color: var(--algo-danger);
+}
+.algo-root .hint.input-warn {
+  padding-left: 0.6rem;
+  border-left: 3px solid var(--algo-c-compare-line);
+  color: var(--algo-text);
+}
+.algo-root ul.hint {
+  margin: 0.3rem 0 0;
+  padding-left: 1.2rem;
+}
+.algo-root .graph-input-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.algo-root .var {
+  white-space: nowrap;
+}
+/* v úzkém panelu výsledku grafů se dlouhá hodnota (závorky DFS) zalomí místo posuvníku do strany */
+.algo-root .graph-result .var {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+/* šířku panelu dává tabulka – řádek proměnných se do ní jen vejde, jinak by ho závorky DFS ke konci
+   rozšířily a graf vedle by se zúžil (VAL-04) */
+.algo-root .graph-result .vars {
+  width: 0;
+  min-width: 100%;
+}
+/* dlouhé hodnoty (závorky DFS „(0(1(2)2…“) se zalomí kdekoli – aktuální vrchol na konci zůstane vidět */
+.algo-root .graph-result .var-value {
+  overflow-wrap: anywhere;
+}
+.algo-root .hc-row {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+.algo-root .paging {
+  min-width: 0;
+}
+.algo-root .lf {
+  min-width: 0;
+}
+.algo-root .lf-cycle {
+  color: var(--algo-danger);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+/* první sloupec (strategie) stránkovací tabulky zůstává při vodorovném posouvání vidět */
+.algo-root .table-scroll .paging-table th:first-child,
+.algo-root .table-scroll .paging-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--algo-panel-2);
+}
+@media (max-width: 600px) {
+  .algo-root .paging-table th,
+  .algo-root .paging-table td {
+    padding: 0.2rem 0.35rem;
+  }
+}
+
+/* k-d strom: dělicí přímky podle stavu dotazu, ořezané body, náhled dotazu, pole intervalu */
+.algo-root .kd-split.n-found {
+  stroke: var(--algo-c-sorted);
+  stroke-width: 2;
+}
+.algo-root .kd-split.n-visited {
+  stroke: var(--algo-c-node-border);
+  stroke-dasharray: 3 2;
+}
+/* ořezané: čárkovaně / dutý kroužek – tlumené tvarem, ne průhledností (kontrast zůstává ≥ 3 : 1) */
+.algo-root .kd-split.n-pruned {
+  stroke: var(--algo-c-swap);
+  stroke-dasharray: 3 3;
+}
+.algo-root .kd-pt.pt-pruned circle {
+  fill: transparent;
+  stroke: var(--algo-c-swap);
+  stroke-width: 1.5;
+}
+.algo-root .kd-query-preview {
+  opacity: 0.5;
+}
+.algo-root .kd-interval {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+}
+
+/* ---------- plynulé přechody mezi kroky ----------
+   Délky nastavuje Visualizer na .viz-canvas podle přehrávače (core/motion.ts, core/stepTransition.ts):
+   --algo-step-ms = přesun / objevení / odchod, --algo-step-color-ms = přelévání barev. Skok posuvníkem,
+   Home/End, nová sada kroků a „omezit pohyb“ = 0 ms. Přesuny vrcholů stromů animuje JS (views/useTween).
+   Mimo plátno modulu (statické náhledy) se nic neanimuje. */
+.algo-root {
+  --algo-step-ms: 0ms;
+  --algo-step-color-ms: 0ms;
+}
+.algo-root .tree-edge line,
+.algo-root .mtree-edge,
+.algo-root .kd-split,
+.algo-root .kd-pt circle,
+.algo-root .lf-node,
+.algo-root .hc-key,
+.algo-root .hc-row,
+.algo-root .gtable td,
+.algo-root .gtable-tile,
+.algo-root .sa-table td,
+.algo-root .paging-seq .pg,
+.algo-root .paging-table td {
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms),
+    background-color var(--algo-step-color-ms),
+    color var(--algo-step-color-ms);
+}
+@keyframes algo-enter {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes algo-leave {
+  to {
+    opacity: 0;
+  }
+}
+.algo-root .viz-canvas .bar,
+.algo-root .viz-canvas .box,
+.algo-root .viz-canvas .tree-node,
+.algo-root .viz-canvas .mtree-node,
+.algo-root .viz-canvas .lf-node,
+.algo-root .viz-canvas .hc-key,
+.algo-root .viz-canvas .kd-pt {
+  animation: algo-enter var(--algo-step-ms) ease-out backwards;
+}
+.algo-root .viz-canvas .leaving {
+  animation: algo-leave var(--algo-step-ms) ease-in forwards;
+  pointer-events: none;
+}
+
+/* ---------- omezení pohybu ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .algo-root,
+  .algo-root *,
+  .algo-root *::before,
+  .algo-root *::after {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- hlavička webu v tmavém tématu (jen na stránce /algo/) ----------
+   Hlavička (src/styles/global.css) je jinak bílá; v tmavém tématu algo by nad tmavou stránkou
+   svítila. POZOR: oba bloky musí mít stejné hodnoty (kontroluje cssScope.test.ts). */
+:root[data-theme="dark"] .site-header {
+  background-color: color-mix(in srgb, var(--algo-panel) 88%, transparent);
+  border-bottom-color: var(--algo-border);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+:root[data-theme="dark"] .header-logo {
+  color: var(--algo-text);
+}
+:root[data-theme="dark"] .main-nav a {
+  color: var(--algo-text);
+}
+:root[data-theme="dark"] .main-nav a:hover {
+  background-color: var(--algo-panel-2);
+  color: var(--algo-accent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .site-header {
+    background-color: color-mix(in srgb, var(--algo-panel) 88%, transparent);
+    border-bottom-color: var(--algo-border);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  }
+  :root:not([data-theme="light"]) .header-logo {
+    color: var(--algo-text);
+  }
+  :root:not([data-theme="light"]) .main-nav a {
+    color: var(--algo-text);
+  }
+  :root:not([data-theme="light"]) .main-nav a:hover {
+    background-color: var(--algo-panel-2);
+    color: var(--algo-accent);
+  }
+}
+
+/* ---------- dok pod plátnem: akce (ActionMenu) vlevo, stav operace vpravo ---------- */
+.algo-root .viz-dock {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 0.6rem 1rem;
+  align-items: start;
+  margin: 0.6rem 0;
+}
+.algo-root .viz-dock .viz-status {
+  margin: 0;
+}
+.algo-root .viz-actions {
+  min-width: 0;
+  background: var(--algo-panel);
+  border: 1px solid var(--algo-border);
+  border-radius: 10px;
+  padding: 0.5rem 0.6rem;
+}
+.algo-root .viz-actions .viz-history {
+  margin-top: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--algo-border);
+  font-size: 0.85rem;
+}
+.algo-root .viz-actions + .viz-status .viz-message {
+  min-height: 3.5rem;
+}
+@media (max-width: 700px) {
+  .algo-root .viz-dock {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* telefon: nejdřív věta o kroku (patří k obrázku), pak akce */
+  .algo-root .viz-dock .viz-status {
+    order: -1;
+  }
+}
+
+/* ---------- ActionMenu ---------- */
+.algo-root .action-menu {
+  min-width: 0;
+}
+/* akce v řádcích vedle sebe (nízký dok pod plátnem); tělo otevřené akce je v DOM až za seznamem
+   (ActionMenu.tsx), takže leží pod všemi tlačítky přes celou šířku a pořadí tabulátoru sedí */
+.algo-root .am-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+}
+.algo-root .am-item {
+  display: flex;
+  min-width: 0;
+}
+.algo-root .am-action {
+  min-width: 0;
+  min-height: 2.25rem;
+  text-align: left;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-left: 4px solid var(--algo-border);
+}
+.algo-root .am-action[aria-expanded="true"] {
+  border-left-color: var(--algo-accent);
+  background: var(--algo-panel-2);
+}
+.algo-root .am-action[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: help;
+}
+.algo-root .am-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.5rem;
+  min-width: 0;
+  margin-top: 0.3rem;
+  padding: 0.35rem 0 0.1rem 0.5rem;
+  border-left: 4px solid var(--algo-accent);
+}
+.algo-root .am-variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.algo-root .am-variant {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+}
+.algo-root .am-variant.active {
+  border-color: var(--algo-accent);
+  color: var(--algo-accent);
+  font-weight: 600;
+}
+.algo-root .am-args {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.5rem;
+  min-width: 0;
+}
+.algo-root .am-arg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 100%;
+}
+.algo-root .am-arg-label {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  color: var(--algo-muted);
+  white-space: nowrap;
+}
+.algo-root .am-arg input,
+.algo-root .am-arg select {
+  max-width: 100%;
+}
+/* seznam čísel: pole přes zbytek řádku (nejméně ~22 znaků), na úzkém displeji nejvýš šířka řádku */
+/* formulář se seznamem čísel zabere celý řádek pod variantami (pole + Provést vedle sebe) */
+.algo-root .am-args:has(> .am-arg-wide) {
+  flex: 1 1 100%;
+}
+.algo-root .am-arg.am-arg-wide {
+  flex: 1 1 22ch;
+  min-width: min(22ch, 100%);
+}
+.algo-root .am-arg.am-arg-wide input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+.algo-root .am-arg.invalid input {
+  border-color: var(--algo-danger);
+}
+.algo-root .am-go {
+  min-height: 2.25rem;
+}
+.algo-root .am-go[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.algo-root .am-msg {
+  flex-basis: 100%;
+  margin: 0;
+  min-height: 0;
+  font-size: 0.82rem;
+  color: var(--algo-muted);
+}
+.algo-root .am-msg:empty {
+  display: none;
+}
+/* prázdné varování po provedení akce: neviditelné, ale v DOM (živá oblast ohlásí první text) */
+.algo-root .am-msg.am-ran-note:empty {
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.algo-root .am-msg.error,
+.algo-root .am-msg.am-disabled {
+  color: var(--algo-danger);
+}
+/* zahozené položky vstupu („Ignorováno: …“) – varování, ne šedá poznámka */
+.algo-root .am-msg.warn {
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--algo-c-compare-line);
+  color: var(--algo-text);
+  font-weight: 600;
+}
+@media (pointer: coarse) {
+  .algo-root .am-action,
+  .algo-root .am-go,
+  .algo-root .am-variant {
+    min-height: 2.75rem;
+  }
+}
+
+/* ---------- úpravy grafu na plátně (GraphEditor) ---------- */
+.algo-root .graph-editor {
+  min-width: 0;
+}
+/* návod prázdného grafu: překryv uprostřed plátna (nezabírá místo, kliky jdou skrz do kresby) */
+.algo-root .graph-layout {
+  position: relative;
+}
+.algo-root .graph-empty-hint {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  width: min(32rem, 90%);
+  z-index: 1;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
+}
+.algo-root .ge-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 0.4rem;
+}
+/* panel editoru nahoře ve sloupci výsledku (G-01): šířku sloupce dává výsledek kroku 1 nového běhu
+   (nejméně min-width sloupce), ne dlouhý návod – kresba je v editoru i po „Hotovo“ stejně široká */
+.algo-root .graph-result > .ge-panel-slot {
+  contain: inline-size;
+}
+.algo-root .graph-result > .ge-panel-slot {
+  margin-bottom: 0.4rem;
+}
+/* Import / export textem dole ve sloupci výsledku (G-02): šířku sloupce nemění, rozbalený bere místo
+   jen sloupci (kresbě ne) */
+.algo-root .graph-result > .ge-text {
+  contain: inline-size;
+}
+/* lišta editoru grafu: jeden řádek v běhu i v editoru (G-03) – kresba pod ní při vstupu do editoru
+   ani po „Hotovo“ neposkočí; na telefonu ji posun fokusem nezasune pod hlavičku webu a horní lištu */
+.algo-root .graph-editor > .ge-toolbar {
+  flex-wrap: nowrap;
+  scroll-margin-top: calc(3.5rem + var(--algo-site-header-space, 0px));
+}
+.algo-root .graph-editor > .ge-toolbar > button {
+  flex: none;
+  scroll-margin-top: calc(3.5rem + var(--algo-site-header-space, 0px));
+}
+/* ikonová tlačítka stejně vysoká jako textová (výška lišty se v editoru nezmění) */
+.algo-root .ge-toolbar > .ge-icon {
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.algo-root .ge-icon > span,
+.algo-root .ge-icon > svg {
+  line-height: 1;
+}
+.algo-root .ge-mode[aria-pressed="true"] {
+  border-color: var(--algo-accent);
+  background: var(--algo-panel-2);
+  font-weight: 600;
+}
+.algo-root .ge-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+.algo-root .ge-hint {
+  margin: 0 0 0.3rem;
+  font-size: 0.8rem;
+  color: var(--algo-muted);
+}
+.algo-root .ge-message {
+  margin: 0 0 0.3rem;
+  min-height: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--algo-text);
+}
+.algo-root .ge-text {
+  margin-top: 0.5rem;
+}
+.algo-root .ge-text > summary {
+  cursor: pointer;
+  color: var(--algo-muted);
+  font-size: 0.9rem;
+}
+.algo-root .ge-text-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+}
+.algo-root .ge-text textarea {
+  width: 100%;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+}
+.algo-root .ge-text-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+.algo-root .ge-text-note {
+  font-size: 0.82rem;
+  color: var(--algo-muted);
+}
+.algo-root .graph-svg.editing {
+  touch-action: none;
+  cursor: crosshair;
+}
+.algo-root .graph-bg {
+  fill: transparent;
+  pointer-events: all;
+}
+.algo-root .graph-svg.editing .graph-node {
+  cursor: grab;
+}
+.algo-root .edge-hit {
+  fill: none !important;
+  stroke: transparent !important;
+  stroke-width: 16 !important;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+/* v editoru je číslo ceny totéž co hrana (klik = pole ceny) */
+.algo-root .edge-label-hit {
+  cursor: pointer;
+}
+.algo-root .edge-hit:focus {
+  outline: none;
+}
+.algo-root .edge-hit:focus-visible {
+  stroke: color-mix(in srgb, var(--algo-accent) 35%, transparent) !important;
+}
+.algo-root .graph-edge.is-selected path:not(.edge-hit) {
+  stroke: var(--algo-accent);
+  stroke-width: 3.5;
+}
+.algo-root .graph-node.is-selected circle:not(.node-hit),
+.algo-root .graph-node.is-target circle:not(.node-hit) {
+  stroke: var(--algo-accent);
+  stroke-width: 4;
+}
+.algo-root .graph-node.is-source circle:not(.node-hit) {
+  stroke-dasharray: 4 3;
+}
+.algo-root .graph-node.is-moving {
+  opacity: 0.8;
+}
+.algo-root .graph-preview {
+  stroke: var(--algo-accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  pointer-events: none;
+}
+.algo-root .edge-weight-input {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.1rem 0.3rem;
+  text-align: center;
+  font-weight: 700;
+}
+.algo-root .graph-svg.pickable .graph-node {
+  cursor: pointer;
+}
+
+/* ---------- výběr prvku plátna klikem (onPick) ---------- */
+.algo-root .pickable {
+  cursor: pointer;
+}
+.algo-root svg.pickable {
+  cursor: default;
+}
+.algo-root .pickable:focus {
+  outline: none;
+}
+.algo-root .pickable:focus-visible {
+  outline: 2px solid var(--algo-accent);
+  outline-offset: 2px;
+}
+.algo-root .pickable:hover > rect,
+.algo-root .pickable:hover > circle {
+  stroke: var(--algo-accent);
+}
+
+/* ==========================================================================
+   STRÁNKA MODULU NA JEDNU OBRAZOVKU (desktop, po vzoru VisuAlgo)
+   Kostra modulu má výšku okna bez hlavičky webu: nahoře název + dvouřádkový popis, pod tím
+   vlevo plátno (vyplní zbytek výšky, SVG se zmenší se zachovaným poměrem stran), dok s akcemi
+   a stavem a lišta přehrávání; vpravo pseudokód (posouvá se uvnitř), volby, legenda a sbalená
+   nápověda. Stránka se neposouvá; na menším okně (telefon, tablet, nízké okno) platí běžný tok.
+   ========================================================================== */
+.algo-root .viz-code {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .layout {
+    min-height: calc(100vh - var(--algo-site-header-space, 0px));
+    min-height: calc(100dvh - var(--algo-site-header-space, 0px));
+  }
+  .algo-root .content:has(> .viz) {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+  .algo-root .viz {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* místo hlavičky v toku, ne --site-header-h: schovaná hlavička (0) by kostru zvětšila a stránka
+       by se pak o výšku hlavičky posouvala */
+    height: calc(100vh - var(--algo-site-header-space, 0px) - 1.2rem);
+    height: calc(100dvh - var(--algo-site-header-space, 0px) - 1.2rem);
+  }
+  .algo-root .viz-header,
+  .algo-root .viz > .viz-input {
+    flex: none;
+  }
+  .algo-root .viz > .viz-input {
+    margin: 0;
+    padding: 0.4rem 0.8rem;
+  }
+  .algo-root .viz-header h1 {
+    font-size: 1.3rem;
+    margin: 0 auto 0 0;
+  }
+  .algo-root .viz-desc {
+    font-size: 0.92rem;
+  }
+  /* levý sloupec a dok jsou jen v DOM (pořadí na telefonu); na desktopu leží jejich části přímo
+     v mřížce: stav vpravo nad pseudokódem (jako ve VisuAlgo), akce přes celou šířku pod plátnem */
+  .algo-root .viz-main {
+    flex: 1 1 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 420px);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "canvas status"
+      "canvas side"
+      "actions side"
+      "controls side";
+    align-items: stretch;
+    gap: 0.5rem 0.75rem;
+  }
+  .algo-root .viz-canvas-col,
+  .algo-root .viz-dock {
+    display: contents;
+  }
+  .algo-root .viz-canvas {
+    grid-area: canvas;
+    flex: 1 1 0;
+    min-height: 9rem;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+  }
+  /* obsah plátna se nesmršťuje (text, tabulky); zmenšují se jen obaly s SVG pohledů */
+  .algo-root .viz-canvas > *,
+  .algo-root .viz-canvas .graph-editor > * {
+    flex: none;
+  }
+  .algo-root .viz-canvas .view-wrap,
+  .algo-root .viz-canvas > .graph-editor,
+  .algo-root .viz-canvas .viz-fit {
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root .viz-canvas .view-wrap,
+  .algo-root .viz-canvas .tree-wrap {
+    max-height: none;
+    overflow: hidden;
+  }
+  .algo-root .viz-canvas .view-wrap > svg {
+    flex: 0 1 auto;
+    min-height: 0;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    align-self: center;
+  }
+  .algo-root .viz-status {
+    grid-area: status;
+    margin: 0;
+    gap: 0.25rem;
+  }
+  .algo-root .controls {
+    grid-area: controls;
+  }
+  .algo-root .viz-actions {
+    grid-area: actions;
+    padding: 0.4rem 0.5rem;
+  }
+  .algo-root .viz-line {
+    display: none;
+  }
+  .algo-root .viz-actions .viz-history {
+    margin-top: 0.35rem;
+    padding-top: 0.3rem;
+  }
+  .algo-root .viz-message {
+    min-height: 3rem;
+    padding: 0.45rem 0.7rem;
+  }
+  /* co se do pravého sloupce nevejde (rozbalená nápověda), posouvá se uvnitř sloupce, ne stránka */
+  .algo-root .viz-code {
+    grid-area: side;
+    position: static;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  /* pseudokód si drží aspoň ~6 řádků, i když je nápověda rozbalená */
+  .algo-root .viz-code .pseudocode {
+    flex: 1 1 auto;
+    min-height: min(9rem, 100%);
+    max-height: none;
+  }
+  /* před první operací (struktury): jeden řádek místo prázdného boxu přes většinu sloupce */
+  .algo-root .viz-code .pseudocode.empty {
+    flex: none;
+    min-height: 0;
+    padding: 0.5rem 0.75rem;
+  }
+  .algo-root .viz-code > :not(.pseudocode) {
+    flex: none;
+  }
+  /* rozbalená nápověda nesmí vytlačit pseudokód – posouvá se uvnitř sebe */
+  .algo-root .viz-more[open] .viz-more-body {
+    max-height: 28vh;
+    overflow-y: auto;
+  }
+  /* rozbalený popis („více“) se posouvá uvnitř sebe – plátno, akce i lišta zůstanou na obrazovce */
+  .algo-root .viz-desc.open .viz-desc-body {
+    /* na nízkém okně (720 px) jen ~4 řádky, ať plátno nepřeteče */
+    max-height: min(22vh, max(5.5em, calc(100vh - 620px)));
+    overflow-y: auto;
+  }
+}
+/* lišta přehrávání na desktopu v jednom řádku i v užším sloupci (posuvník kroků se zúží) */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-main .controls-row {
+    flex-wrap: nowrap;
+  }
+  .algo-root .viz-main .controls .seek {
+    min-width: 3rem;
+  }
+}
+@media (min-width: 1100px) and (max-width: 1439px) and (min-height: 600px) {
+  .algo-root .viz-main .ctl-text {
+    display: none;
+  }
+  .algo-root .viz-main .step-counter {
+    min-width: 0;
+    margin-left: 0.2rem;
+  }
+}
+/* stránka modulu se neposouvá → hlavička se neschovává; přechod výšky levé lišty by při načtení
+   (z plné výšky okna na výšku bez hlavičky) na chvíli přetekl stránku */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .layout:has(.viz) .sidebar {
+    transition: none;
+  }
+}
+/* grafy: graf | tabulka výsledku vedle sebe (tabulka hran Kruskala by graf odsunula pod okraj);
+   k-d strom: rovina | strom vedle sebe */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas > .graph-layout {
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .algo-root .graph-layout > * {
+    flex: none;
+  }
+  .algo-root .graph-layout > .graph-editor,
+  .algo-root .graph-layout > .view-wrap {
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root .graph-layout .graph-editor > * {
+    flex: none;
+  }
+  .algo-root .graph-layout .graph-editor > .view-wrap {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+  .algo-root .viz-canvas > .graph-layout:has(.gtable) {
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .algo-root .graph-layout:has(.gtable) > .graph-editor,
+  .algo-root .graph-layout:has(.gtable) > .view-wrap {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  /* min-width: i prázdný graf (sloupec jen s panelem editoru) má sloupec stejně široký jako po prvním
+     vrcholu – kresba se neroztáhne a vrchol zůstane pod kliknutím (G-01) */
+  .algo-root .graph-result {
+    min-height: 0;
+    min-width: 15rem;
+    max-width: 45%;
+    overflow-y: auto;
+  }
+  .algo-root .graph-result .gtable {
+    margin-top: 0;
+  }
+  /* v editoru šířka sloupce zmrazená ze vstupu do editoru (inline width): nová tabulka ho nerozšíří (X-07) */
+  .algo-root .graph-result.is-frozen {
+    flex: none;
+    min-width: 0;
+    max-width: none;
+    contain: inline-size;
+    overflow-x: auto;
+  }
+  /* rozbalený text: návod editoru se mezitím skryje (přepínače a hláška zůstanou), ať je vidět výsledek */
+  .algo-root .graph-result:has(> .ge-text[open]) .ge-hint {
+    display: none;
+  }
+  /* panel textu lepí dole ve sloupci s vlastním posuvníkem (dlouhá tabulka Kruskala ho neodsune) */
+  .algo-root .graph-result > .ge-text {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    padding-top: 0.25rem;
+    background: var(--algo-panel);
+  }
+  /* velikost roviny = menší z ~3/5 šířky a celé výšky plátna (jednotky kontejneru); strom vedle je užší –
+     rovina je hlavní kresba (TREEHASH-12), strom ale musí zůstat čitelný (popisky ≥ ~10 px při 1366) */
+  .algo-root .viz-canvas > .kd-layout {
+    flex: 1 1 0;
+    min-height: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    container-type: size;
+  }
+  .algo-root .kd-layout > .kd-plane {
+    flex: none;
+    width: min(58cqw, 100cqh);
+    max-width: none;
+    height: auto;
+    margin: 0;
+  }
+  .algo-root .kd-tree-col {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+    max-height: 100cqh;
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root .kd-tree-col > * {
+    flex: none;
+  }
+  .algo-root .kd-tree-col > .view-wrap {
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-main .step-counter {
+    white-space: nowrap;
+  }
+  /* Mergesort (Z), Counting sort (počítadla): hlavní pole se zmenšuje méně než pomocné */
+  .algo-root .viz-canvas > .array-view + .array-view {
+    flex-shrink: 1.5;
+  }
+}
+
+/* ---------- líně načítaná stránka modulu (App.tsx lazyPage) ---------- */
+.algo-root .page-loading {
+  color: var(--algo-muted);
+  padding: 2rem 1rem;
+}
+
+/* ---------- sdílené kresby: sloupcový graf, stopa pod buňkami, les Union-Find (dávka 2, 8. 11. 2026) ----------
+   Obecné třídy pro SVG kresby více modulů (amortizace, hešování, Kruskal). Barvy jen z tokenů --algo-*,
+   takže fungují v obou tématech; přechody barev podle délky kroku. Prvky, které jdou vybrat, dostávají
+   atributy z core/useRovingFocus (jedna zastávka Tabu na kresbu) – obrys fokusu je tady.
+
+   <svg class="viz-barchart" role="group" aria-label="Cena operací">
+     <line class="bc-axis" …/>                         osa (i mřížka)
+     <text class="bc-label" …>3</text>                  popisek osy / pod sloupcem
+     <text class="bc-title" …>cena</text>               název osy
+     <g class="bc-bar [is-hot|is-done] [bc-alt]">        sloupec (bc-alt = druhá řada, např. potenciál)
+       <rect …/><text class="bc-value" …>2,5</text>
+     </g>
+     <line class="bc-limit" …/><text class="bc-limit-label" …>3</text>   mez (amortizovaná cena)
+     <polyline class="bc-line" …/><circle class="bc-dot [is-hot]" …/>   čára (potenciál po krocích)
+   </svg>
+
+   <g class="viz-trail">                                 stopa pod řadou buněk (zkoušené pozice / vyhazování)
+     <text class="tr-label" …>zkoušeno:</text>
+     <g class="tr-cell [is-hot|is-done|is-fail|is-ok]"><rect …/><text …>7</text></g>
+     <path class="tr-arrow [is-hot]" marker-end="url(#…)"/>   (hrot: <marker><path class="tr-head [is-hot]"/></marker>)
+   </g>
+
+   <svg class="viz-ufforest" role="group" aria-label="Les Union-Find">
+     <line|path class="uf-edge [is-path]" marker-end="url(#…)"/>  ukazatel syn → otec
+     <marker …><path class="uf-arrow [is-path]"/></marker>
+     <g class="uf-node [is-root] [is-path] [is-hot]"><circle …/><text …>A</text><text class="uf-rank" …>r=1</text></g>
+   </svg>
+*/
+.algo-root .viz-barchart,
+.algo-root .viz-ufforest {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+}
+.algo-root .viz-barchart text,
+.algo-root .viz-trail text,
+.algo-root .viz-ufforest text {
+  font-variant-numeric: tabular-nums;
+}
+
+/* sloupcový graf */
+.algo-root .viz-barchart .bc-axis {
+  stroke: var(--algo-border);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.algo-root .viz-barchart .bc-label,
+.algo-root .viz-barchart .bc-title {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .viz-barchart .bc-value {
+  fill: var(--algo-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+.algo-root .viz-barchart .bc-bar rect {
+  fill: color-mix(in srgb, var(--algo-c-active) 28%, var(--algo-c-node));
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .viz-barchart .bc-bar.is-hot rect {
+  fill: var(--algo-c-active);
+  stroke: var(--algo-c-active);
+}
+.algo-root .viz-barchart .bc-bar.is-done rect {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-border);
+}
+.algo-root .viz-barchart .bc-bar.bc-alt rect {
+  fill: color-mix(in srgb, var(--algo-c-min) 30%, var(--algo-c-node));
+  stroke: var(--algo-c-min);
+}
+.algo-root .viz-barchart .bc-bar.bc-alt.is-hot rect {
+  fill: var(--algo-c-min);
+}
+.algo-root .viz-barchart .bc-limit {
+  stroke: var(--algo-c-bound);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  fill: none;
+}
+.algo-root .viz-barchart .bc-limit-label {
+  fill: var(--algo-c-bound-text);
+  font-size: 11px;
+  font-weight: 600;
+}
+.algo-root .viz-barchart .bc-line {
+  fill: none;
+  stroke: var(--algo-c-pivot);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.algo-root .viz-barchart .bc-dot {
+  fill: var(--algo-c-pivot);
+  stroke: var(--algo-bg);
+  stroke-width: 1.5;
+}
+.algo-root .viz-barchart .bc-dot.is-hot {
+  r: 5;
+  stroke: var(--algo-text);
+}
+/* vodorovná mřížka (nenulové značky osy) čárkovaně */
+.algo-root .viz-barchart .bc-grid {
+  stroke-dasharray: 3 4;
+}
+
+/* stopa pod řadou buněk */
+.algo-root .viz-trail .tr-cell rect {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-border);
+  stroke-width: 1;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .viz-trail .tr-cell text {
+  fill: var(--algo-text);
+  font-size: 12px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.algo-root .viz-trail .tr-cell.is-hot rect {
+  fill: color-mix(in srgb, var(--algo-c-active) 25%, var(--algo-c-node));
+  stroke: var(--algo-c-active);
+  stroke-width: 2.5;
+}
+.algo-root .viz-trail .tr-cell.is-done rect {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-muted);
+}
+.algo-root .viz-trail .tr-cell.is-done text {
+  fill: var(--algo-muted);
+}
+.algo-root .viz-trail .tr-cell.is-fail rect {
+  fill: color-mix(in srgb, var(--algo-c-swap) 25%, var(--algo-c-node));
+  stroke: var(--algo-c-swap);
+}
+.algo-root .viz-trail .tr-cell.is-ok rect {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 30%, var(--algo-c-node));
+  stroke: var(--algo-c-sorted);
+}
+.algo-root .viz-trail .tr-arrow {
+  fill: none;
+  stroke: var(--algo-muted);
+  stroke-width: 1.5;
+}
+.algo-root .viz-trail .tr-arrow.is-hot {
+  stroke: var(--algo-c-active);
+  stroke-width: 2;
+}
+.algo-root .viz-trail .tr-head {
+  fill: var(--algo-muted);
+}
+.algo-root .viz-trail .tr-head.is-hot {
+  fill: var(--algo-c-active);
+}
+.algo-root .viz-trail .tr-label {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+
+/* les Union-Find */
+.algo-root .viz-ufforest .uf-node circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .viz-ufforest .uf-node text {
+  fill: var(--algo-text);
+  font-size: 13px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.algo-root .viz-ufforest .uf-node.is-root circle {
+  stroke-width: 3;
+}
+.algo-root .viz-ufforest .uf-node.is-path circle {
+  fill: color-mix(in srgb, var(--algo-c-active) 20%, var(--algo-c-node));
+  stroke: var(--algo-c-active);
+  stroke-width: 3;
+}
+.algo-root .viz-ufforest .uf-node.is-hot circle {
+  fill: color-mix(in srgb, var(--algo-c-active) 40%, var(--algo-c-node));
+  stroke: var(--algo-c-active);
+}
+.algo-root .viz-ufforest .uf-node .uf-rank {
+  fill: var(--algo-muted);
+  font-size: 10px;
+  font-weight: 400;
+}
+.algo-root .viz-ufforest .uf-rank {
+  fill: var(--algo-muted);
+}
+.algo-root .viz-ufforest .uf-edge {
+  fill: none;
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.5;
+  transition: stroke var(--algo-step-color-ms);
+}
+.algo-root .viz-ufforest .uf-edge.is-path {
+  stroke: var(--algo-c-active);
+  stroke-width: 2.5;
+}
+.algo-root .viz-ufforest .uf-arrow {
+  fill: var(--algo-c-edge);
+}
+.algo-root .viz-ufforest .uf-arrow.is-path {
+  fill: var(--algo-c-active);
+}
+.algo-root .viz-ufforest .uf-edge.is-new {
+  stroke: var(--algo-c-active);
+  stroke-width: 3;
+}
+/* barvy komponent v lese (Kruskal, UnionFindView nodeMarks → uf-compK) = barvy vrcholů v grafu; leží za is-path / is-hot,
+   takže výplň komponenty zůstane a cestu Find / připojený kořen ukáže obrys */
+.algo-root .viz-ufforest .uf-node.uf-comp0 circle {
+  fill: var(--algo-comp0-fill);
+  stroke: var(--algo-comp0-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp1 circle {
+  fill: var(--algo-comp1-fill);
+  stroke: var(--algo-comp1-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp2 circle {
+  fill: var(--algo-comp2-fill);
+  stroke: var(--algo-comp2-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp3 circle {
+  fill: var(--algo-comp3-fill);
+  stroke: var(--algo-comp3-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp4 circle {
+  fill: var(--algo-comp4-fill);
+  stroke: var(--algo-comp4-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp5 circle {
+  fill: var(--algo-comp5-fill);
+  stroke: var(--algo-comp5-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp6 circle {
+  fill: var(--algo-comp6-fill);
+  stroke: var(--algo-comp6-line);
+}
+.algo-root .viz-ufforest .uf-node.uf-comp7 circle {
+  fill: var(--algo-comp7-fill);
+  stroke: var(--algo-comp7-line);
+}
+.algo-root .viz-ufforest .uf-node[class*="uf-comp"] .uf-label {
+  fill: var(--algo-comp-text);
+}
+.algo-root .viz-ufforest .uf-node[class*="uf-comp"].is-path circle,
+.algo-root .viz-ufforest .uf-node[class*="uf-comp"].is-hot circle {
+  stroke: var(--algo-c-active);
+  stroke-width: 3.5;
+}
+/* Kruskal: les nad tabulkou hran lepí nahoře panelu, i když se panel posune ke zvýrazněnému řádku
+   (jen na desktopu, kde má panel výsledku vlastní posuvník – na telefonu teče stránka) */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .graph-result > .uf-forest {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--algo-panel);
+  }
+}
+
+/* fokus prvku kresby (roving tabindex): obrys v barvě akcentu, kliknutí myší obrys nekreslí */
+.algo-root .viz-barchart .bc-bar:focus,
+.algo-root .viz-trail .tr-cell:focus,
+.algo-root .viz-ufforest .uf-node:focus {
+  outline: none;
+}
+.algo-root .viz-barchart .bc-bar:focus-visible,
+.algo-root .viz-trail .tr-cell:focus-visible,
+.algo-root .viz-ufforest .uf-node:focus-visible {
+  outline: 2px solid var(--algo-accent);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   ODDÍLY STOP FÁZE 2 (7. 11. 2026) – každá stopa píše jen mezi své dva komentáře
+   (pravidla pod .algo-root, proměnné jen --algo-*); oddíly hlídá core/cssSections.test.ts.
+   ========================================================================== */
+
+/* === strings === */
+/* KMP, Aho-Corasicková, Rabin-Karp (algos/strings/, views textu a automatu) */
+
+/* ---------- pás textu (views/TextStripView) ---------- */
+.algo-root .strip-svg {
+  display: block;
+  overflow: visible;
+}
+.algo-root .strip-label {
+  font-size: 12px;
+  font-style: italic;
+  fill: var(--algo-muted);
+}
+.algo-root .strip-cell rect {
+  fill: var(--algo-panel);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1;
+  transition:
+    fill var(--algo-step-color-ms, 0ms),
+    stroke var(--algo-step-color-ms, 0ms);
+}
+.algo-root .strip-cell.dashed rect {
+  stroke-dasharray: 3 2;
+  fill: var(--algo-panel-2);
+}
+.algo-root .strip-ch {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 15px;
+  fill: var(--algo-text);
+}
+.algo-root .strip-num {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  fill: var(--algo-muted);
+}
+.algo-root .strip-index {
+  font-size: 9.5px;
+  fill: var(--algo-muted);
+}
+.algo-root .strip-glyph {
+  font-size: 9px;
+  font-weight: 700;
+  fill: var(--algo-text);
+}
+.algo-root .strip-cell.s-active rect {
+  fill: color-mix(in srgb, var(--algo-c-active) 28%, var(--algo-panel));
+  stroke: var(--algo-c-active);
+  stroke-width: 2;
+}
+.algo-root .strip-cell.s-match rect {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 18%, var(--algo-panel));
+  stroke: var(--algo-c-sorted);
+}
+.algo-root .strip-cell.s-ok rect,
+.algo-root .strip-cell.s-in rect {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 38%, var(--algo-panel));
+  stroke: var(--algo-c-sorted);
+  stroke-width: 2;
+}
+.algo-root .strip-cell.s-bad rect,
+.algo-root .strip-cell.s-out rect {
+  fill: color-mix(in srgb, var(--algo-c-swap) 32%, var(--algo-panel));
+  stroke: var(--algo-c-swap);
+  stroke-width: 2;
+}
+.algo-root .strip-cell.s-out .strip-ch {
+  text-decoration: line-through;
+}
+.algo-root .strip-cell.s-dim rect {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-border);
+}
+.algo-root .strip-cell.s-dim .strip-ch,
+.algo-root .strip-cell.s-end .strip-ch {
+  fill: var(--algo-muted);
+}
+.algo-root .strip-num-bg {
+  stroke: none;
+  transition: fill var(--algo-step-color-ms, 0ms);
+}
+.algo-root .strip-cell.n-cur .strip-num-bg {
+  fill: color-mix(in srgb, var(--algo-c-compare) 30%, var(--algo-panel));
+}
+.algo-root .strip-cell.n-eq .strip-num-bg {
+  /* stejný podíl žluté jako .hot-bg: v tmavém tématu menší, ať světlé číslo má ≥ 4,5 : 1 */
+  fill: color-mix(
+    in srgb,
+    var(--algo-c-compare) var(--algo-hot-pct),
+    var(--algo-panel)
+  );
+}
+.algo-root .strip-cell.n-hit .strip-num-bg {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 40%, var(--algo-panel));
+}
+.algo-root .strip-cell.n-false .strip-num-bg {
+  fill: color-mix(in srgb, var(--algo-c-pivot) 40%, var(--algo-panel));
+}
+.algo-root .strip-cell.n-cur .strip-num,
+.algo-root .strip-cell.n-eq .strip-num,
+.algo-root .strip-cell.n-hit .strip-num,
+.algo-root .strip-cell.n-false .strip-num {
+  fill: var(--algo-text);
+  font-weight: 700;
+}
+.algo-root .strip-window {
+  fill: color-mix(in srgb, var(--algo-c-compare) 22%, transparent);
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 1.5;
+}
+.algo-root .strip-bracket path {
+  fill: none;
+  stroke: var(--algo-c-sorted);
+  stroke-width: 2;
+}
+.algo-root .strip-bracket text {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--algo-success-text);
+}
+.algo-root .strip-bracket.b-false path {
+  stroke: var(--algo-c-pivot);
+  stroke-dasharray: 4 2;
+}
+.algo-root .strip-bracket.b-false text {
+  fill: var(--algo-c-pivot-text);
+}
+.algo-root .strip-cell.pickable {
+  cursor: pointer;
+}
+.algo-root .strip-cell.pickable:hover rect {
+  stroke: var(--algo-accent);
+}
+.algo-root .strip-cell.pickable:focus-visible {
+  outline: none;
+}
+.algo-root .strip-cell.pickable:focus-visible rect {
+  stroke: var(--algo-accent);
+  stroke-width: 3;
+}
+
+/* ---------- vyhledávací automat (views/AutomatonView) ---------- */
+.algo-root .automaton-svg {
+  display: block;
+  overflow: visible;
+}
+.algo-root .au-edge path {
+  fill: none;
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.3;
+  transition: stroke var(--algo-step-color-ms, 0ms);
+}
+.algo-root .au-edge polygon {
+  fill: var(--algo-c-edge);
+  transition: fill var(--algo-step-color-ms, 0ms);
+}
+.algo-root .au-fwd path {
+  stroke: var(--algo-c-node-border);
+  stroke-width: 2.2;
+}
+.algo-root .au-fwd polygon {
+  fill: var(--algo-c-node-border);
+}
+.algo-root .au-short path {
+  stroke-dasharray: 1 4;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+.algo-root .au-edge.au-hot path {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 3;
+}
+.algo-root .au-edge.au-hot polygon {
+  fill: var(--algo-c-pivot);
+}
+.algo-root .au-fwd.au-hot path {
+  stroke: var(--algo-c-edge-tree);
+}
+.algo-root .au-fwd.au-hot polygon {
+  fill: var(--algo-c-edge-tree);
+}
+.algo-root .au-edge.au-new path {
+  stroke: var(--algo-c-sorted);
+  stroke-width: 2.5;
+}
+.algo-root .au-edge.au-new polygon {
+  fill: var(--algo-c-sorted);
+}
+.algo-root .au-letter,
+.algo-root .au-name {
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  fill: var(--algo-text);
+}
+.algo-root .au-letter {
+  font-size: calc(14px * var(--algo-au-zoom, 1));
+}
+.algo-root .au-name {
+  font-size: calc(12px * var(--algo-au-zoom, 1));
+}
+.algo-root .au-node circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms, 0ms),
+    stroke var(--algo-step-color-ms, 0ms);
+}
+/* číslo stavu: 11 px (na 1280 × 720 po zmenšení kresby ≥ 10,5 px) */
+.algo-root .au-num {
+  font-size: calc(11px * var(--algo-au-zoom, 1));
+  fill: var(--algo-muted);
+}
+.algo-root .au-node.au-final circle {
+  stroke-width: 3.5;
+}
+.algo-root .au-node.au-pending circle {
+  fill: var(--algo-panel-2);
+  stroke-dasharray: 3 2;
+}
+.algo-root .au-node.au-new circle {
+  stroke: var(--algo-c-sorted);
+  fill: color-mix(in srgb, var(--algo-c-sorted) 30%, var(--algo-c-node));
+}
+.algo-root .au-node.au-current circle {
+  stroke: var(--algo-c-active);
+  stroke-width: 3;
+  fill: color-mix(in srgb, var(--algo-c-active) 35%, var(--algo-c-node));
+}
+.algo-root .au-node.au-current .au-num,
+.algo-root .au-node.au-new .au-num {
+  fill: var(--algo-text);
+  font-weight: 700;
+}
+.algo-root .au-node.pickable {
+  cursor: pointer;
+}
+
+/* ---------- tabulka zpětných hran (KMP) ---------- */
+.algo-root .kmp-table {
+  border-collapse: collapse;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  margin: 0.15rem 0;
+}
+.algo-root .kmp-table th,
+.algo-root .kmp-table td {
+  border: 1px solid var(--algo-border);
+  padding: 0.05rem 0.4rem;
+  text-align: center;
+  min-width: 1.7rem;
+  transition: background-color var(--algo-step-color-ms, 0ms);
+}
+.algo-root .kmp-table th {
+  background: var(--algo-panel-2);
+  color: var(--algo-muted);
+  font-weight: 600;
+  position: sticky;
+  left: 0;
+}
+.algo-root .kmp-table td.col-pending {
+  color: var(--algo-muted);
+}
+.algo-root .kmp-table td.col-new {
+  background: color-mix(in srgb, var(--algo-c-sorted) 28%, var(--algo-panel));
+  font-weight: 700;
+}
+.algo-root .kmp-table td.col-cur {
+  background: color-mix(in srgb, var(--algo-c-active) 22%, var(--algo-panel));
+}
+
+/* ---------- Rabin–Karp: parametry a rozepsaný výpočet ---------- */
+.algo-root .rk-params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  margin: 0 0 0.2rem;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}
+.algo-root .rk-calc {
+  margin: 0.1rem 0 0;
+  min-height: 1.3em;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  color: var(--algo-text);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- náhled KMP na úvodní stránce: automat nad senem ---------- */
+.algo-root .thumb-art .kmp-thumb {
+  display: flex;
+  flex-direction: column;
+}
+.algo-root .thumb-art .kmp-thumb > .view-wrap {
+  flex: 1 1 0;
+  min-height: 0;
+  height: 50%;
+}
+/* ---------- Aho-Corasicková: strom (obr. 13.2), tabulka stavů, fronta / výskyty ---------- */
+/* koncový stav (Slovo ≠ ∅) = plný kroužek jako na obr. 13.2 */
+.algo-root .swatch.sw-ac-word {
+  background: var(--algo-c-node-border);
+  border-radius: 50%;
+}
+.algo-root .au-node.au-word circle {
+  fill: var(--algo-c-node-border);
+}
+.algo-root .au-node.au-word .au-num {
+  fill: var(--algo-panel);
+  font-weight: 700;
+}
+.algo-root .au-node.au-queue circle {
+  stroke: var(--algo-accent);
+  stroke-dasharray: 3 2;
+  stroke-width: 2;
+}
+.algo-root .au-node.au-pick circle {
+  stroke: var(--algo-accent);
+  stroke-width: 3.5;
+  stroke-dasharray: none;
+}
+.algo-root .au-node.au-cmp circle,
+.algo-root .au-node.au-child circle {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.5;
+  fill: color-mix(in srgb, var(--algo-c-compare) 55%, var(--algo-c-node));
+}
+.algo-root .au-node.au-report circle {
+  stroke: var(--algo-c-sorted);
+  stroke-width: 3.5;
+  fill: color-mix(in srgb, var(--algo-c-sorted) 45%, var(--algo-c-node));
+}
+.algo-root .au-node.au-word.au-cmp .au-num,
+.algo-root .au-node.au-word.au-child .au-num,
+.algo-root .au-node.au-word.au-report .au-num,
+.algo-root .au-node.au-word.au-current .au-num {
+  fill: var(--algo-text);
+}
+/* aktuální stav až po ostatních značkách (přebije výplň koncového stavu) */
+.algo-root .au-node.au-word.au-current circle {
+  stroke: var(--algo-c-active);
+  stroke-width: 3;
+  fill: color-mix(in srgb, var(--algo-c-active) 45%, var(--algo-c-node));
+}
+/* jméno stavu vedle kroužku: podklad v barvě plátna, aby se četlo přes hrany */
+.algo-root .au-tname {
+  font-size: 11px;
+  fill: var(--algo-muted);
+  paint-order: stroke;
+  stroke: var(--algo-panel);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+.algo-root .au-node.au-current .au-tname,
+.algo-root .au-node.au-report .au-tname,
+.algo-root .au-node.au-child .au-tname {
+  fill: var(--algo-text);
+  font-weight: 700;
+}
+/* zvětšení písma stromu AC na vysokém plátně (přebije ho inline styl z AutomatonView) */
+.algo-root .automaton-svg {
+  --algo-au-zoom: 1;
+}
+.algo-root .automaton-svg .au-letter {
+  paint-order: stroke;
+  stroke: var(--algo-panel);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+/* procházená zkratka (hlášení) fialově, nově nastavená zeleně – tečkovaně jako na obrázku */
+.algo-root .au-short.au-hot path {
+  stroke: var(--algo-c-min);
+  stroke-width: 3;
+}
+.algo-root .au-short.au-hot polygon {
+  fill: var(--algo-c-min);
+}
+.algo-root .au-short.au-new path {
+  stroke-width: 3;
+}
+.algo-root .strip-bracket.b-now path {
+  stroke-width: 3.5;
+}
+
+.algo-root .ac-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.algo-root .ac-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+/* tabulka stavů nejvýš ~8 řádků, dál se posouvá uvnitř (AcTable ji drží u aktivního stavu) */
+.algo-root .ac-side {
+  max-height: 10.5rem;
+  overflow: auto;
+}
+.algo-root .ac-table {
+  border-collapse: collapse;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.15;
+  margin: 0;
+}
+.algo-root .ac-table th,
+.algo-root .ac-table td {
+  border: 1px solid var(--algo-border);
+  padding: 0.05rem 0.35rem;
+  text-align: left;
+  white-space: nowrap;
+  transition: background-color var(--algo-step-color-ms, 0ms);
+}
+.algo-root .ac-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--algo-panel-2);
+  color: var(--algo-muted);
+  font-weight: 600;
+}
+.algo-root .ac-table tbody th {
+  color: var(--algo-muted);
+  font-weight: 400;
+  text-align: right;
+}
+.algo-root .ac-table tr.row-pending td {
+  color: var(--algo-muted);
+  font-style: italic;
+}
+/* nový / rozpracovaný řádek na zeleném podkladu: tlumená barva by měla < 4,5 : 1 */
+.algo-root .ac-table tr.row-new td,
+.algo-root .ac-table tr.row-new.row-pending td {
+  color: var(--algo-text);
+  background: color-mix(in srgb, var(--algo-c-sorted) 26%, var(--algo-panel));
+}
+.algo-root .ac-table tr.row-hot td {
+  background: color-mix(in srgb, var(--algo-c-compare) 40%, var(--algo-panel));
+}
+.algo-root .ac-table tr.row-cur td {
+  background: color-mix(in srgb, var(--algo-c-active) 24%, var(--algo-panel));
+  font-weight: 700;
+}
+.algo-root .ac-line {
+  margin: 0.1rem 0 0;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  min-height: 1.5em;
+}
+.algo-root .ac-line-label {
+  font-family: inherit;
+  color: var(--algo-muted);
+}
+.algo-root .ac-chip {
+  display: inline-block;
+  padding: 0 0.3rem;
+  border: 1px solid var(--algo-border);
+  border-radius: 4px;
+  background: var(--algo-panel-2);
+}
+.algo-root .ac-chip.now {
+  border-color: var(--algo-c-sorted);
+  background: color-mix(in srgb, var(--algo-c-sorted) 30%, var(--algo-panel));
+  font-weight: 700;
+}
+.algo-root .ac-empty {
+  color: var(--algo-muted);
+}
+/* desktop na jednu obrazovku: strom | tabulka vedle sebe; tabulka nepřidává výšku (posouvá se
+   uvnitř), takže výšku řádku dává strom a CanvasFit ladí jen vzdálenost hladin */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas > .ac-layout {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+  .algo-root .ac-layout {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  /* strom = obal s SVG přes celou výšku plátna (zmenší se do výšky řádku jako ostatní pohledy,
+     pojistka za CanvasFit); vpravo sloupec tabulka · seno se závorkami · Ohlášeno (NEWMODS-04) */
+  .algo-root .ac-layout > .automaton-view {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+  }
+  .algo-root .ac-layout > .ac-side-col {
+    flex: 0 0 auto;
+    width: min(18rem, 46%);
+    min-height: 0;
+  }
+  .algo-root .ac-side-col > .ac-side {
+    flex: 0 1 auto;
+    min-height: 4rem;
+  }
+  .algo-root .ac-side-col > * {
+    flex: none;
+  }
+  /* ohlášené výskyty se v úzkém sloupci zalamují (žádný vodorovný posuvník) */
+  .algo-root .ac-side-col > .ac-line {
+    white-space: normal;
+    overflow-x: visible;
+    line-height: 1.7;
+  }
+}
+/* náhled na úvodní stránce: strom (vysoký jako obr. 13.2) vlevo, seno s výskyty vpravo */
+.algo-root .thumb-art .ac-thumb {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+.algo-root .thumb-art .ac-thumb > .ac-layout {
+  flex: 0 0 46%;
+  height: 100%;
+  min-width: 0;
+}
+.algo-root .thumb-art .ac-thumb > .ac-layout > .view-wrap {
+  min-height: 0;
+  height: 100%;
+}
+.algo-root .thumb-art .ac-thumb > .strip-view {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 70%;
+}
+/* desktop: pás textu se nezmenšuje do šířky plátna (u dlouhého vstupu by písmo kleslo pod 8 px) –
+   buňka má aspoň STRIP_MIN_CELL a širší pás se posouvá vodorovně (stín u kraje ukáže, že pokračuje) */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas .strip-view.view-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .algo-root .viz-canvas .strip-view.view-wrap > svg {
+    flex: none;
+    max-width: none;
+    align-self: flex-start;
+  }
+}
+/* === /strings === */
+
+/* === circuits === */
+/* hradlové sítě a sčítačka (algos/parallel/Gates*, Adder*, views hradel) */
+/* --- editor (CircuitEditor): lišta, paleta, hlášky --- */
+.algo-root .circuit-editor {
+  min-width: 0;
+}
+/* lišta a paleta v jednom zalamovaném pásu, souhrn vpravo */
+.algo-root .ce-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.6rem;
+  margin-bottom: 0.3rem;
+}
+.algo-root .ce-bar > .ge-toolbar,
+.algo-root .ce-bar > .ce-palette {
+  margin: 0;
+}
+.algo-root .circuit-editor.is-editing .ce-bar button {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.85rem;
+}
+@media (pointer: coarse) {
+  .algo-root .circuit-editor.is-editing .ce-bar button {
+    min-height: 44px;
+  }
+}
+.algo-root .ce-hint {
+  margin-bottom: 0.2rem;
+}
+/* hláška editoru jako překryv dole na plátně (nezabírá místo kresbě; živá oblast je v DOM pořád) */
+.algo-root .ce-message {
+  position: absolute;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  z-index: 2;
+  margin: 0;
+  min-height: 0;
+  pointer-events: none;
+}
+.algo-root .ce-message.shown {
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--algo-panel) 88%, transparent);
+  border: 1px solid var(--algo-border);
+}
+.algo-root .ce-summary {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--algo-muted);
+  white-space: nowrap;
+}
+.algo-root .ce-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding-left: 0.6rem;
+  border-left: 1px solid var(--algo-border);
+}
+.algo-root .ce-tool {
+  min-width: 3rem;
+  font-size: 0.85rem;
+  touch-action: none;
+}
+.algo-root .ce-tool[aria-pressed="true"] {
+  border-color: var(--algo-accent);
+  background: var(--algo-panel-2);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--algo-accent);
+}
+.algo-root .ce-fn select {
+  font-size: 0.85rem;
+}
+.algo-root .ce-canvas {
+  position: relative;
+  min-width: 0;
+}
+/* obal editoru převezme fokus po smazání prvku / kliku do plátna (Ctrl+Z, Delete) */
+.algo-root .circuit-editor:focus {
+  outline: none;
+}
+.algo-root .circuit-editor:focus-visible {
+  outline: 2px solid var(--algo-accent);
+  outline-offset: 2px;
+}
+.algo-root .ce-empty-hint {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  width: min(30rem, 90%);
+  z-index: 1;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
+}
+.algo-root .circuit-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.algo-root .circuit-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+.algo-root .circuit-result .vars {
+  margin: 0;
+}
+/* s tabulkou: šířku sloupce dává tabulka, řádek proměnných se do ní zalomí */
+.algo-root .circuit-layout.with-table .circuit-result .vars {
+  width: 0;
+  min-width: 100%;
+}
+/* --- pravdivostní tabulka --- */
+.algo-root .ctruth {
+  margin-top: 0;
+}
+.algo-root .ctruth table {
+  font-variant-numeric: tabular-nums;
+}
+.algo-root .ctruth th,
+.algo-root .ctruth td {
+  text-align: center;
+  padding-inline: 0.55rem;
+}
+.algo-root .ctruth .ctruth-out {
+  border-left: 2px solid var(--algo-border);
+}
+.algo-root .ctruth td.c1 {
+  color: var(--algo-c-one);
+  font-weight: 700;
+}
+.algo-root .ctruth tr.pickable {
+  cursor: pointer;
+}
+.algo-root .ctruth tr.pickable:hover td {
+  background: var(--algo-panel-2);
+}
+/* tlačítko „použít jako vstup“ v první buňce řádku – vypadá jako číslice, fokus je vidět */
+.algo-root .ctruth .ctruth-use {
+  all: unset;
+  display: inline-block;
+  min-width: 1.4em;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.algo-root .ctruth .ctruth-use:focus-visible {
+  outline: 2px solid var(--algo-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+/* --- kresba (CircuitView) --- */
+.algo-root .circuit-svg {
+  display: block;
+  font-size: 13px;
+}
+.algo-root .circuit-svg.editing {
+  touch-action: none;
+}
+.algo-root .circuit-bg {
+  fill: transparent;
+  pointer-events: all;
+}
+.algo-root .circuit-svg.editing .cnode {
+  cursor: grab;
+}
+.algo-root .circuit-svg.toggling .cnode-in {
+  cursor: pointer;
+}
+.algo-root .cnode:focus {
+  outline: none;
+}
+.algo-root .cnode-hit {
+  fill: transparent;
+  stroke: none;
+}
+.algo-root .cgate-box,
+.algo-root .cpin {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .cgate-sym {
+  font-size: 18px;
+  fill: var(--algo-text);
+  pointer-events: none;
+}
+.algo-root .cname {
+  font-size: 10px;
+  fill: var(--algo-muted);
+  pointer-events: none;
+}
+.algo-root .csub {
+  font-size: 0.75em;
+}
+.algo-root .clabel {
+  font-size: 15px;
+  font-style: italic;
+  fill: var(--algo-text);
+}
+.algo-root .cval,
+.algo-root .cpin-val {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--algo-text);
+  pointer-events: none;
+}
+.algo-root .cnode.v1 .cval,
+.algo-root .cnode.v1 .cpin-val {
+  fill: var(--algo-c-one);
+}
+.algo-root .cnode-in.v1 .cpin {
+  fill: color-mix(in srgb, var(--algo-c-one) 20%, var(--algo-c-node));
+  stroke: var(--algo-c-one);
+}
+.algo-root .cnode.active .cgate-box,
+.algo-root .cnode.active .cpin {
+  fill: color-mix(in srgb, var(--algo-c-compare) 40%, var(--algo-c-node));
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.5;
+}
+/* na podbarveném aktivním hradle nese hodnotu číslice – barva textu (kontrast v obou tématech) */
+.algo-root .cnode.active.v1 .cval,
+.algo-root .cnode.active.v1 .cpin-val {
+  fill: var(--algo-text);
+}
+.algo-root .cnode-out.done .cpin {
+  stroke: var(--algo-c-sorted);
+  stroke-width: 3;
+}
+.algo-root .cnode.selected .cgate-box,
+.algo-root .cnode.selected .cpin {
+  stroke: var(--algo-accent);
+  stroke-width: 3;
+}
+.algo-root .cnode.source .cgate-box,
+.algo-root .cnode.source .cpin {
+  stroke: var(--algo-accent);
+  stroke-dasharray: 4 3;
+  stroke-width: 3;
+}
+.algo-root .cnode:focus-visible .cgate-box,
+.algo-root .cnode:focus-visible .cpin {
+  stroke: var(--algo-accent);
+  stroke-width: 4;
+}
+/* vodiče: 1 = silná modrá, 0 = tenká šedá, neznámá = čárkovaná (tvar nese význam, ne jen barva) */
+.algo-root .cwire-line {
+  fill: none;
+  stroke-linejoin: round;
+  transition: stroke var(--algo-step-color-ms);
+}
+.algo-root .cwire.we .cwire-line {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.6;
+}
+.algo-root .cwire.w1 .cwire-line {
+  stroke: var(--algo-c-one);
+  stroke-width: 3;
+}
+.algo-root .cwire.w0 .cwire-line {
+  stroke: var(--algo-c-plain);
+  stroke-width: 1.6;
+}
+.algo-root .cwire.wu .cwire-line {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.4;
+  stroke-dasharray: 5 4;
+}
+.algo-root .cwire.selected .cwire-line {
+  stroke: var(--algo-accent);
+  stroke-width: 3.5;
+}
+.algo-root .cmarker.we path,
+.algo-root .cmarker.wu path {
+  fill: var(--algo-c-edge);
+}
+.algo-root .cmarker.w1 path {
+  fill: var(--algo-c-one);
+}
+.algo-root .cmarker.w0 path {
+  fill: var(--algo-c-plain);
+}
+.algo-root .cjunction {
+  fill: var(--algo-c-edge);
+}
+.algo-root .cjunction.w1 {
+  fill: var(--algo-c-one);
+}
+.algo-root .cjunction.w0 {
+  fill: var(--algo-c-plain);
+}
+.algo-root .cwire-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 14;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+.algo-root .cwire-hit:focus {
+  outline: none;
+}
+.algo-root .cwire-hit:focus-visible {
+  stroke: color-mix(in srgb, var(--algo-accent) 35%, transparent);
+}
+.algo-root .cwire-preview {
+  stroke: var(--algo-accent);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  pointer-events: none;
+}
+.algo-root .cwire-preview.ok {
+  stroke-dasharray: none;
+}
+.algo-root .cport-in {
+  fill: var(--algo-c-node-border);
+  pointer-events: none;
+}
+.algo-root .cport-in.free {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-danger);
+  stroke-width: 1.5;
+}
+.algo-root .cport-in.hover {
+  fill: var(--algo-accent);
+  stroke: var(--algo-accent);
+}
+.algo-root .cport-out {
+  fill: var(--algo-accent);
+  fill-opacity: 0.85;
+  stroke: var(--algo-c-node);
+  stroke-width: 1.5;
+  cursor: crosshair;
+}
+/* vrstvy S₀ … Sₖ (tečkovaně jako obr. 15.1), aktuální vrstva podbarvená */
+.algo-root .clayer-sep {
+  stroke: var(--algo-muted);
+  stroke-width: 1.2;
+  stroke-dasharray: 1.5 3.5;
+}
+.algo-root .clayer-hot {
+  fill: color-mix(in srgb, var(--algo-c-compare) 16%, transparent);
+  transition:
+    x var(--algo-step-ms),
+    y var(--algo-step-ms);
+}
+.algo-root .clayer-label,
+.algo-root .clayer-tag {
+  font-style: italic;
+  fill: var(--algo-muted);
+}
+.algo-root .clayer-label {
+  font-size: 14px;
+}
+.algo-root .clayer-tag {
+  font-size: 10px;
+}
+.algo-root .clayer-label.hot,
+.algo-root .clayer-tag.hot {
+  font-weight: 700;
+  fill: var(--algo-text);
+}
+/* desktop na jednu obrazovku: kresba se zmenší do výšky plátna, tabulka vedle ní */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas > .circuit-layout,
+  .algo-root .circuit-layout > .circuit-editor,
+  .algo-root .circuit-editor > .ce-canvas {
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root .circuit-editor > * {
+    flex: none;
+  }
+  .algo-root .circuit-editor > .ce-canvas {
+    flex: 0 1 auto;
+  }
+  .algo-root .viz-canvas > .circuit-layout.with-table {
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .algo-root .circuit-layout.with-table > .circuit-editor {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .algo-root .circuit-layout > .circuit-result {
+    flex: none;
+    min-height: 0;
+    max-width: 40%;
+    overflow-y: auto;
+  }
+  /* rozbalený „Import / export textem“ nezmenší kresbu: panel textu je pravý sloupec editoru,
+     textarea nejvýš ~6 řádků s vlastním posuvníkem, nápověda kreslení se mezitím skryje (NEWMODS-02) */
+  .algo-root .circuit-editor:has(> .ce-text[open]),
+  .algo-root .graph-editor:has(> .ge-text[open]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 16rem;
+    grid-auto-rows: auto;
+    column-gap: 0.75rem;
+    align-content: start;
+  }
+  .algo-root .circuit-editor:has(> .ce-text[open]) > *,
+  .algo-root .graph-editor:has(> .ge-text[open]) > * {
+    grid-column: 1;
+    min-height: 0;
+  }
+  .algo-root .circuit-editor:has(> .ce-text[open]) > .ce-text,
+  .algo-root .graph-editor:has(> .ge-text[open]) > .ge-text {
+    grid-column: 2;
+    grid-row: 1 / span 6;
+    margin-top: 0;
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+  }
+  .algo-root .circuit-editor:has(> .ce-text[open]) > .ce-hint {
+    display: none;
+  }
+  .algo-root .ge-text[open] textarea {
+    max-height: 9.5em;
+    overflow-y: auto;
+  }
+  /* hradla: tabulka výsledku vedle by s panelem textu kresbu zúžila – po dobu úprav textem ustoupí
+     (běh se po změně vstupu stejně počítá znovu). Graf sloupec výsledku nechává (G-02): zásobník,
+     fronta i panel editoru zůstanou vidět, panel textu je užší (níže). */
+  .algo-root .circuit-layout:has(.ce-text[open]) > .circuit-result {
+    display: none;
+  }
+}
+/* --- sčítačka (AdderPage, algos/parallel/adderViews.tsx) --- */
+.algo-root .adder-depth {
+  margin: 0 0 0.3rem;
+}
+.algo-root .adder-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 0;
+}
+.algo-root .adder-par-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem 1.2rem;
+}
+.algo-root .adder-par {
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+/* tabulka průběhu paralelního sčítání jako obr. 15.4 */
+.algo-root .adder-table {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+  line-height: 1.15;
+}
+.algo-root .adder-table td,
+.algo-root .adder-table th {
+  padding: 0.1rem 0;
+  text-align: center;
+  transition: background-color var(--algo-step-color-ms);
+}
+.algo-root .adder-table .ad-col {
+  min-width: 2.1em;
+  height: 1.45em;
+  border: 1px solid var(--algo-border);
+}
+.algo-root .adder-table.ad-wide .ad-col {
+  min-width: 1.7em;
+  font-size: 0.93em;
+}
+.algo-root .adder-table tr.ad-pos th.ad-col {
+  font-weight: 400;
+  color: var(--algo-muted);
+}
+.algo-root .adder-table .ad-edge {
+  min-width: 1.2em;
+  padding: 0 0.2rem;
+  border: 0;
+  color: var(--algo-muted);
+}
+.algo-root .adder-table .ad-group {
+  padding-left: 0.6rem;
+  border: 0;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 400;
+  color: var(--algo-muted);
+  white-space: nowrap;
+}
+/* tečkované čáry mezi skupinami přes celou šířku (jako v knize) */
+.algo-root .adder-table tr.ad-sep > .ad-edge,
+.algo-root .adder-table tr.ad-sep > .ad-group {
+  border-top: 1px dotted var(--algo-muted);
+}
+/* přenosy: svislé čáry tečkovaně, hodnota uprostřed nad hranicí sloupců */
+.algo-root .adder-table tr.ad-carry .ad-col {
+  border-left-style: dotted;
+  border-right-style: dotted;
+}
+.algo-root .adder-table .ad-cedge {
+  font-weight: 600;
+  color: var(--algo-text);
+}
+/* chování bloků: glyf nese význam (0 a 1 tučně, < normálně), barva jen jemně */
+.algo-root .adder-table .ad-b0 {
+  background: color-mix(in srgb, var(--algo-c-plain) 14%, var(--algo-panel));
+}
+.algo-root .adder-table .ad-b1 {
+  background: color-mix(in srgb, var(--algo-c-pivot) 18%, var(--algo-panel));
+}
+.algo-root .adder-table .ad-bc {
+  background: color-mix(in srgb, var(--algo-c-bound) 14%, var(--algo-panel));
+}
+.algo-root .adder-table td.ad-new,
+.algo-root .adder-compose td.ad-new {
+  background: color-mix(in srgb, var(--algo-c-compare) 45%, var(--algo-panel));
+}
+.algo-root .adder-table td.ad-used,
+.algo-root .adder-table td.ad-src {
+  outline: 2px dashed var(--algo-c-current);
+  outline-offset: -3px;
+}
+.algo-root .adder-table .ad-one {
+  color: var(--algo-c-one);
+  font-weight: 700;
+}
+.algo-root .adder-table td.ad-done {
+  background: color-mix(in srgb, var(--algo-c-sorted) 26%, var(--algo-panel));
+  font-weight: 600;
+}
+.algo-root .adder-table .ad-zn.muted {
+  font-weight: 400;
+}
+.algo-root .adder-table .ad-name {
+  font-style: italic;
+}
+.algo-root .adder-table .ad-pq {
+  display: block;
+  font-size: 0.62rem;
+  line-height: 1;
+  color: var(--algo-muted);
+}
+.algo-root .adder-table td.ad-toggle {
+  cursor: pointer;
+}
+.algo-root .adder-table td.ad-toggle:hover {
+  background: var(--algo-panel-2);
+}
+/* tabulka skládání H ∘ D (s. 388) */
+.algo-root .adder-compose {
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.algo-root .adder-compose caption {
+  color: var(--algo-muted);
+  margin-bottom: 0.1rem;
+}
+.algo-root .adder-compose th,
+.algo-root .adder-compose td {
+  min-width: 1.7em;
+  padding: 0.08rem 0.25rem;
+  text-align: center;
+  border: 1px solid var(--algo-border);
+  transition: background-color var(--algo-step-color-ms);
+}
+.algo-root .adder-compose th {
+  background: var(--algo-panel-2);
+  font-weight: 400;
+}
+/* řetěz krabiček Σ školního sčítání (obr. 15.3) */
+.algo-root .adder-chain-svg {
+  /* šířka viewBoxu (přebije ji inline styl pohledu) */
+  --algo-ad-w: 600;
+}
+.algo-root .adder-chain-svg text {
+  font-size: 11px;
+  fill: var(--algo-text);
+}
+.algo-root .adder-chain-svg .ad-pin-label,
+.algo-root .adder-chain-svg .ad-clabel {
+  fill: var(--algo-muted);
+}
+.algo-root .adder-chain-svg .ad-box rect {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.2;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .adder-chain-svg .ad-box text {
+  font-size: 16px;
+}
+.algo-root .adder-chain-svg .ad-box.done rect {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 24%, var(--algo-c-node));
+}
+.algo-root .adder-chain-svg .ad-box.hot rect {
+  fill: color-mix(in srgb, var(--algo-c-current) 40%, var(--algo-c-node));
+  stroke: var(--algo-c-current);
+  stroke-width: 2.4;
+  stroke-dasharray: 5 3;
+}
+.algo-root .adder-chain-svg .ad-wire,
+.algo-root .adder-chain-svg .ad-carry-line {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.3;
+  transition: stroke var(--algo-step-color-ms);
+}
+.algo-root .adder-chain-svg .ad-carry-line.ad-unknown {
+  stroke-dasharray: 4 3;
+}
+.algo-root .adder-chain-svg .ad-carry-line.ad-one {
+  stroke: var(--algo-c-one);
+  stroke-width: 2.6;
+}
+.algo-root .adder-chain-svg .ad-cbit {
+  font-weight: 600;
+}
+.algo-root .adder-chain-svg .ad-cbit.ad-one,
+.algo-root .adder-chain-svg .ad-pin.ad-one .ad-pin-bit {
+  fill: var(--algo-c-one);
+  font-weight: 700;
+}
+.algo-root .adder-chain-svg .ad-arrowhead {
+  fill: var(--algo-c-edge);
+}
+.algo-root .adder-chain-svg .ad-arrowhead.ad-one {
+  fill: var(--algo-c-one);
+}
+.algo-root .adder-chain-svg .ad-pin circle {
+  fill: var(--algo-panel);
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.2;
+  transition: fill var(--algo-step-color-ms);
+}
+.algo-root .adder-chain-svg .ad-zpin.ad-done circle {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 30%, var(--algo-panel));
+}
+.algo-root .adder-chain-svg .ad-toggle {
+  cursor: pointer;
+}
+.algo-root .adder-chain-svg .ad-toggle:hover circle,
+.algo-root .adder-chain-svg .ad-toggle:focus-visible circle {
+  stroke: var(--algo-accent);
+  stroke-width: 2.2;
+}
+/* na desktopu na jednu obrazovku kresba roste s výškou okna (na velkém monitoru nezůstane drobná);
+   řetěz Σ má šířku podle svého viewBoxu (--algo-ad-w) ve stejném měřítku jako písmo tabulky */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .adder-table {
+    font-size: clamp(0.9rem, 1.85vh + 0.1rem, 1.3rem);
+  }
+  .algo-root .adder-compose {
+    font-size: clamp(0.82rem, 1.6vh + 0.05rem, 1.15rem);
+  }
+  .algo-root .viz-canvas .adder-chain.view-wrap > svg.adder-chain-svg {
+    width: calc(
+      var(--algo-ad-w) * clamp(0.9rem, 1.85vh + 0.1rem, 1.3rem) / 14.4
+    );
+    height: auto;
+  }
+}
+/* telefon: osm sloupců i s popisky skupin do šířky */
+@media (max-width: 600px) {
+  .algo-root .adder-table {
+    font-size: 0.8rem;
+  }
+  .algo-root .adder-table .ad-group {
+    padding-left: 0.3rem;
+  }
+}
+/* === /circuits === */
+
+/* === sortnet === */
+/* třídicí sítě (algos/parallel/SortNet*, views/ComparatorView): jako obr. 15.6–15.10 – černé šipky
+   komparátorů na šedých vodičích, žetony s hodnotami, bloky Sₙ / Mₙ průhledně */
+.algo-root .sortnet-view {
+  overflow-x: auto;
+}
+.algo-root .sortnet-svg {
+  display: block;
+  margin: 0 auto;
+}
+.algo-root .sortnet-svg text {
+  font-size: 12px;
+  fill: var(--algo-text);
+}
+.algo-root .sn-wire {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.5;
+}
+.algo-root .sortnet-svg .sn-wire-label {
+  fill: var(--algo-muted);
+  font-style: italic;
+  font-size: 13px;
+}
+.algo-root .sn-block {
+  fill: color-mix(in srgb, var(--algo-c-bound) 9%, transparent);
+  stroke: color-mix(in srgb, var(--algo-c-bound) 60%, transparent);
+  stroke-width: 1;
+}
+.algo-root .sortnet-svg .sn-block-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--algo-c-bound-text);
+  paint-order: stroke;
+  stroke: var(--algo-panel);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+.algo-root .sn-band {
+  fill: color-mix(in srgb, var(--algo-c-compare) 16%, transparent);
+}
+.algo-root .sn-pass-sep {
+  stroke: var(--algo-muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 0.5 4;
+  stroke-linecap: round;
+}
+.algo-root .sn-comp-hit {
+  stroke: transparent;
+  stroke-width: 12;
+}
+.algo-root .sn-comp.pickable {
+  cursor: pointer;
+}
+.algo-root .sn-comp:focus {
+  outline: none;
+}
+.algo-root .sn-comp-line {
+  stroke: var(--algo-text);
+  stroke-width: 1.6;
+  transition:
+    stroke var(--algo-step-color-ms) ease,
+    stroke-width var(--algo-step-color-ms) ease;
+}
+.algo-root .sn-arrow.plain {
+  fill: var(--algo-text);
+}
+.algo-root .sn-arrow.keep {
+  fill: var(--algo-c-compare-line);
+}
+.algo-root .sn-arrow.swap {
+  fill: var(--algo-c-swap);
+}
+.algo-root .sn-comp.future {
+  opacity: 0.55;
+}
+.algo-root .sn-comp.active .sn-comp-line {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 3;
+}
+.algo-root .sn-comp.active.swap .sn-comp-line {
+  stroke: var(--algo-c-swap);
+}
+.algo-root .sn-comp.removed .sn-comp-line {
+  stroke: var(--algo-c-edge);
+  stroke-dasharray: 4 3;
+}
+.algo-root .sn-comp:hover .sn-comp-line,
+.algo-root .sn-comp:focus-visible .sn-comp-line {
+  stroke: var(--algo-accent);
+  stroke-width: 3;
+}
+/* fokus z klávesnice: plná viditelnost (i budoucí komparátor) a halo kolem úchopu – hover je jen čára */
+.algo-root .sn-comp:focus-visible {
+  opacity: 1;
+}
+.algo-root .sn-comp:focus-visible .sn-comp-hit {
+  stroke: color-mix(in srgb, var(--algo-accent) 28%, transparent);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+.algo-root .sortnet-svg .sn-comp-glyph {
+  fill: var(--algo-c-swap);
+  font-size: 11px;
+  font-weight: 700;
+}
+.algo-root .sortnet-svg .sn-past {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .sn-token circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms) ease,
+    stroke var(--algo-step-color-ms) ease;
+}
+.algo-root .sortnet-svg .sn-token text {
+  font-weight: 700;
+  pointer-events: none;
+}
+.algo-root .sn-token.moved circle {
+  stroke: var(--algo-c-swap);
+  stroke-width: 2.5;
+}
+.algo-root .sn-token.z0 circle {
+  fill: color-mix(in srgb, var(--algo-c-plain) 45%, var(--algo-c-node));
+}
+.algo-root .sn-token.z1 circle {
+  fill: var(--algo-c-active);
+}
+.algo-root .sortnet-svg .sn-token.z1 text {
+  fill: #fff;
+}
+.algo-root .sn-token.hora circle {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 3;
+}
+.algo-root .sn-token.udoli circle {
+  stroke: var(--algo-c-bound);
+  stroke-width: 3;
+}
+.algo-root .sn-token.sorted circle {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 28%, var(--algo-c-node));
+  stroke: var(--algo-c-sorted);
+  stroke-width: 2.5;
+}
+.algo-root .sn-token.sorted.z1 circle {
+  fill: var(--algo-c-active);
+}
+.algo-root .sn-input {
+  fill: transparent;
+  cursor: pointer;
+}
+.algo-root .sn-input:focus {
+  outline: none;
+}
+.algo-root .sn-input:hover,
+.algo-root .sn-input:focus-visible {
+  stroke: var(--algo-accent);
+  stroke-width: 2;
+}
+/* výsledek „Ověřit 0-1 principem“ pod kresbou: pruh prošlých vstupů a věta */
+.algo-root .sn-check {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.3rem 0 0;
+  padding: 0.3rem 0.6rem;
+  border-left: 4px solid var(--algo-c-sorted);
+  background: var(--algo-panel-2);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.algo-root .sn-check.fail {
+  border-left-color: var(--algo-danger);
+}
+.algo-root .sn-check meter {
+  flex: 0 0 7rem;
+  height: 0.9rem;
+}
+/* === /sortnet === */
+
+/* === fourier === */
+/* FFT a motýlková síť (algos/fourier/, views kružnice a motýlků) */
+
+/* #/fft/fft: strom volání nad tabulkou vlevo, kružnice (+ proměnné) vpravo přes obě řady (na nízké
+   obrazovce se tak vejde i s rozbaleným popisem); kroky NásobeníPolynomů: kružnice | tabulka po řádcích j */
+.algo-root .fft-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "tree side"
+    "table side";
+  gap: 0.35rem 1rem;
+  align-items: start;
+}
+.algo-root .fft-layout.is-mul {
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "side table";
+}
+.algo-root .fft-tree {
+  grid-area: tree;
+  min-width: 0;
+}
+.algo-root .fft-side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  /* šířku (= kružnice) dává stránka inline – proměnné se pod kružnicí zalomí */
+}
+.algo-root .fft-side .vars {
+  justify-content: center;
+  margin: 0;
+}
+.algo-root .fft-table-col {
+  grid-area: table;
+  min-width: 0;
+}
+.algo-root .fft-crumb {
+  margin: 0 0 0.15rem;
+  font-size: 0.82rem;
+  color: var(--algo-muted);
+}
+
+/* strom volání: sudé indexy (→ s) podtržené tyrkysově, liché (→ ℓ) oranžově */
+.algo-root .mtree-node .key-even > text {
+  fill: var(--algo-c-bound-text);
+  text-decoration: underline;
+}
+.algo-root .mtree-node .key-odd > text {
+  fill: var(--algo-c-pivot-text);
+}
+.algo-root .mtree-node.fft-pending > rect {
+  stroke-dasharray: 4 3;
+  stroke: var(--algo-c-plain);
+}
+.algo-root .mtree-node.fft-pending text {
+  fill: var(--algo-muted);
+  font-weight: 400;
+}
+.algo-root .mtree-node.fft-waiting > rect {
+  fill: var(--algo-c-visited-fill);
+}
+.algo-root .mtree-edge.fft-edge-pending {
+  stroke-dasharray: 4 3;
+  stroke: var(--algo-c-plain);
+}
+
+.algo-root .fft-calltree .mtree-node text {
+  font-size: 12px;
+}
+
+/* tabulka koeficienty → hodnoty (řádky p, s, ℓ, ω^j, y; u násobení P, Q, P̂, Q̂, R̂, R) */
+.algo-root .fft-table-wrap {
+  margin-top: 0;
+}
+.algo-root .fft-table-title {
+  margin: 0 0 0.15rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.algo-root .fft-table th,
+.algo-root .fft-table td {
+  padding: 0.08rem 0.4rem;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-align: right;
+}
+.algo-root .fft-table th[scope="row"] {
+  text-align: left;
+}
+.algo-root .fft-table td.fft-even:not(.cell-active):not(.cell-hot) {
+  background: color-mix(in srgb, var(--algo-c-bound) 16%, var(--algo-panel));
+}
+.algo-root .fft-table td.fft-odd:not(.cell-active):not(.cell-hot) {
+  background: color-mix(in srgb, var(--algo-c-pivot) 16%, var(--algo-panel));
+}
+.algo-root .fft-table td.fft-pad {
+  color: var(--algo-muted);
+  border-style: dashed;
+}
+
+/* jednotková kružnice (obr. 17.1, 17.2) */
+.algo-root .uc-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.algo-root .uc-axis {
+  stroke: var(--algo-border);
+  stroke-dasharray: 4 3;
+}
+.algo-root .uc-circle {
+  fill: none;
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.5;
+}
+.algo-root .uc-axis-label text {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .uc-angle path,
+.algo-root .uc-angle line {
+  fill: none;
+  stroke: var(--algo-muted);
+  stroke-width: 1.2;
+}
+.algo-root .uc-angle text {
+  fill: var(--algo-muted);
+  font-size: 10px;
+}
+.algo-root .uc-arrow-head {
+  fill: var(--algo-muted);
+}
+.algo-root .uc-point circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .uc-point text {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .uc-point.uc-on circle {
+  fill: var(--algo-c-active);
+  stroke: var(--algo-c-active);
+}
+.algo-root .uc-point.uc-on text {
+  fill: var(--algo-text);
+  font-weight: 600;
+}
+.algo-root .uc-point.uc-pair circle,
+.algo-root .uc-point.uc-hot circle {
+  fill: var(--algo-c-compare);
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.5;
+}
+.algo-root .uc-pair-line {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+
+@media (max-width: 700px) {
+  .algo-root .fft-layout,
+  .algo-root .fft-layout.is-mul {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "side"
+      "tree"
+      "table";
+  }
+  .algo-root .fft-side {
+    justify-self: center;
+  }
+}
+
+/* #/fft/net: řádek proměnných a motýlková síť (obr. 17.4) vlevo, kružnice s mocninami ω vpravo */
+.algo-root .fftnet-layout {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.algo-root .fftnet-net {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.algo-root .fftnet-net .vars {
+  margin: 0 0 0.15rem;
+  min-height: 1.4rem;
+}
+.algo-root .fftnet-side {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+.algo-root .fftnet-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--algo-muted);
+  text-align: center;
+}
+.algo-root .bn-wrap {
+  max-width: 100%;
+}
+.algo-root .bn-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.algo-root .bn-band {
+  fill: var(--algo-c-visited-fill);
+  transition: x var(--algo-step-ms) ease;
+}
+.algo-root .bn-block {
+  fill: none;
+  stroke: var(--algo-c-active);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+  transition:
+    y var(--algo-step-ms) ease,
+    height var(--algo-step-ms) ease;
+}
+.algo-root .bn-wire {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.4;
+  transition: stroke var(--algo-step-color-ms);
+}
+.algo-root .bn-wire.is-pending {
+  stroke: var(--algo-c-plain);
+  stroke-dasharray: 4 3;
+}
+.algo-root .bn-link {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.2;
+  transition:
+    stroke var(--algo-step-color-ms),
+    stroke-width var(--algo-step-color-ms);
+}
+.algo-root .bn-link.is-hot {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.6;
+}
+.algo-root .bn-dot {
+  fill: var(--algo-text);
+}
+.algo-root .bn-gate circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.4;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .bn-gate text {
+  fill: var(--algo-text);
+  font-size: 10px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.algo-root .bn-gate.is-done circle {
+  stroke: var(--algo-c-sorted);
+}
+.algo-root .bn-gate.is-hot circle {
+  fill: var(--algo-c-compare);
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.4;
+}
+.algo-root .bn-gate.is-hot text {
+  fill: #1a1a1a;
+}
+.algo-root .bn-bits {
+  fill: var(--algo-muted);
+  font-size: 9px;
+  font-family: ui-monospace, Consolas, monospace;
+}
+.algo-root .bn-val {
+  fill: var(--algo-text);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  transition: fill var(--algo-step-color-ms);
+}
+.algo-root .viz-canvas .bn-val {
+  animation: algo-enter var(--algo-step-ms) ease-out backwards;
+}
+.algo-root .bn-val.is-new {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 70%, var(--algo-text));
+  font-weight: 700;
+}
+.algo-root .bn-in,
+.algo-root .bn-out {
+  fill: var(--algo-text);
+  font-size: 13px;
+  font-style: italic;
+}
+@media (max-width: 700px) {
+  .algo-root .fftnet-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* klik / Enter na volání ve stromu vyplní FFT(p) jeho koeficienty */
+.algo-root .fft-calltree .mtree-node.pickable {
+  cursor: pointer;
+}
+.algo-root .fft-calltree .mtree-node.pickable:focus {
+  outline: none;
+}
+.algo-root .fft-calltree .mtree-node.pickable:hover > rect,
+.algo-root .fft-calltree .mtree-node.pickable:focus-visible > rect {
+  stroke: var(--algo-accent);
+  stroke-width: 3;
+}
+/* === /fourier === */
+
+/* ==========================================================================
+   ODDÍLY STOP FÁZE 4 (8. 11. 2026) – každá stopa píše jen mezi své dva komentáře
+   (pravidla pod .algo-root, proměnné jen --algo-*, barvy přes proměnné tématu – žádné hex
+   ve sdílených kresbách); oddíly hlídá core/cssSections.test.ts.
+   ========================================================================== */
+
+/* === flows === */
+/* Fordův–Fulkersonův, Dinicův a Goldbergův algoritmus (algos/flows/) – stopa flows */
+/* rozložení: síť f/c | druhá kresba (síť rezerv, vrstevnatá R, výšky) vedle sebe, na úzkém plátně pod sebou,
+   nad kresbou malý titulek. „Upravit graf“ rozložení nemění – druhá kresba zůstane (zrušené UX-02) a nápověda
+   editoru je v bočním sloupci nebo pod kresbami, ne jako třetí sloupec (F-03) */
+.algo-root .flow-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  align-items: flex-start;
+}
+.algo-root .flow-panel {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+.algo-root .flow-panel[hidden] {
+  display: none;
+}
+.algo-root .flow-panel-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--algo-muted);
+}
+.algo-root .flow-panel-title > span {
+  flex: none;
+}
+/* náhradní zdroj / stok (F-09): poznámka na řádku titulku – výšku nepřidá, dlouhá se zkrátí (celá v title) */
+.algo-root .flow-panel-title > .flow-panel-note {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+  color: var(--algo-c-pivot-text);
+}
+/* neplatná síť (prázdná, z = s…, F-09): nápověda místo druhé kresby, panel zůstane */
+.algo-root .flow-panel-hint {
+  margin: 0.4rem 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px dashed var(--algo-border);
+  border-radius: 6px;
+}
+/* „Upravit síť“ u samotné druhé kresby (Kresba = jen rezervy / výšky): na řádku nadpisu, výšku nepřidá;
+   na telefonu ho posun fokusem nezasune pod hlavičku webu a horní lištu (F-12) */
+.algo-root .flow-edit-net {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  padding: 0 0.45rem;
+  scroll-margin-top: calc(3.5rem + var(--algo-site-header-space, 0px));
+}
+/* nápověda a hláška editoru (boční sloupec nebo pod kresbami); přepínače orientace a ohodnocení jsou
+   u sítě zamčené – nezobrazují se */
+.algo-root .flow-edit-help {
+  margin: 0.3rem 0 0.5rem;
+}
+.algo-root .flow-edit-help .ge-panel > .ge-toolbar {
+  display: none;
+}
+.algo-root .flow-edit-help .hint {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+}
+/* Import / export textem pod sítí: nízký řádek – kresba sítě má na výšku víc místa (F-05) */
+.algo-root .flow-panel .ge-text {
+  margin-top: 0.15rem;
+}
+.algo-root .flow-panel .ge-text > summary {
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+.algo-root .flow-options {
+  border: 0;
+  padding: 0;
+  margin: 0 0 0.3rem;
+}
+.algo-root .flow-options legend {
+  float: left;
+  padding: 0;
+  margin-right: 0.4rem;
+}
+.algo-root .flow-options label {
+  margin-right: 0.6rem;
+  white-space: nowrap;
+}
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas > .flow-layout {
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+  .algo-root .flow-panel {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root .flow-panel > * {
+    flex: none;
+  }
+  .algo-root .flow-panel > .graph-editor,
+  .algo-root .flow-panel > .view-wrap {
+    flex: 0 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root .flow-panel .graph-editor > * {
+    flex: none;
+  }
+  .algo-root .flow-panel .graph-editor > .view-wrap {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+  /* široké kresby pod sebou: celá šířka, bez ořezu (F-04). Výšku si kresby dělí rovným dílem až po
+     odečtení lišt (síť: titulek, lišta editoru, import; druhá: titulek, proměnné); síť nanejvýš podle obsahu
+     (lišta + kresba) – nízká široká síť nechá zbytek druhé kresbě */
+  .algo-root .flow-layout.flow-stack {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .algo-root .flow-stack > .flow-panel-net {
+    flex: 1 1 6.6rem;
+    max-height: max-content;
+  }
+  .algo-root .flow-stack > .flow-panel-res {
+    flex: 1 1 3.2rem;
+  }
+  /* pod sebou je výška vzácná (obr. 14.7 má 4 řádky v každé kresbě): lišta editoru sítě a proměnné kroku
+     jdou na řádek titulku (vpravo, kompaktní), kresby dostanou o lištu a řádek proměnných víc (X-01) */
+  .algo-root .flow-stack > .flow-panel {
+    position: relative;
+  }
+  .algo-root .flow-stack > .flow-panel > .flow-panel-title {
+    padding-right: 15.5rem;
+    min-height: 1.45rem;
+  }
+  .algo-root .flow-stack > .flow-panel-net .graph-editor > .ge-toolbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    gap: 0.3rem;
+  }
+  .algo-root
+    .flow-stack
+    > .flow-panel-net
+    .graph-editor
+    > .ge-toolbar
+    > button {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    padding: 0.1rem 0.5rem;
+  }
+  .algo-root
+    .flow-stack
+    > .flow-panel-net
+    .graph-editor
+    > .ge-toolbar
+    > .ge-icon {
+    min-width: 1.9rem;
+  }
+  .algo-root .flow-stack > .flow-panel-res > .vars {
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 15rem;
+    margin: 0;
+  }
+  /* Goldberg, síť párování vedle sebe: kresba výšek má sloupec na každý vrchol (12 u obr. 14.6), síť jen
+     čtyři sloupce z | L | R | s – výšky dostanou 3/5 šířky a vejdou se bez posunu (X-02); lišta editoru
+     v užším panelu sítě kompaktní (v editoru se nezalomí ani nepřeteče do kresby výšek) */
+  .algo-root .gb-layout.flow-match:not(.flow-stack) > .flow-panel-net {
+    flex: 40 1 0;
+  }
+  .algo-root .gb-layout.flow-match:not(.flow-stack) > .flow-panel-res {
+    flex: 60 1 0;
+  }
+  .algo-root
+    .gb-layout.flow-match:not(.flow-stack)
+    > .flow-panel-net
+    .graph-editor
+    > .ge-toolbar
+    > button {
+    /* stejná výška v běhu i v editoru (ikony ↶ a koš jsou jinak vyšší) – kresba neposkočí */
+    height: 1.75rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    padding: 0 0.45rem;
+  }
+  .algo-root
+    .gb-layout.flow-match:not(.flow-stack)
+    > .flow-panel-net
+    .graph-editor
+    > .ge-toolbar
+    > .ge-icon {
+    min-width: 1.9rem;
+  }
+  /* rozbalený Import / export textem vedle sebe (půl šířky): pod kresbou s vlastní výškou a posunem, druhá
+     kresba zůstane (F-07); ve stohu (celá šířka) je vpravo vedle kresby jako u grafů */
+  .algo-root
+    .flow-layout:not(.flow-stack)
+    .flow-panel
+    .graph-editor:has(> .ge-text[open]) {
+    display: flex;
+    flex-direction: column;
+  }
+  .algo-root
+    .flow-layout:not(.flow-stack)
+    .flow-panel
+    .graph-editor:has(> .ge-text[open])
+    > .ge-text {
+    flex: none;
+    max-height: 7.5rem;
+    margin-top: 0.15rem;
+    overflow-y: auto;
+  }
+  /* pole a tlačítka vedle sebe – panel textu je nízký (kresba sítě si nechá ~90 % výšky; ve stohu je
+     sloupec textu vpravo nižší než kresba) */
+  .algo-root .flow-layout .ge-text[open] .ge-text-label {
+    display: inline-flex;
+    width: calc(100% - 6.6rem);
+    margin-top: 0.15rem;
+    vertical-align: bottom;
+    font-size: 0.75rem;
+  }
+  .algo-root .flow-layout .ge-text[open] .ge-text-buttons {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 6.2rem;
+    margin: 0 0 0 0.4rem;
+    vertical-align: bottom;
+  }
+  .algo-root .flow-layout .ge-text[open] textarea {
+    max-height: 3.9em;
+  }
+}
+
+/* síť: tok / kapacita */
+.algo-root .graph-edge.e-flow path {
+  stroke: var(--algo-c-active);
+  stroke-width: 2.6;
+}
+.algo-root .graph-arrow.e-flow {
+  fill: var(--algo-c-active);
+}
+.algo-root .graph-edge.e-sat path {
+  stroke: var(--algo-c-min);
+  stroke-width: 3.2;
+}
+.algo-root .graph-arrow.e-sat {
+  fill: var(--algo-c-min);
+}
+.algo-root .graph-edge.e-path path {
+  stroke: var(--algo-c-current);
+  stroke-width: 4;
+}
+.algo-root .graph-arrow.e-path {
+  fill: var(--algo-c-current);
+}
+.algo-root .graph-edge.e-path-back path {
+  stroke: var(--algo-c-current);
+  stroke-width: 3.4;
+  stroke-dasharray: 7 4;
+}
+.algo-root .graph-arrow.e-path-back {
+  fill: var(--algo-c-current);
+}
+.algo-root .graph-edge.e-path.e-min path {
+  stroke-width: 6.5;
+}
+.algo-root .graph-edge.e-changed path {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 4.5;
+}
+.algo-root .graph-arrow.e-changed {
+  fill: var(--algo-c-pivot);
+}
+.algo-root .graph-edge.e-cut path {
+  stroke: var(--algo-c-bound);
+  stroke-width: 4;
+  stroke-dasharray: 9 3;
+}
+.algo-root .graph-arrow.e-cut {
+  fill: var(--algo-c-bound);
+}
+/* párování: tučně jako na obr. 14.6 */
+.algo-root .graph-edge.e-match path {
+  stroke: var(--algo-text);
+  stroke-width: 4.5;
+}
+.algo-root .graph-arrow.e-match {
+  fill: var(--algo-text);
+}
+/* síť rezerv: nasycený oblouk (r = 0) */
+.algo-root .graph-edge.e-zero path {
+  stroke: var(--algo-muted);
+  stroke-width: 1.4;
+  stroke-dasharray: 2 4;
+}
+.algo-root .graph-arrow.e-zero {
+  fill: var(--algo-muted);
+}
+/* vrstevnatá síť (obr. 14.7): šedivé (dozadu, uvnitř vrstvy, za s), tečkované (slepé uličky), nasycené */
+.algo-root .graph-edge.e-r-live path {
+  stroke: var(--algo-text);
+  stroke-width: 2;
+}
+.algo-root .graph-arrow.e-r-live {
+  fill: var(--algo-text);
+}
+.algo-root .graph-edge.e-r-gray path {
+  stroke: var(--algo-muted);
+  stroke-width: 1.3;
+  opacity: 0.45;
+}
+.algo-root .graph-arrow.e-r-gray {
+  fill: var(--algo-muted);
+  opacity: 0.45;
+}
+.algo-root .graph-edge.e-r-dead path {
+  stroke: var(--algo-muted);
+  stroke-width: 1.8;
+  stroke-dasharray: 1 4;
+  stroke-linecap: round;
+}
+.algo-root .graph-arrow.e-r-dead {
+  fill: var(--algo-muted);
+}
+.algo-root .graph-edge.e-r-sat path {
+  stroke: var(--algo-muted);
+  stroke-width: 1.6;
+  stroke-dasharray: 6 4;
+}
+.algo-root .graph-arrow.e-r-sat {
+  fill: var(--algo-muted);
+}
+/* vrcholy: zdroj a stok, kam došlo hledání, levá strana řezu, smazané */
+.algo-root .graph-node.n-term circle {
+  stroke: var(--algo-text);
+  stroke-width: 3;
+}
+.algo-root .graph-node.n-seen circle {
+  fill: color-mix(in srgb, var(--algo-c-frontier) 35%, var(--algo-c-node));
+}
+.algo-root .graph-node.n-cut-a circle {
+  fill: color-mix(in srgb, var(--algo-c-bound) 30%, var(--algo-c-node));
+}
+.algo-root .graph-node.n-gone circle {
+  stroke-dasharray: 3 3;
+  fill: var(--algo-panel);
+}
+.algo-root .graph-node.n-gone .node-label {
+  fill: var(--algo-muted);
+}
+
+/* vzorky legendy */
+.algo-root .swatch.sw-flow-path {
+  background: var(--algo-c-current);
+}
+.algo-root .swatch.sw-flow-back {
+  background: var(--algo-c-current);
+}
+.algo-root .swatch.sw-flow-min {
+  background: var(--algo-c-current);
+  height: 7px;
+}
+.algo-root .swatch.sw-flow-changed {
+  background: var(--algo-c-pivot);
+}
+.algo-root .swatch.sw-flow-flow {
+  background: var(--algo-c-active);
+}
+.algo-root .swatch.sw-flow-sat {
+  background: var(--algo-c-min);
+}
+.algo-root .swatch.sw-flow-zero {
+  background: var(--algo-muted);
+}
+.algo-root .swatch.sw-flow-live {
+  background: var(--algo-text);
+}
+.algo-root .swatch.sw-flow-gray {
+  background: var(--algo-muted);
+  opacity: 0.45;
+}
+.algo-root .swatch.sw-flow-dead {
+  background: var(--algo-muted);
+}
+.algo-root .swatch.sw-flow-rsat {
+  background: var(--algo-muted);
+}
+.algo-root .swatch.sw-flow-gone {
+  background: var(--algo-panel);
+}
+.algo-root .swatch.sw-flow-seen {
+  background: color-mix(
+    in srgb,
+    var(--algo-c-frontier) 35%,
+    var(--algo-c-node)
+  );
+  border: 1.5px solid var(--algo-c-node-border);
+}
+.algo-root .swatch.sw-flow-a {
+  background: color-mix(in srgb, var(--algo-c-bound) 30%, var(--algo-c-node));
+  border: 1.5px solid var(--algo-c-node-border);
+}
+.algo-root .swatch.sw-flow-cut {
+  background: var(--algo-c-bound);
+}
+.algo-root .swatch.sw-flow-match {
+  background: var(--algo-text);
+}
+/* === /flows === */
+
+/* === graphs-new === */
+/* Bellman-Ford, Borůvka (stopa graphsA) a mosty, SCC (stopa graphsB) na stránce grafů – třídy n-…, e-…
+   nových algoritmů, šipky .graph-arrow.<třída> (GraphAlgorithm.markers), vzorky .swatch.sw-…. Obě stopy
+   sdílí oddíl: graphsA píše jen mezi značky „graphsA“, graphsB jen mezi „graphsB“. */
+/* --- graphsA --- */
+/* --- /graphsA --- */
+/* --- graphsB --- */
+/* Mosty a artikulace (bridges.ts): most = tučná hrana barvy chyby (v knize tučně), artikulace = vrchol
+   s výraznou výplní a obrysem (v knize černý); obojí přebije n-open / n-closed a e-tree. SCC (scc.ts)
+   používá jen sdílené třídy (n-open, n-closed, n-current, n-compK, e-relax, e-tree, e-back, e-seen,
+   e-rejected). */
+.algo-root .graph-edge.e-bridge path {
+  stroke: var(--algo-danger);
+  stroke-width: 4.5;
+}
+.algo-root .swatch.sw-bridge {
+  background: var(--algo-danger);
+}
+.algo-root .graph-node.n-art circle {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 4;
+  fill: color-mix(in srgb, var(--algo-c-pivot) 45%, var(--algo-c-node));
+}
+.algo-root .swatch.sw-art {
+  background: var(--algo-c-pivot);
+}
+/* --- /graphsB --- */
+/* === /graphs-new === */
+
+/* === dp === */
+/* Editační vzdálenost a nejdelší rostoucí podposloupnost (algos/dp/, views/dp*) – stopa dp */
+.algo-root .dp-lis,
+.algo-root .dp-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+}
+.algo-root .dp-lis .dp-scroll {
+  flex: none;
+}
+.algo-root .dp-chart {
+  display: block;
+}
+/* tabulky DP: pevná mřížka, čísla zarovnaná, okraje jemné */
+.algo-root .dp-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+.algo-root .dp-table th,
+.algo-root .dp-table td {
+  border: 1px solid var(--algo-border);
+  text-align: center;
+  padding: 0;
+  position: relative;
+  transition: background-color var(--algo-step-color-ms, 0ms);
+}
+.algo-root .dp-table th {
+  background: var(--algo-panel-2);
+  font-weight: 600;
+}
+.algo-root .dp-lis-table th,
+.algo-root .dp-lis-table td {
+  height: 1.9rem;
+}
+.algo-root .dp-lis-table th[scope="row"] {
+  white-space: nowrap;
+}
+.algo-root .dp-lis-table .dp-idx td {
+  color: var(--algo-muted);
+  font-size: 0.85em;
+}
+.algo-root .dp-lis-table .dp-idx td.dp-cur {
+  color: var(--algo-text);
+  font-weight: 700;
+}
+.algo-root .dp-edit-table {
+  /* strana buňky; stránka ji přepíše inline podle výšky plátna (editCellSize) */
+  --algo-dp-cell: 30px;
+  font-size: max(11px, calc(var(--algo-dp-cell) * 0.5));
+}
+.algo-root .dp-edit-table th,
+.algo-root .dp-edit-table td {
+  width: var(--algo-dp-cell, 30px);
+  height: var(--algo-dp-cell, 30px);
+  min-width: var(--algo-dp-cell, 30px);
+}
+.algo-root .dp-edit-table .dp-border,
+.algo-root .dp-edit-table .dp-border-head {
+  background: color-mix(in srgb, var(--algo-panel-2) 60%, var(--algo-panel));
+}
+/* klikací buňky (výběr podproblému) a fokus kresby (roving tabindex) */
+.algo-root .dp-table td[role="button"] {
+  cursor: pointer;
+}
+.algo-root .dp-table td[role="button"]:hover {
+  box-shadow: inset 0 0 0 2px var(--algo-accent);
+}
+.algo-root .dp-table td[role="button"]:focus {
+  outline: none;
+}
+.algo-root .dp-table td[role="button"]:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--algo-accent);
+}
+/* stavy buněk (pořadí = priorita: později přebije) */
+.algo-root .dp-table td.dp-empty {
+  background: var(--algo-panel);
+}
+.algo-root .dp-table td.dp-eq::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--algo-c-plain);
+}
+.algo-root .dp-table .dp-path {
+  background: color-mix(in srgb, var(--algo-c-sorted) 28%, var(--algo-panel));
+}
+.algo-root .dp-table .dp-sel {
+  background: color-mix(in srgb, var(--algo-c-min) 28%, var(--algo-panel));
+}
+.algo-root .dp-table .dp-read {
+  background: color-mix(in srgb, var(--algo-c-compare) 45%, var(--algo-panel));
+}
+.algo-root .dp-table td.dp-new,
+.algo-root .dp-table td.dp-min {
+  background: color-mix(in srgb, var(--algo-c-active) 30%, var(--algo-panel));
+  font-weight: 700;
+}
+.algo-root .dp-table .dp-cur {
+  background: color-mix(in srgb, var(--algo-c-current) 22%, var(--algo-panel));
+  box-shadow: inset 0 0 0 2px var(--algo-c-current);
+  font-weight: 700;
+}
+.algo-root .dp-table th.dp-match {
+  background: color-mix(in srgb, var(--algo-c-sorted) 28%, var(--algo-panel));
+}
+.algo-root .dp-table td.dp-better {
+  box-shadow: inset 0 0 0 2px var(--algo-c-active);
+}
+/* šipka tahu v pravém dolním rohu buňky */
+.algo-root .dp-dir {
+  position: absolute;
+  right: 1px;
+  bottom: 0;
+  font-size: 0.72em;
+  line-height: 1;
+  color: var(--algo-text);
+}
+/* graf posloupnosti (obr. 12.4) */
+.algo-root .dp-level line {
+  stroke: var(--algo-border);
+  stroke-dasharray: 1 3;
+}
+.algo-root .dp-level text {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .dp-edge {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1.5;
+  transition: stroke var(--algo-step-color-ms, 0ms);
+}
+.algo-root .dp-edge.dp-e-all {
+  stroke: var(--algo-border);
+  stroke-width: 1;
+}
+.algo-root .dp-edge.dp-e-sel {
+  stroke: var(--algo-c-min);
+  stroke-width: 4;
+}
+.algo-root .dp-edge.dp-e-path {
+  stroke: var(--algo-c-sorted);
+  stroke-width: 4;
+}
+.algo-root .dp-edge.dp-e-cmp {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 3;
+}
+.algo-root .dp-edge.dp-e-better {
+  stroke: var(--algo-c-active);
+}
+.algo-root .dp-edge.dp-e-no {
+  stroke: var(--algo-muted);
+  stroke-dasharray: 5 4;
+  stroke-width: 2;
+}
+.algo-root .dp-pt circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+}
+.algo-root .dp-pt text {
+  fill: var(--algo-text);
+  font-size: 10px;
+  font-weight: 600;
+}
+.algo-root .dp-pt.dp-path circle {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 35%, var(--algo-c-node));
+  stroke: var(--algo-c-sorted);
+}
+.algo-root .dp-pt.dp-sel circle {
+  stroke: var(--algo-c-min);
+  stroke-width: 3;
+}
+.algo-root .dp-pt.dp-read circle {
+  fill: var(--algo-c-compare);
+  stroke: var(--algo-c-compare-line);
+}
+.algo-root .dp-pt.dp-cur circle {
+  fill: color-mix(in srgb, var(--algo-c-current) 30%, var(--algo-c-node));
+  stroke: var(--algo-c-current);
+  stroke-width: 3;
+}
+/* zarovnání slov podle úprav (Edit) */
+.algo-root .dp-align {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 0;
+  min-height: calc(3 * 1.5em);
+}
+.algo-root .dp-align-empty {
+  color: var(--algo-muted);
+  font-size: 0.9rem;
+}
+.algo-root .dp-align-row {
+  display: flex;
+  gap: 2px;
+  line-height: 1.5em;
+}
+.algo-root .dp-align-row b {
+  width: 1.4rem;
+  color: var(--algo-muted);
+}
+.algo-root .dp-al {
+  width: 1.5em;
+  text-align: center;
+}
+.algo-root .dp-al-change {
+  background: color-mix(in srgb, var(--algo-c-compare) 45%, var(--algo-panel));
+}
+.algo-root .dp-al-delete,
+.algo-root .dp-al-insert {
+  background: color-mix(in srgb, var(--algo-c-current) 22%, var(--algo-panel));
+}
+.algo-root .dp-align-ops .dp-al {
+  color: var(--algo-muted);
+  background: none;
+}
+.algo-root .dp-sel-info {
+  margin: 0;
+  min-height: 1.45em;
+  font-size: 0.92rem;
+  color: var(--algo-muted);
+}
+/* vzorky legendy */
+.algo-root .swatch.sw-dp-edge {
+  background: var(--algo-c-edge);
+}
+.algo-root .swatch.sw-dp-eq {
+  background: var(--algo-c-plain);
+}
+/* === /dp === */
+
+/* === hull === */
+/* Konvexní obal (algos/geometry/hull*, views/hull*) – stopa hull */
+.algo-root .hull-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: stretch;
+}
+.algo-root .hull-plane {
+  /* jednotky roviny na 1 px (HullPlane měří) – písmo popisků bodů */
+  --algo-hull-k: 1;
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  margin: 0 auto;
+}
+.algo-root .hull-frame {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-border);
+}
+/* hotový obal: průsvitná zelená plocha s obrysem (vzorek sw-green) */
+.algo-root .hull-final {
+  fill: color-mix(in srgb, var(--algo-c-sorted) 16%, transparent);
+  stroke: var(--algo-c-sorted);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.algo-root .hull-final-seg {
+  fill: none;
+}
+.algo-root .hull-sweep {
+  stroke: var(--algo-c-bound);
+  stroke-width: 2;
+  stroke-dasharray: 7 5;
+}
+.algo-root .hull-env {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.algo-root .hull-env.hull-H {
+  stroke: var(--algo-c-active);
+}
+.algo-root .hull-env.hull-D {
+  stroke: var(--algo-c-min);
+}
+/* testovaný úhel hₖ₋₁hₖb (zametání) a kandidát / zkoušený bod (provázek) */
+.algo-root .hull-test {
+  fill: none;
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  stroke-linejoin: round;
+}
+.algo-root .hull-cand {
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 3;
+}
+.algo-root .hull-probe {
+  stroke: var(--algo-c-min);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+}
+.algo-root .hull-pt circle {
+  fill: var(--algo-c-node-border);
+  stroke: var(--algo-panel);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+/* bod vpravo od zametací přímky – ještě nezpracovaný: jen kroužek (vzorek sw-seen, tvar ring) */
+.algo-root .hull-pt.is-todo circle {
+  fill: var(--algo-panel-2);
+  stroke: var(--algo-c-edge);
+  stroke-width: 2;
+}
+.algo-root .hull-pt.on-hull circle {
+  fill: var(--algo-c-sorted);
+}
+.algo-root .hull-pt.is-cand circle {
+  fill: var(--algo-c-compare);
+  stroke: var(--algo-c-compare-line);
+}
+.algo-root .hull-pt.is-probe circle {
+  fill: var(--algo-c-min);
+}
+.algo-root .hull-pt.is-cur circle {
+  fill: var(--algo-c-pivot);
+  r: 7.5px;
+}
+.algo-root .hull-pt.is-dropped circle {
+  fill: color-mix(in srgb, var(--algo-c-swap) 45%, var(--algo-panel-2));
+}
+.algo-root .hull-pt.is-popped circle {
+  fill: var(--algo-c-swap);
+  r: 8px;
+}
+.algo-root .hull-x {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--algo-c-node);
+  pointer-events: none;
+}
+.algo-root .hull-label {
+  /* v jednotkách roviny; --algo-hull-k (HullPlane) drží písmo nejméně na 11 px i v malé rovině (UX-18) */
+  font-size: max(12.5px, calc(11px * var(--algo-hull-k, 1)));
+  fill: var(--algo-text);
+  paint-order: stroke;
+  stroke: var(--algo-panel-2);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.algo-root .hull-pt.is-todo .hull-label {
+  fill: var(--algo-muted);
+}
+.algo-root .hull-pt:focus {
+  outline: none;
+}
+.algo-root .hull-pt:focus-visible circle {
+  stroke: var(--algo-accent);
+  stroke-width: 4;
+}
+/* panel: obálky jako zásobníky a matice M */
+.algo-root .hull-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  min-width: 0;
+}
+.algo-root .hull-stack {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+}
+.algo-root .hull-stack-name {
+  font-weight: 700;
+  flex: none;
+}
+.algo-root .hull-stack-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.algo-root .hull-chip {
+  border: 2px solid var(--algo-border);
+  border-radius: 4px;
+  padding: 0 0.3rem;
+  background: var(--algo-panel);
+  line-height: 1.4;
+}
+.algo-root .hull-stack.is-H .hull-chip {
+  border-color: var(--algo-c-active);
+}
+.algo-root .hull-stack.is-D .hull-chip {
+  border-color: var(--algo-c-min);
+}
+.algo-root .hull-chip.is-hot {
+  background: color-mix(in srgb, var(--algo-c-compare) 40%, var(--algo-panel));
+}
+.algo-root .hull-stack .hull-chip.is-popped {
+  border-color: var(--algo-c-swap);
+  color: var(--algo-danger-text);
+  text-decoration: line-through;
+}
+.algo-root .hull-chip.is-empty {
+  color: var(--algo-muted);
+}
+.algo-root .hull-det {
+  border: 1px solid var(--algo-border);
+  border-radius: 6px;
+  background: var(--algo-panel-2);
+  padding: 0.4rem 0.55rem;
+}
+.algo-root .hull-det.is-idle {
+  color: var(--algo-muted);
+}
+.algo-root .hull-det-head {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.algo-root .hull-matrix {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.algo-root .hull-matrix th {
+  font-weight: 400;
+  text-align: left;
+  padding-right: 0.6rem;
+  color: var(--algo-muted);
+}
+.algo-root .hull-matrix td {
+  text-align: right;
+  min-width: 2.6rem;
+  padding: 0 0.3rem;
+  border-left: 2px solid var(--algo-border);
+}
+.algo-root .hull-det-value {
+  margin-top: 0.25rem;
+}
+.algo-root .hull-det.is-pop .hull-det-value b {
+  color: var(--algo-danger-text);
+}
+/* náhled na úvodní stránce: rovina se vejde do karty */
+.algo-root .hull-thumb {
+  display: flex;
+  justify-content: center;
+}
+.algo-root .hull-thumb .hull-thumb-plane {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+}
+/* jedna obrazovka: rovina | panel vedle sebe, rovina z jednotek kontejneru (jako k-d strom) */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas > .hull-layout {
+    flex: 1 1 0;
+    min-height: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    container-type: size;
+  }
+  .algo-root .hull-layout > .hull-plane {
+    flex: none;
+    width: min(66cqw, 100cqh);
+    max-width: none;
+    margin: 0;
+  }
+  .algo-root .hull-layout > .hull-panel {
+    flex: 1 1 0;
+    max-height: 100cqh;
+    overflow-y: auto;
+  }
+}
+/* Úpravy roviny ukazatelem – konvexní obal i k-d strom (algos/geometry/usePlaneDrag, planeDrag):
+   kurzor, neviditelný úchop bodu 22 px obrazovky (--algo-plane-k = jednotky roviny na 1 px; skutečný
+   výběr počítá planeDrag podle vzdálenosti, u prstu 44 px), vybraný a tažený bod, tlačítko ×, souřadnice
+   taženého bodu a úchopy obdélníku Q. */
+.algo-root .hull-plane,
+.algo-root .kd-plane {
+  /* jednotky roviny na 1 px (HullPlane / Plane měří) – úchop bodu a souřadnice taženého bodu */
+  --algo-plane-k: 1;
+}
+.algo-root .hull-plane.is-editable,
+.algo-root .kd-plane.is-editable {
+  cursor: crosshair;
+  /* tah myší nesmí označovat text popisků bodů */
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* k-d: tah z prázdna natahuje Q – prst na rovině stránku neposouvá. Obal touch-action nemá: prst
+   z prázdného místa stránku posouvá, tah bodu posun zruší (usePointerDrag attachSvg). */
+.algo-root .kd-plane.is-editable {
+  touch-action: none;
+}
+.algo-root .is-editable circle.plane-hit {
+  fill: transparent;
+  stroke: none;
+  r: calc(22px * var(--algo-plane-k, 1));
+}
+.algo-root .is-editable .hull-pt,
+.algo-root .is-editable .kd-pt {
+  cursor: grab;
+}
+.algo-root .hull-plane.is-dragging,
+.algo-root .hull-plane.is-dragging *,
+.algo-root .kd-plane.is-dragging,
+.algo-root .kd-plane.is-dragging * {
+  cursor: grabbing !important;
+}
+.algo-root .hull-pt.is-selected > circle:first-child,
+.algo-root .kd-pt.is-selected > circle:first-child,
+.algo-root .hull-pt.is-dragged > circle:first-child,
+.algo-root .kd-pt.is-dragged > circle:first-child {
+  stroke: var(--algo-accent);
+  stroke-width: 3;
+}
+.algo-root .plane-del {
+  cursor: pointer;
+}
+.algo-root .plane-del circle {
+  fill: var(--algo-panel);
+  stroke: var(--algo-c-swap);
+  stroke-width: 1.5;
+}
+.algo-root .plane-del path {
+  fill: none;
+  stroke: var(--algo-c-swap);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.algo-root .plane-del:hover circle {
+  fill: var(--algo-c-swap);
+}
+.algo-root .plane-del:hover path {
+  stroke: var(--algo-panel);
+}
+.algo-root .plane-drag-label {
+  font-size: max(12.5px, calc(11px * var(--algo-plane-k, 1)));
+  font-weight: 600;
+  fill: var(--algo-text);
+  paint-order: stroke;
+  stroke: var(--algo-panel-2);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.algo-root .kd-q-body {
+  fill: transparent;
+  cursor: move;
+}
+.algo-root .kd-q-edge {
+  stroke: transparent;
+  stroke-width: 12;
+}
+.algo-root .kd-q-edge.is-ns {
+  cursor: ns-resize;
+}
+.algo-root .kd-q-edge.is-ew {
+  cursor: ew-resize;
+}
+.algo-root .kd-q-handle {
+  fill: var(--algo-panel);
+  stroke: var(--algo-c-compare-line);
+  stroke-width: 1.5;
+}
+.algo-root .kd-q-handle.is-nw,
+.algo-root .kd-q-handle.is-se {
+  cursor: nwse-resize;
+}
+.algo-root .kd-q-handle.is-ne,
+.algo-root .kd-q-handle.is-sw {
+  cursor: nesw-resize;
+}
+/* === /hull === */
+
+/* === llrb === */
+/* Červeno-černý strom LLRB (algos/trees/llrb*, views/llrb*) – stopa llrb */
+/* hrany jako v obr. 8.11: černé tmavé, červené červené a silnější; barvu nese spodní vrchol (obrys) */
+.algo-root .llrb-tree .tree-edge line {
+  stroke: var(--algo-text);
+  stroke-width: 1.75;
+}
+.algo-root .llrb-tree .tree-edge.e-active line {
+  stroke: var(--algo-c-active);
+  stroke-width: 3;
+}
+.algo-root .llrb-tree .tree-edge.e-red line {
+  stroke: var(--algo-danger);
+  stroke-width: 3;
+}
+/* cesta rekurze po červené hraně: barva zůstane, hrana zesílí */
+.algo-root .llrb-tree .tree-edge.e-red.e-active line {
+  stroke-width: 5;
+}
+/* rotuje se jen červená hrana (str. 207) – barvu dává e-red, rotace je čárkovaná */
+.algo-root .llrb-tree .tree-edge.e-rotate line {
+  stroke-dasharray: 7 4;
+  stroke-width: 4;
+}
+.algo-root .llrb-tree .tree-node.n-flip circle {
+  stroke: var(--algo-c-min);
+  fill: color-mix(in srgb, var(--algo-c-min) 30%, var(--algo-c-node));
+}
+.algo-root .llrb-tree .mtree-node.n-flip > rect {
+  stroke: var(--algo-c-min);
+  fill: color-mix(in srgb, var(--algo-c-min) 30%, var(--algo-c-node));
+}
+/* za n-flip: přebarvovaný červený vrchol si obrys nechá, výplň ukáže stav kroku */
+.algo-root .llrb-tree .tree-node.n-red circle {
+  stroke: var(--algo-danger);
+  stroke-width: 2.5;
+}
+.algo-root .llrb-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.algo-root .llrb-ab {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.algo-root .llrb-ab-caption {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--algo-muted);
+  text-align: center;
+}
+/* desktop na jednu obrazovku: LLRB strom | (2,4)-strom vedle (výšku řádku dává LLRB strom, CanvasFit
+   ladí jeho hladiny); bez (2,4)-stromu je rozložení jako u ostatních stromů */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .viz-canvas > .llrb-layout {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+  .algo-root .llrb-layout.with-ab {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .algo-root .llrb-layout.with-ab > .tree-wrap {
+    flex: 3 1 0;
+    min-width: 0;
+  }
+  .algo-root .llrb-layout.with-ab > .llrb-ab {
+    flex: 2 1 0;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--algo-border);
+  }
+  /* (2,4)-strom vedle (u velkého stromu široký) se nezmenšuje pod 1 : 1 – písmo by kleslo pod 10 px;
+     posouvá se vodorovně uvnitř svého sloupce (jako pás textu u KMP) */
+  .algo-root .llrb-ab > .view-wrap {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .algo-root .llrb-ab > .view-wrap > svg {
+    max-width: none;
+    flex-shrink: 0;
+    align-self: safe center;
+  }
+}
+/* náhled na úvodní stránce: LLRB strom vlevo, jeho (2,3)-strom vpravo */
+/* náhled: jen LLRB strom přes celou šířku (UX-15) */
+.algo-root .thumb-art .llrb-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.algo-root .thumb-art .llrb-thumb > :first-child {
+  flex: 1 1 auto;
+  height: 100%;
+  min-width: 0;
+}
+/* === /llrb === */
+
+/* === drag === */
+/* Tah ukazatelem (core/usePointerDrag): během tahu „grabbing“ na celé kresbě – ukazatel může být
+   i mimo tažený vrchol (meze plátna, zachycený ukazatel). */
+.algo-root .graph-svg.is-dragging,
+.algo-root .graph-svg.is-dragging * {
+  cursor: grabbing !important;
+}
+/* Vrchol, který jde táhnout i vybrat klikem (v₀): ukazatel „grab“ napoví tah, klik funguje dál. */
+.algo-root .graph-svg.draggable.pickable .graph-node {
+  cursor: grab;
+}
+/* Dotykový displej: neviditelný úchop vrcholu aspoň 44 px (GraphView vybírá nejbližší vrchol, takže
+   překrývající se úchopy sousedů nevadí); touch-action: none má úchop jako celý vrchol (.draggable). */
+@media (pointer: coarse) {
+  .algo-root .graph-node > .node-hit {
+    r: 44px;
+  }
+}
+/* === /drag === */
+
+/* === goldberg === */
+/* Goldbergův algoritmus (algos/flows/goldberg*, GoldbergPage) – stopa goldberg. Síť „vlna / kapacita“
+   používá třídy oddílu flows, tady jen vrchol s přebytkem a kresba výšek (goldbergHeightView.tsx). */
+.algo-root .graph-node.n-excess circle {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 2.6;
+  fill: color-mix(in srgb, var(--algo-c-pivot) 22%, var(--algo-c-node));
+}
+/* kresba výšek: skutečná velikost v px, širší kresba (mnoho vrcholů) se posouvá do strany */
+.algo-root .gb-heights {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.algo-root .gb-svg {
+  display: block;
+  margin: 0 auto;
+  max-width: none;
+  flex-shrink: 0;
+  user-select: none;
+}
+.algo-root .gb-axis text {
+  fill: var(--algo-muted);
+  font-size: 11px;
+}
+.algo-root .gb-axis .gb-axis-title {
+  font-style: italic;
+  font-weight: 600;
+  font-size: 12px;
+}
+.algo-root .gb-level line {
+  stroke: var(--algo-border);
+  stroke-width: 1;
+}
+.algo-root .gb-level-n line {
+  stroke: var(--algo-muted);
+  stroke-dasharray: 5 4;
+}
+.algo-root .gb-level-n text {
+  fill: var(--algo-text);
+  font-weight: 600;
+}
+/* hrany sítě jen jako slabé spojnice (která dvojice vrcholů je sousední) */
+.algo-root .gb-edge {
+  stroke: var(--algo-c-edge);
+  stroke-width: 1;
+  opacity: 0.35;
+}
+.algo-root .gb-arc line {
+  stroke-width: 2;
+}
+.algo-root .gb-arc.gb-down line {
+  stroke: var(--algo-c-active);
+}
+.algo-root .gb-arrow.gb-down {
+  fill: var(--algo-c-active);
+}
+.algo-root .gb-arc.gb-push line {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 4;
+}
+.algo-root .gb-arrow.gb-push {
+  fill: var(--algo-c-pivot);
+}
+.algo-root .gb-arc-label {
+  fill: var(--algo-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+/* zvednutí: původní výška čárkovaně, šipka nahoru */
+.algo-root .gb-ghost {
+  fill: none;
+  stroke: var(--algo-c-pivot);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+.algo-root .gb-rise line {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+.algo-root .gb-node circle {
+  fill: var(--algo-c-node);
+  stroke: var(--algo-c-node-border);
+  stroke-width: 1.5;
+  transition:
+    fill var(--algo-step-color-ms),
+    stroke var(--algo-step-color-ms);
+}
+.algo-root .gb-node .gb-node-label {
+  fill: var(--algo-text);
+  font-weight: 600;
+  pointer-events: none;
+}
+.algo-root .gb-node.gb-term circle {
+  stroke: var(--algo-text);
+  stroke-width: 3;
+}
+.algo-root .gb-node.gb-excess circle {
+  stroke: var(--algo-c-pivot);
+  stroke-width: 2.6;
+  fill: color-mix(in srgb, var(--algo-c-pivot) 22%, var(--algo-c-node));
+}
+.algo-root .gb-node.gb-current circle {
+  stroke: var(--algo-c-current);
+  stroke-width: 3;
+  fill: color-mix(in srgb, var(--algo-c-current) 35%, var(--algo-c-node));
+}
+.algo-root .gb-node.gb-cut-a circle {
+  fill: color-mix(in srgb, var(--algo-c-bound) 30%, var(--algo-c-node));
+}
+.algo-root .gb-node:focus {
+  outline: none;
+}
+.algo-root .gb-node:focus-visible circle {
+  stroke: var(--algo-accent);
+  stroke-width: 4;
+}
+/* odznak přebytku: světlý podklad s barevným okrajem, text v barvě pro text (kontrast ≥ 4,5 : 1) */
+.algo-root .gb-badge rect {
+  fill: var(--algo-panel);
+  stroke: var(--algo-c-pivot);
+  stroke-width: 1.5;
+}
+.algo-root .gb-badge text {
+  fill: var(--algo-c-pivot-text);
+  font-size: 11px;
+  font-weight: 700;
+}
+.algo-root .gb-badge.gb-badge-sink rect {
+  stroke: var(--algo-c-sorted);
+}
+.algo-root .gb-badge.gb-badge-sink text {
+  fill: var(--algo-text);
+}
+/* desktop na jednu obrazovku: kresba výšek vyplní výšku panelu (výšku ladí useGraphFitHeight) */
+@media (min-width: 1100px) and (min-height: 600px) {
+  .algo-root .flow-panel > .gb-heights {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+  /* kresba výšek 1 : 1 (písmo se nezmenšuje) – rozměr dává heightLayout podle volného místa, širší kresba
+     (mnoho vrcholů v úzkém panelu) se posouvá vodorovně jako pás textu KMP */
+  .algo-root .viz-canvas .gb-heights.view-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .algo-root .viz-canvas .gb-heights.view-wrap > svg {
+    flex: none;
+    max-width: none;
+    align-self: safe center;
+  }
+}
+/* náhled na úvodní stránce */
+.algo-root .thumb-art .gb-heights {
+  overflow: hidden;
+}
+/* vzorky legendy */
+.algo-root .swatch.sw-gb-current {
+  background: color-mix(in srgb, var(--algo-c-current) 35%, var(--algo-c-node));
+  border: 2px solid var(--algo-c-current);
+}
+.algo-root .swatch.sw-gb-excess {
+  background: color-mix(in srgb, var(--algo-c-pivot) 22%, var(--algo-c-node));
+  border: 2px solid var(--algo-c-pivot);
+}
+.algo-root .swatch.sw-gb-down {
+  background: var(--algo-c-active);
+}
+.algo-root .swatch.sw-gb-push {
+  background: var(--algo-c-pivot);
+  height: 5px;
+}
+.algo-root .swatch.sw-gb-lift {
+  background: var(--algo-panel);
+  border: 1.5px dashed var(--algo-c-pivot);
+}
+/* === /goldberg === */

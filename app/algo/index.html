@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="cs" data-site-root="../">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algoritmy a datové struktury</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <script>
+      // téma algoritmů aplikujeme před prvním vykreslením, aby stránka neblikla
+      try {
+        var t = localStorage.getItem("algo-theme");
+        if (t === "light" || t === "dark")
+          document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root" data-page="algo"></div>
+    <script type="module" src="../main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+/*
+ * Sdílené prvky Kalkulačky i Rozvrhu: tlačítka, panely, hlavička panelu, štítky,
+ * souhrn s pruhy průběhu a stavová hláška (1:1 ze staré stránky).
+ */
+
+.btn {
+  padding: var(--_spacing---16-px) var(--_spacing---24-px);
+  background: var(--primary--primary-blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--_radius---radius-btns);
+  cursor: pointer;
+  font-family: var(--_typography---font-family--silka);
+  font-size: var(--_typography---paragraph--font-size);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s,
+    opacity 0.15s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 54, 87, 0.18);
+}
+.btn.alt {
+  background: var(--primary--primary-red);
+}
+.btn.alt:hover {
+  box-shadow: 0 6px 16px rgba(210, 45, 64, 0.2);
+}
+.btn.ghost {
+  background: var(--primary--background-white);
+  color: var(--primary--primary-blue);
+  border: 1px solid var(--variables--blue-12);
+}
+.btn.ghost:hover {
+  background: var(--primary--background-grey);
+  box-shadow: none;
+}
+.btn.small {
+  padding: var(--_spacing---8-px) var(--_spacing---16-px);
+  font-size: var(--_typography---btn-primary--font-size);
+}
+
+.panel {
+  background: var(--primary--background-grey);
+  border: 1px solid var(--variables--blue-12);
+  padding: var(--_spacing---32-px);
+  border-radius: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--_spacing---16-px);
+  flex-wrap: wrap;
+  margin-bottom: var(--_spacing---20-px);
+  padding-bottom: var(--_spacing---16-px);
+  border-bottom: 1px solid var(--variables--blue-12);
+}
+.secTitle {
+  font-size: var(--_typography---filter-label--font-size);
+  letter-spacing: var(--_typography---filter-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.header h2,
+.panel > h3 {
+  color: var(--primary--primary-blue);
+}
+.header h2 {
+  font-size: var(--_typography---h2--font-size);
+  font-weight: var(--_typography---h2--font-weight);
+  letter-spacing: var(--_typography---h2--letter-spacing);
+  margin-top: var(--_spacing---2-px);
+}
+
+.pill {
+  font-size: var(--_typography---filter-label--font-size);
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--_radius---radius-btns);
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.pill.ok {
+  background: #1f9d55;
+}
+.pill.todo {
+  background: var(--col-mixed);
+  color: #5b4b00;
+}
+.pill.req {
+  background: var(--primary--primary-red);
+}
+.pill.nc {
+  background: var(--variables--blue-32);
+  color: #fff;
+}
+.pillBtn {
+  cursor: pointer;
+  border: none;
+  transition:
+    filter 0.15s ease,
+    transform 0.1s ease;
+}
+.pillBtn:hover {
+  filter: brightness(1.12);
+}
+.pillBtn:active {
+  transform: scale(0.96);
+}
+
+.summary {
+  position: sticky;
+  top: var(--_spacing---20-px);
+}
+.progressBox {
+  margin-bottom: var(--_spacing---12-px);
+}
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--_spacing---8-px);
+  margin-bottom: var(--_spacing---4-px);
+  font-weight: 500;
+  font-size: var(--_typography---form-label--font-size);
+}
+.progressInfo .rem {
+  color: var(--muted);
+  font-weight: 600;
+}
+.progressBar {
+  width: 100%;
+  height: 9px;
+  background: var(--variables--blue-12);
+  border-radius: var(--_radius---radius-btns);
+  overflow: hidden;
+}
+.progressFill {
+  height: 100%;
+  width: 0;
+  background: var(--primary--primary-blue);
+  border-radius: var(--_radius---radius-btns);
+  transition:
+    width 0.4s ease,
+    background-color 0.3s ease;
+}
+.divider {
+  margin: var(--_spacing---20-px) 0;
+  border: 0;
+  border-top: 1px dashed var(--variables--blue-32);
+}
+.totalLine .progressInfo {
+  font-size: var(--_typography---text-m--font-size);
+  font-weight: 700;
+  color: var(--primary--primary-blue);
+}
+
+.status {
+  margin-top: var(--_spacing---16-px);
+  padding: var(--_spacing---12-px) var(--_spacing---14-px);
+  border-radius: var(--_radius---radius-8-px);
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--_typography---form-label--font-size);
+}
+.status.ok {
+  background: #e7f6ec;
+  color: #1f7a3f;
+}
+.status.todo {
+  background: #fff7e0;
+  color: #5b4b00;
+}
+
+.note {
+  font-size: var(--_typography---text-xs--font-size);
+  color: var(--muted);
+  margin-top: var(--_spacing---20-px);
+  line-height: 1.5;
+}
+
+@media (max-width: 820px) {
+  .summary {
+    position: static;
+  }
+}

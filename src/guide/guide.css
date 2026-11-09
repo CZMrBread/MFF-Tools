@@ -1,0 +1,118 @@
+/*
+ * Stránkové styly Průvodce prváka – převedeno 1:1 z inline <style> starého
+ * index.html (proměnné, body a elementové selektory). Třídy komponent jsou
+ * v guide.module.css. Soubor se načítá jen na stránce průvodce (lazy chunk).
+ */
+:root {
+  /* Oficiální MFF proměnné z webu */
+  --primary-blue: #003657;
+  --primary-red: #d22d40;
+  --primary-black: black;
+  --background-white: white;
+  --background-grey: whitesmoke;
+
+  /* Transparentní varianty pro okraje a sekundární texty */
+  --blue-72: #003657b8;
+  --blue-32: #00365752;
+  --blue-12: #0036571f;
+
+  /* Rádiusy */
+  --radius-btns: 50rem;
+  --radius-8-px: 8px;
+
+  /* Moje mapování na strukturu webu */
+  --bg-color: var(--background-white);
+  /* Matfyz používá modrou i pro běžný text */
+  --text-color: var(--primary-blue);
+  --text-secondary: var(--blue-72);
+  --card-bg: var(--background-grey);
+  --border-color: var(--blue-12);
+  --accent-green: #10b981;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /* Oficiální MFF font Silka s fallbackem na Arial */
+  font-family: "Silka Webfont", Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 144%;
+  font-weight: 400;
+  letter-spacing: 0.004em;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Ve staré stránce byly hlavička webu i .container přímými potomky <body>
+ * (flex sloupec). React je vykresluje do #root, proto se #root z layoutu
+ * vypouští – rozložení (i chování sticky hlavičky) pak zůstává stejné jako dřív.
+ */
+#root {
+  display: contents;
+}
+
+/*
+ * Pozor: elementový selektor – stejně jako ve staré stránce platí i pro
+ * hlavičku webu (.site-header), které tím přidává padding a spodní okraj.
+ */
+header {
+  text-align: center;
+  padding: 4rem 0 2rem;
+  border-bottom: 3px solid var(--primary-red);
+  margin-bottom: 2rem;
+}
+
+h1 {
+  color: var(--primary-blue);
+  font-size: 2.625rem;
+  line-height: 116%;
+  font-weight: 700;
+  letter-spacing: -0.016em;
+  margin-bottom: 0.5rem;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 108%;
+  font-weight: 700;
+  letter-spacing: -0.024em;
+  color: var(--primary-blue);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+h3 {
+  font-size: 1.375rem;
+  line-height: 116%;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+strong {
+  font-weight: 600; /* Dle variables MFF --_typography---paragraph-bold */
+}

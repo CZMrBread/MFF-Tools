@@ -1,0 +1,445 @@
+{
+  "_zdroj": "Průvodce labyrintem algoritmů (docs/pruvodce.pdf): oddíl → tištěná strana začátku oddílu; vytaženo z textu knihy 7. 11. 2026 (research2/book.txt, nadpisy oddílů a značky stran)",
+  "sections": {
+    "1.1": {
+      "page": 23,
+      "title": "Úsek s největším součtem"
+    },
+    "1.2": {
+      "page": 26,
+      "title": "Binární vyhledávání"
+    },
+    "1.3": {
+      "page": 30,
+      "title": "Euklidův algoritmus"
+    },
+    "1.4": {
+      "page": 33,
+      "title": "Fibonacciho čísla a rychlé umocňování"
+    },
+    "2.1": {
+      "page": 39,
+      "title": "Jak fungují počítače uvnitř"
+    },
+    "2.2": {
+      "page": 42,
+      "title": "Rychlost konkrétního výpočtu"
+    },
+    "2.3": {
+      "page": 46,
+      "title": "Složitost algoritmu"
+    },
+    "2.4": {
+      "page": 50,
+      "title": "Asymptotická notace"
+    },
+    "2.5": {
+      "page": 52,
+      "title": "Výpočetní model RAM"
+    },
+    "3.1": {
+      "page": 61,
+      "title": "Základní třídicí algoritmy"
+    },
+    "3.2": {
+      "page": 64,
+      "title": "Třídění sléváním"
+    },
+    "3.3": {
+      "page": 68,
+      "title": "Dolní odhad složitosti třídění"
+    },
+    "3.4": {
+      "page": 72,
+      "title": "Přihrádkové třídění"
+    },
+    "3.5": {
+      "page": 78,
+      "title": "Přehled třídicích algoritmů"
+    },
+    "4.1": {
+      "page": 81,
+      "title": "Rozhraní datových struktur"
+    },
+    "4.2": {
+      "page": 84,
+      "title": "Haldy"
+    },
+    "4.3": {
+      "page": 92,
+      "title": "Písmenkové stromy"
+    },
+    "4.4": {
+      "page": 94,
+      "title": "Prefixové součty"
+    },
+    "4.5": {
+      "page": 98,
+      "title": "Intervalové stromy"
+    },
+    "5.1": {
+      "page": 107,
+      "title": "Několik grafů úvodem"
+    },
+    "5.2": {
+      "page": 110,
+      "title": "Prohledávání do šířky"
+    },
+    "5.3": {
+      "page": 112,
+      "title": "Reprezentace grafů"
+    },
+    "5.4": {
+      "page": 115,
+      "title": "Komponenty souvislosti"
+    },
+    "5.5": {
+      "page": 116,
+      "title": "Vrstvy a vzdálenosti"
+    },
+    "5.6": {
+      "page": 119,
+      "title": "Prohledávání do hloubky"
+    },
+    "5.7": {
+      "page": 123,
+      "title": "Mosty a artikulace"
+    },
+    "5.8": {
+      "page": 127,
+      "title": "Acyklické orientované grafy"
+    },
+    "5.9": {
+      "page": 130,
+      "title": "Silná souvislost a její komponenty"
+    },
+    "5.10": {
+      "page": 134,
+      "title": "Silná souvislost podruhé: Tarjanův algoritmus"
+    },
+    "5.11": {
+      "page": 138,
+      "title": "Další cvičení"
+    },
+    "6.1": {
+      "page": 143,
+      "title": "Ohodnocené grafy a vzdálenost"
+    },
+    "6.2": {
+      "page": 146,
+      "title": "Dijkstrův algoritmus"
+    },
+    "6.3": {
+      "page": 149,
+      "title": "Relaxační algoritmy"
+    },
+    "6.4": {
+      "page": 154,
+      "title": "Matice vzdáleností a Floydův-Warshallův algoritmus"
+    },
+    "6.5": {
+      "page": 156,
+      "title": "Heuristiky a potenciálová redukce"
+    },
+    "6.6": {
+      "page": 163,
+      "title": "Další cvičení"
+    },
+    "7.1": {
+      "page": 167,
+      "title": "Od městečka ke kostře"
+    },
+    "7.2": {
+      "page": 168,
+      "title": "Jarníkův algoritmus a řezy"
+    },
+    "7.3": {
+      "page": 173,
+      "title": "Borůvkův algoritmus"
+    },
+    "7.4": {
+      "page": 174,
+      "title": "Kruskalův algoritmus a Union-Find"
+    },
+    "7.5": {
+      "page": 179,
+      "title": "Komprese cest"
+    },
+    "7.6": {
+      "page": 182,
+      "title": "Další cvičení"
+    },
+    "8.1": {
+      "page": 185,
+      "title": "Binární vyhledávací stromy"
+    },
+    "8.2": {
+      "page": 191,
+      "title": "Hloubkové vyvážení: AVL stromy"
+    },
+    "8.3": {
+      "page": 198,
+      "title": "Více klíčů ve vrcholech: (a,b)-stromy"
+    },
+    "8.4": {
+      "page": 206,
+      "title": "Červeno-černé stromy"
+    },
+    "8.5": {
+      "page": 215,
+      "title": "Další cvičení"
+    },
+    "9.1": {
+      "page": 219,
+      "title": "Nafukovací pole"
+    },
+    "9.2": {
+      "page": 222,
+      "title": "Binární počítadlo"
+    },
+    "9.3": {
+      "page": 224,
+      "title": "Potenciálová metoda"
+    },
+    "9.4": {
+      "page": 228,
+      "title": "Líné vyvažování stromů"
+    },
+    "9.5": {
+      "page": 230,
+      "title": "Splay stromy"
+    },
+    "10.1": {
+      "page": 243,
+      "title": "Hanojské věže"
+    },
+    "10.2": {
+      "page": 245,
+      "title": "Třídění sléváním – Mergesort"
+    },
+    "10.3": {
+      "page": 248,
+      "title": "Násobení čísel – Karacubův algoritmus"
+    },
+    "10.4": {
+      "page": 253,
+      "title": "Kuchařková věta o složitosti rekurzivních algoritmů"
+    },
+    "10.5": {
+      "page": 255,
+      "title": "Násobení matic – Strassenův algoritmus"
+    },
+    "10.6": {
+      "page": 257,
+      "title": "Hledání k-tého nejmenšího prvku – Quickselect"
+    },
+    "10.7": {
+      "page": 259,
+      "title": "Ještě jednou třídění – Quicksort"
+    },
+    "10.8": {
+      "page": 262,
+      "title": "k-tý nejmenší prvek v lineárním čase"
+    },
+    "10.9": {
+      "page": 265,
+      "title": "Další cvičení"
+    },
+    "11.1": {
+      "page": 269,
+      "title": "Pravděpodobnostní algoritmy"
+    },
+    "11.2": {
+      "page": 272,
+      "title": "Náhodný výběr pivota"
+    },
+    "11.3": {
+      "page": 276,
+      "title": "Hešování s přihrádkami"
+    },
+    "11.4": {
+      "page": 279,
+      "title": "Hešování s otevřenou adresací"
+    },
+    "11.5": {
+      "page": 281,
+      "title": "Univerzální hešování"
+    },
+    "11.6": {
+      "page": 289,
+      "title": "Treapy a náhodné vyhledávací stromy"
+    },
+    "12.1": {
+      "page": 299,
+      "title": "Fibonacciho čísla podruhé"
+    },
+    "12.2": {
+      "page": 302,
+      "title": "Vybrané podposloupnosti"
+    },
+    "12.3": {
+      "page": 306,
+      "title": "Editační vzdálenost"
+    },
+    "12.4": {
+      "page": 310,
+      "title": "Optimální vyhledávací stromy"
+    },
+    "13.1": {
+      "page": 319,
+      "title": "Řetězce a abecedy"
+    },
+    "13.2": {
+      "page": 320,
+      "title": "Knuthův-Morrisův-Prattův algoritmus"
+    },
+    "13.3": {
+      "page": 324,
+      "title": "Více řetězců najednou: algoritmus Aho-Corasicková"
+    },
+    "13.4": {
+      "page": 330,
+      "title": "Rabinův-Karpův algoritmus"
+    },
+    "13.5": {
+      "page": 332,
+      "title": "Suffixová pole"
+    },
+    "13.6": {
+      "page": 337,
+      "title": "Konstrukce suffixového pole"
+    },
+    "13.7": {
+      "page": 342,
+      "title": "Suffixové stromy"
+    },
+    "13.8": {
+      "page": 346,
+      "title": "Další cvičení"
+    },
+    "14.1": {
+      "page": 351,
+      "title": "Definice toku"
+    },
+    "14.2": {
+      "page": 353,
+      "title": "Fordův-Fulkersonův algoritmus"
+    },
+    "14.3": {
+      "page": 359,
+      "title": "Největší párování v bipartitních grafech"
+    },
+    "14.4": {
+      "page": 361,
+      "title": "Dinicův algoritmus"
+    },
+    "14.5": {
+      "page": 368,
+      "title": "Goldbergův algoritmus"
+    },
+    "14.6": {
+      "page": 374,
+      "title": "Vylepšení Goldbergova algoritmu"
+    },
+    "14.7": {
+      "page": 377,
+      "title": "Další cvičení"
+    },
+    "15.1": {
+      "page": 381,
+      "title": "Hradlové sítě"
+    },
+    "15.2": {
+      "page": 386,
+      "title": "Sčítání a násobení binárních čísel"
+    },
+    "15.3": {
+      "page": 392,
+      "title": "Třídicí sítě"
+    },
+    "16.1": {
+      "page": 401,
+      "title": "Konvexní obal"
+    },
+    "16.2": {
+      "page": 406,
+      "title": "Průsečíky úseček"
+    },
+    "16.3": {
+      "page": 409,
+      "title": "Voroného diagramy"
+    },
+    "16.4": {
+      "page": 414,
+      "title": "Lokalizace bodu"
+    },
+    "16.5": {
+      "page": 418,
+      "title": "Rychlejší algoritmus na konvexní obal"
+    },
+    "16.6": {
+      "page": 419,
+      "title": "Další cvičení"
+    },
+    "17.1": {
+      "page": 423,
+      "title": "Polynomy a jejich násobení"
+    },
+    "17.2": {
+      "page": 427,
+      "title": "Intermezzo o komplexních číslech"
+    },
+    "17.3": {
+      "page": 430,
+      "title": "Rychlá Fourierova transformace"
+    },
+    "17.4": {
+      "page": 433,
+      "title": "Spektrální rozklad"
+    },
+    "17.5": {
+      "page": 438,
+      "title": "Další varianty FFT"
+    },
+    "18.1": {
+      "page": 443,
+      "title": "Binomiální haldy"
+    },
+    "18.2": {
+      "page": 447,
+      "title": "Operace s binomiální haldou"
+    },
+    "18.3": {
+      "page": 451,
+      "title": "Líná binomiální halda"
+    },
+    "18.4": {
+      "page": 455,
+      "title": "Fibonacciho haldy"
+    },
+    "19.1": {
+      "page": 465,
+      "title": "Problémy a převody"
+    },
+    "19.2": {
+      "page": 468,
+      "title": "Příklady převodů"
+    },
+    "19.3": {
+      "page": 476,
+      "title": "NP-úplné problémy"
+    },
+    "19.4": {
+      "page": 482,
+      "title": "Důkaz Cookovy věty"
+    },
+    "19.5": {
+      "page": 485,
+      "title": "Co si počít s těžkým problémem"
+    },
+    "19.6": {
+      "page": 489,
+      "title": "Aproximační algoritmy"
+    }
+  }
+}

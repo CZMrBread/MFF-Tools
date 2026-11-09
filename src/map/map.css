@@ -1,0 +1,140 @@
+/*
+ * Stránkové styly Mapy předmětů – převedeno z inline <style> staré stránky
+ * specializace/index.html (proměnné, reset, body). Třídy komponent jsou v *.module.css.
+ * Soubor se načítá jen na stránce mapy (lazy chunk).
+ *
+ * Stará stránka navíc načítala Bootstrap 5.3 z CDN. Nová aplikace Bootstrap nemá, proto
+ * jsou tu (a v modulech) ručně přepsaná jen ta pravidla Bootstrapu, která se na staré
+ * stránce skutečně projevila – vždy s poznámkou „Bootstrap".
+ */
+:root {
+  /* Proměnné design systému MFF – ze staré stránky jsou převzaté jen ty použité. */
+  --_typography---font-family--silka: "Silka Webfont", Arial, sans-serif;
+  --_typography---paragraph--font-size: 1rem;
+  --_typography---paragraph--line-height: 144%;
+  --_typography---h1--font-size: 2.625rem;
+  --_typography---h1--line-height: 116%;
+  --_typography---h1--font-weight: 700;
+  --_typography---h1--letter-spacing: -0.016em;
+  --_typography---btn-primary--font-size: 0.875rem;
+  --_spacing---14-px: 0.875rem;
+  --_spacing---20-px: 1.25rem;
+  --_spacing---24-px: 1.5rem;
+  --_spacing---40-px: 2.5rem;
+  --_spacing---gap-20: 20px;
+  --_radius---radius-8-px: 8px;
+  --primary--primary-blue: #003657;
+  --primary--primary-red: #d22d40;
+  --primary--primary-black: black;
+  --primary--background-white: white;
+  --primary--background-grey: whitesmoke;
+  --variables--blue-12: #0036571f;
+  --variables--blue-72: #003657b8;
+
+  --bg: var(--primary--background-white);
+  --text: var(--primary--primary-black);
+  --muted: #6b7280;
+  --col-mandatory-all: #3b82f6;
+  --col-mandatory: #4ade80;
+  --col-elective: #fb923c;
+  --col-mixed: #facc15;
+
+  /* Zvýraznění specializací dle vybraných předmětů: AND = ve všech, OR = alespoň v jednom */
+  --col-subj-and: var(--primary--primary-blue);
+  --col-subj-or: var(--primary--primary-red);
+
+  /* Bootstrap: systémové písmo (--bs-font-sans-serif), kterým se sázel tooltip a popover. */
+  --map-font-system:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans",
+    "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Bootstrap (reboot) */
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--_typography---font-family--silka);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  /* Bootstrap (reboot) */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/*
+ * Ve staré stránce byly hlavička webu, .page-content i patička přímými potomky <body>
+ * (flex sloupec se zarovnáním na střed). React je vykresluje do #root, proto se #root
+ * z layoutu vypouští – rozložení pak zůstává stejné jako dřív (včetně toho, že
+ * hlavička webu je na této stránce široká jen podle svého obsahu a vystředěná).
+ */
+#root {
+  display: contents;
+}
+
+/* Bootstrap (reboot): nadpisy – platí i pro <h4> v patičce. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Bootstrap (reboot): tlačítka a výběr dědí písmo a výšku řádku ze stránky. */
+button {
+  border-radius: 0;
+}
+
+button:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+button,
+select {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-transform: none;
+}
+
+select {
+  word-wrap: normal;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Patička: přes celou šířku a u spodního okraje (přepisuje margin-top z global.css). */
+footer.site-footer {
+  width: 100%;
+  margin-top: auto;
+}

@@ -1,0 +1,418 @@
+/*
+ * Kontejner grafu, ovládací prvky, tooltip a styly uzlů/hran (1:1 ze staré stránky).
+ *
+ * Uzly a hrany vytváří D3 (src/map/graph.ts) s pevnými názvy tříd ze staré stránky
+ * (node, node-spec, selected, dimmed, …), proto jsou zapsané přes :global() pod třídou
+ * .svg. Pořadí pravidel je stejné jako ve staré stránce – u shodné specificity na něm
+ * záleží.
+ */
+
+.container {
+  width: 100%;
+  height: 800px;
+  background: var(--primary--background-grey);
+  border: 1px solid var(--variables--blue-12);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.container.fullscreen {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  border-radius: 0 !important;
+  z-index: 9999;
+  background: var(--bg) !important;
+  overflow: visible !important;
+}
+
+.fullscreenOpen {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--primary--background-white);
+  border: 1px solid var(--variables--blue-12);
+  color: var(--primary--primary-black);
+  padding: 8px 14px;
+  border-radius: var(--_radius---radius-8-px);
+  cursor: pointer;
+  font-family: var(--_typography---font-family--silka);
+  font-size: 13px;
+  z-index: 20;
+  transition: background 0.2s;
+}
+
+.fullscreenOpen:hover {
+  background: #e5e7eb;
+}
+
+.fullscreenClose {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  z-index: 20;
+  transition: color 0.2s;
+}
+
+.fullscreenClose:hover {
+  color: var(--primary--primary-black);
+}
+
+.fullscreen .fullscreenOpen {
+  display: none;
+}
+
+.fullscreen .fullscreenClose {
+  display: block;
+}
+
+.zoomControls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 20;
+}
+
+.zoomControls button {
+  width: 34px;
+  height: 34px;
+  background: var(--primary--background-white);
+  border: 1px solid var(--variables--blue-12);
+  color: var(--primary--primary-black);
+  border-radius: var(--_radius---radius-8-px);
+  cursor: pointer;
+  font-family: var(--_typography---font-family--silka);
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.zoomControls button:hover {
+  background: #e5e7eb;
+}
+
+/* Hláška při chybě načtení dat (stará stránka chybu jen zapsala do konzole). */
+.error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--primary--primary-red);
+}
+
+.svg {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.svg:active {
+  cursor: grabbing;
+}
+
+.tooltip {
+  /* Bootstrap: stará stránka zdědila část pravidel jeho třídy .tooltip. */
+  display: block;
+  margin: 0;
+  font-family: var(--map-font-system);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  white-space: normal;
+  word-spacing: normal;
+  line-break: auto;
+  font-size: 0.875rem;
+  word-wrap: break-word;
+
+  position: absolute;
+  background: rgba(15, 18, 25, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 14px 18px;
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+  max-width: 280px;
+}
+
+.tooltipTitle {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.tooltipDesc {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  font-family: var(--_typography---font-family--silka);
+}
+
+.tooltipMeta {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 8px;
+}
+
+.badge {
+  /* Bootstrap: zbytek pravidel jeho třídy .badge. */
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 6px;
+  color: #111;
+}
+
+.svg :global(.node) {
+  transition: opacity 0.3s ease;
+}
+
+.svg :global(.link) {
+  stroke: rgba(0, 0, 0, 0.08);
+  stroke-width: 1px;
+  transition:
+    stroke 0.3s,
+    stroke-width 0.3s,
+    stroke-opacity 0.3s,
+    opacity 0.3s ease;
+}
+
+.svg :global(.node) circle {
+  stroke: rgba(0, 0, 0, 0.1);
+  stroke-width: 1px;
+  transition:
+    fill 0.3s,
+    stroke 0.3s,
+    filter 0.3s;
+  cursor: pointer;
+}
+
+.svg :global(.node) text {
+  font-family: var(--_typography---font-family--silka);
+  pointer-events: none;
+  font-size: 11px;
+  fill: #374151;
+  font-weight: 500;
+}
+
+.svg :global(.node-spec) text {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--primary--primary-black);
+}
+
+.svg :global(.node-spec.selected) circle {
+  stroke: var(--primary--primary-black);
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 14px currentColor);
+}
+
+.svg :global(.node-spec.selected) text {
+  font-weight: 800;
+  fill: var(--primary--primary-black);
+}
+
+.svg :global(.node-subj.highlighted) circle {
+  stroke: var(--primary--primary-black);
+  stroke-width: 1.5px;
+}
+
+.svg :global(.node-subj.highlighted) text {
+  fill: var(--primary--primary-black);
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* Dimmed prvky jsou průhledné kompletně a neschovají ostatní elementy za nimi */
+.svg :global(.node-subj.dimmed) {
+  opacity: 0.25 !important;
+}
+
+.svg :global(.node-subj.dimmed) circle {
+  fill: #e5e7eb !important;
+  stroke: rgba(0, 0, 0, 0.02);
+  filter: none !important;
+}
+
+.svg :global(.link.highlighted) {
+  stroke-width: 2px;
+  stroke-opacity: 0.8;
+}
+
+.svg :global(.link.dimmed) {
+  stroke-opacity: 0.01;
+}
+
+/* --- Zvýraznění specializací z popoveru předmětu (nezávislé na "průniku" specializací) ---
+   AND = specializace nabízí VŠECHNY vybrané předměty.
+   OR  = specializace nabízí ALESPOŇ JEDEN vybraný předmět, ale ne všechny. */
+.svg :global(.node-spec.subj-emphasized-and) circle {
+  stroke: var(--col-subj-and);
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 14px currentColor);
+  color: var(--col-subj-and);
+}
+
+.svg :global(.node-spec.subj-emphasized-and) text {
+  font-weight: 800;
+  fill: var(--col-subj-and);
+}
+
+.svg :global(.node-spec.subj-emphasized-or) circle {
+  stroke: var(--col-subj-or);
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 0 10px currentColor);
+  color: var(--col-subj-or);
+}
+
+.svg :global(.node-spec.subj-emphasized-or) text {
+  font-weight: 700;
+  fill: var(--col-subj-or);
+}
+
+.svg :global(.node-subj.subj-source) circle {
+  stroke: var(--col-subj-and);
+  stroke-width: 3px;
+}
+
+.svg :global(.node-subj.subj-source) text {
+  fill: var(--col-subj-and);
+  font-weight: 700;
+}
+
+.svg :global(.link.subj-highlighted-and) {
+  stroke: var(--col-subj-and);
+  stroke-width: 2px;
+  stroke-opacity: 0.9;
+}
+
+.svg :global(.link.subj-highlighted-or) {
+  stroke: var(--col-subj-or);
+  stroke-width: 1.5px;
+  stroke-opacity: 0.6;
+}
+
+/* Zešednutí zbytku – zůstává klikatelné (žádné pointer-events: none) */
+.svg :global(.node.subj-faded) circle {
+  opacity: 0.35;
+}
+
+.svg :global(.node.subj-faded) text {
+  opacity: 0.35;
+}
+
+.highlightPanel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.highlightPanel.visible {
+  display: flex;
+}
+
+.clearHighlight {
+  background: var(--primary--background-white);
+  border: 1px solid var(--variables--blue-12);
+  color: var(--muted);
+  padding: 8px 14px;
+  border-radius: var(--_radius---radius-8-px);
+  cursor: pointer;
+  font-family: var(--_typography---font-family--silka);
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.clearHighlight:hover {
+  background: var(--primary--background-grey);
+}
+
+.highlightLegend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--primary--background-white);
+  border: 1px solid var(--variables--blue-12);
+  border-radius: var(--_radius---radius-8-px);
+  padding: 6px 12px;
+  font-family: var(--_typography---font-family--silka);
+  font-size: 12px;
+  color: var(--text);
+}
+
+.legendSwatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.and .dot {
+  background: var(--col-subj-and);
+}
+
+.or .dot {
+  background: var(--col-subj-or);
+}
+
+/* Po doznění přechodu se skryté prvky úplně vyřadí z vykreslování (visibility), ne jen zprůhlední */
+.svg :global(.node.filtered-out),
+.svg :global(.link.filtered-out) {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none !important;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
+}

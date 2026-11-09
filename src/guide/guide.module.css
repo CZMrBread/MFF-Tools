@@ -1,0 +1,271 @@
+/*
+ * Třídy komponent Průvodce prváka – převedeno 1:1 z inline <style> starého
+ * index.html (stejné pořadí pravidel). Proměnné a elementové selektory jsou
+ * v guide.css.
+ */
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem; /* --_spacing---40-px */
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.intro {
+  font-size: 1.125rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-8-px);
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.moneyCard {
+  background: #f1fcf5;
+  border-left: 5px solid var(--accent-green);
+  padding: 1.5rem;
+  border-radius: var(--radius-8-px);
+  margin-top: 2rem;
+  border-top: 1px solid #d1e7dd;
+  border-right: 1px solid #d1e7dd;
+  border-bottom: 1px solid #d1e7dd;
+}
+
+.moneyCard h3 {
+  color: #146c43;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
+  gap: 16px; /* --_spacing---gap-16 */
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 760px) {
+  .linksGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .linksGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  min-height: 3.25rem;
+  background-color: var(--primary-red);
+  color: var(--background-white);
+  text-decoration: none;
+  padding: 0.875rem 1.25rem;
+  /* průhledný okraj, aby plná i outline varianta měly stejnou výšku */
+  border: 2px solid transparent;
+  border-radius: var(--radius-btns); /* Oficiální Matfyz zakulacení */
+  font-size: 0.875rem;
+  line-height: 128%;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: center;
+  text-wrap: balance;
+  transition:
+    opacity 0.2s,
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.btn i {
+  flex: none;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  opacity: 0.85;
+  color: var(--background-white);
+}
+
+.btnDiscord {
+  background-color: #5865f2;
+}
+
+.btnDiscord:hover {
+  opacity: 0.9;
+}
+
+.btnOutline {
+  background-color: transparent;
+  color: var(--primary-red);
+  border-color: var(--primary-red);
+}
+
+.btnOutline:hover {
+  background-color: var(--primary-red);
+  color: var(--background-white);
+}
+
+/* Ve staré stránce inline styl u samostatných tlačítek pod textem. */
+.btnInline {
+  display: inline-flex;
+  width: auto;
+}
+
+/* Ve staré stránce inline styl u řádků tlačítek v sekci o stipendiích. */
+.btnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.subjectList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subjectList li {
+  background: var(--card-bg);
+  border-left: 4px solid var(--primary-red);
+  margin-bottom: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0 var(--radius-8-px) var(--radius-8-px) 0;
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.subjectCode {
+  font-family: monospace;
+  background: var(--blue-12);
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--primary-blue);
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+/* Ve staré stránce inline styl u odkazů na předměty. */
+.subjectLink {
+  color: var(--primary-red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Ve staré stránce inline styl u odkazů v textu (SIS pro Android, e-mail). */
+.textLink {
+  color: var(--primary-red);
+  font-weight: 600;
+}
+
+.faqItem {
+  margin-bottom: 1.5rem;
+}
+
+.faqQuestion {
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 132%;
+  margin-bottom: 0.3rem;
+  color: var(--primary-blue);
+}
+
+.faqAnswer {
+  color: var(--text-secondary);
+}
+
+.card > h2:first-child,
+.card > h3:first-child {
+  margin-top: 1.5rem;
+}
+
+.card p:last-child,
+.card ul:last-child {
+  margin-bottom: 0;
+}
+
+.settingsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.settingsList li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.35rem 0;
+}
+
+.settingsList :global(.bi) {
+  flex: none;
+  margin-top: 0.15rem;
+  font-size: 1.05rem;
+  color: #146c43;
+}
+
+.settingsNote {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0.75rem 0 0;
+}
+
+.appTip {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  background: var(--blue-12);
+  border-left: 4px solid var(--primary-blue);
+  border-radius: 0 var(--radius-8-px) var(--radius-8-px) 0;
+}
+
+.appTip :global(.bi) {
+  flex: none;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: #146c43;
+}
+
+.futureBox {
+  background-color: #fff9e6;
+  border: 1px solid #ffe69c;
+  border-radius: var(--radius-8-px);
+  padding: 1.5rem;
+  margin-top: 3rem;
+  color: #997404;
+}
+
+/* Ve staré stránce inline styl u nadpisu v .future-box. */
+.futureBox h3 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+}

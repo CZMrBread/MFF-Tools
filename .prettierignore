@@ -1,0 +1,10 @@
+# Staré stránky (reference testů) a data se neformátují (čitelné diffy dat)
+/src/legacy
+/data
+/public
+/docs
+/dist
+package-lock.json
+
+# kompaktní záznam staré kalkulačky (formátováním by narostl z 2,1 na 3,5 MB)
+src/lib/__fixtures__/credits-legacy.json
